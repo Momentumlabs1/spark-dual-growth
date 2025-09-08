@@ -7,7 +7,7 @@ const Navigation = () => {
 
   const navItems = [
     { label: 'Coaching', href: '#coaching' },
-    { label: 'BMI Rechner', href: '#bmi-rechner' },
+    { label: 'Gesundheits-Rechner', href: '#bmi-rechner' },
     { label: 'Team', href: '#team' },
     { label: 'Kontakt', href: '#kontakt' },
   ];
