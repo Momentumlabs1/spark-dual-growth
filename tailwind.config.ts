@@ -57,6 +57,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // NF COACHING custom colors
+        nf: {
+          black: "hsl(var(--nf-black))",
+          red: "hsl(var(--nf-red))",
+          white: "hsl(var(--nf-white))",
+          gray: {
+            50: "hsl(var(--nf-gray-50))",
+            100: "hsl(var(--nf-gray-100))",
+            200: "hsl(var(--nf-gray-200))",
+            600: "hsl(var(--nf-gray-600))",
+          },
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +92,61 @@ export default {
             height: "0",
           },
         },
+        "fade-in-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(30px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "fade-in": {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1",
+          },
+        },
+        "scale-in": {
+          from: {
+            opacity: "0",
+            transform: "scale(0.95)",
+          },
+          to: {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
+        "slide-in-right": {
+          from: {
+            opacity: "0",
+            transform: "translateX(30px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "pulse-red": {
+          "0%, 100%": {
+            boxShadow: "0 0 0 0 hsl(var(--nf-red) / 0.4)",
+          },
+          "50%": {
+            boxShadow: "0 0 0 10px hsl(var(--nf-red) / 0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in-up": "fade-in-up 0.6s ease-out",
+        "fade-in": "fade-in 0.4s ease-out",
+        "scale-in": "scale-in 0.3s ease-out",
+        "slide-in-right": "slide-in-right 0.5s ease-out",
+        "pulse-red": "pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },
