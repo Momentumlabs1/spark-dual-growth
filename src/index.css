@@ -127,6 +127,14 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans antialiased;
     scroll-behavior: smooth;
   }
+
+  /* Scroll margin for navigation sections */
+  #coaching,
+  #bmi-rechner,
+  #team,
+  #kontakt {
+    scroll-margin-top: 5rem;
+  }
 }
 
 @layer utilities {

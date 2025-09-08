@@ -1,11 +1,16 @@
-import { Instagram, Facebook, Youtube } from 'lucide-react';
+import { Instagram, Facebook, Youtube, ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const footerLinks = [
-    { name: 'Impressum', href: '#impressum' },
-    { name: 'Datenschutz', href: '#datenschutz' },
-    { name: 'AGB', href: '#agb' }
+    { name: 'Impressum', href: '/impressum' },
+    { name: 'Datenschutz', href: '/datenschutz' },
+    { name: 'AGB', href: '/agb' }
   ];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const socialLinks = [
     { icon: Instagram, href: '#', name: 'Instagram' },
@@ -82,8 +87,12 @@ const Footer = () => {
               ))}
             </div>
             <div className="text-nf-white/70">
-              <p className="mb-2">📧 info@nf-coaching.de</p>
-              <p>📱 +49 (0) 123 456789</p>
+              <p className="mb-2">
+                📧 <a href="mailto:info@nf-coaching.de" className="hover:text-nf-red transition-smooth">info@nf-coaching.de</a>
+              </p>
+              <p>
+                📱 <a href="tel:+491234567890" className="hover:text-nf-red transition-smooth">+49 (0) 123 456789</a>
+              </p>
             </div>
           </div>
         </div>
@@ -91,19 +100,28 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-nf-white/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-nf-white/70 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} NF COACHING. Alle Rechte vorbehalten.
-            </p>
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-4 md:mb-0">
+              <p className="text-nf-white/70 text-sm">
+                © {new Date().getFullYear()} NF COACHING. Alle Rechte vorbehalten.
+              </p>
+              <button
+                onClick={scrollToTop}
+                className="text-nf-white/70 hover:text-nf-red text-sm transition-smooth flex items-center gap-1"
+              >
+                <ArrowUp className="h-4 w-4" />
+                Nach oben
+              </button>
+            </div>
             
             <div className="flex space-x-6">
               {footerLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className="text-nf-white/70 hover:text-nf-red text-sm transition-smooth"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
