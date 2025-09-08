@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Play, Star, Users, TrendingUp } from 'lucide-react';
+import { Star, Users, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import VideoEmbed from '@/components/VideoEmbed';
 
 const HeroSection = () => {
   const scrollToSection = (href: string) => {
@@ -17,22 +18,8 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-nf-black via-nf-black/95 to-nf-red/20">
-      {/* Video Background Placeholder */}
-      <div className="absolute inset-0 z-0">
-        <div className="w-full h-full bg-gradient-to-br from-nf-black/80 via-nf-black/60 to-nf-red/30 flex items-center justify-center">
-          {/* Video will be embedded here */}
-          <div className="w-full h-full bg-nf-black/40 flex items-center justify-center">
-            <div className="text-center text-nf-white/50">
-              <Play className="h-16 w-16 mx-auto mb-4" />
-              <p className="text-lg">Video wird hier eingebettet</p>
-              <p className="text-sm mt-2">/funnel/Niklas-Kompletter-Fitness-Funnel</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Content Overlay */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-nf-black via-nf-black/95 to-nf-red/20 py-20">
+      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -46,9 +33,22 @@ const HeroSection = () => {
             <span className="block">FÜR KÖRPER & GEIST</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-nf-white/90 mb-8 max-w-3xl mx-auto text-balance">
+          <p className="text-xl md:text-2xl text-nf-white/90 mb-10 max-w-3xl mx-auto text-balance">
             Ganzheitliches Online Health & Fitness Coaching
           </p>
+
+          {/* Video Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mb-10"
+          >
+            <VideoEmbed 
+              src="/funnel/Niklas-Kompletter-Fitness-Funnel"
+              ctaLabel="Jetzt starten - Prüfe, wie wir dir helfen können"
+            />
+          </motion.div>
 
           {/* Stats Bar */}
           <motion.div
