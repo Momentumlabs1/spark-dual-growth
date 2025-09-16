@@ -13,7 +13,6 @@ const ComingSoon = () => {
     minutes: 0,
     seconds: 0
   });
-  
   const {
     toast
   } = useToast();
@@ -26,30 +25,27 @@ const ComingSoon = () => {
   });
   const imageY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 1]);
-  
+
   // Countdown Timer Logic
   useEffect(() => {
     // Set target date to 3 weeks from now
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 21); // 3 weeks
-    
+
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate.getTime() - now;
-      
       if (distance > 0) {
         setTimeLeft({
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+          hours: Math.floor(distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)),
+          minutes: Math.floor(distance % (1000 * 60 * 60) / (1000 * 60)),
+          seconds: Math.floor(distance % (1000 * 60) / 1000)
         });
       }
     }, 1000);
-    
     return () => clearInterval(timer);
   }, []);
-  
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
@@ -118,7 +114,7 @@ const ComingSoon = () => {
             }} transition={{
               delay: 0.5,
               duration: 0.6
-            }} className="block text-nf-red">
+            }} className="block text-[#ff0000]">
                 BEGINNT BALD
               </motion.span>
             </motion.h1>
@@ -154,12 +150,7 @@ const ComingSoon = () => {
         }}>
             <div className="relative max-w-2xl mx-auto">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] sm:aspect-[16/10]">
-                <img 
-                  src="/assets/niklas-fabienne-hero.png" 
-                  alt="Niklas und Fabienne - Dein Coaching Team" 
-                  className="w-full h-full object-contain bg-transparent shadow-2xl" 
-                  loading="lazy" 
-                />
+                <img src="/assets/niklas-fabienne-hero.png" alt="Niklas und Fabienne - Dein Coaching Team" className="w-full h-full object-contain bg-transparent shadow-2xl" loading="lazy" />
               </div>
             </div>
           </motion.div>
@@ -193,54 +184,24 @@ const ComingSoon = () => {
               delay: 1.2,
               duration: 0.8
             }}>
-                Niklas und Fabienne bereiten etwas <span className="font-bold text-nf-red">Großartiges</span> für dich vor.
+                Niklas und Fabienne bereiten etwas <span className="font-bold text-[#ff0000]">Großartiges</span> für dich vor.
               </motion.p>
             </motion.div>
           </motion.div>
 
           {/* Countdown Timer */}
           <motion.div className="mb-12" initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 1.5,
-            duration: 0.8
-          }}>
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          delay: 1.5,
+          duration: 0.8
+        }}>
             <div className="max-w-2xl mx-auto">
-              <div className="grid grid-cols-4 gap-2 sm:gap-4">
-                {[
-                  { label: 'TAGE', value: timeLeft.days },
-                  { label: 'STUNDEN', value: timeLeft.hours },
-                  { label: 'MINUTEN', value: timeLeft.minutes },
-                  { label: 'SEKUNDEN', value: timeLeft.seconds }
-                ].map((item, index) => (
-                  <motion.div 
-                    key={item.label}
-                    className="bg-nf-black/80 border border-nf-red/30 rounded-2xl p-3 sm:p-4 shadow-lg"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.7 + index * 0.1, duration: 0.6 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <motion.div 
-                      key={item.value}
-                      className="text-2xl sm:text-3xl md:text-4xl font-black text-nf-red"
-                      initial={{ y: -10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 10, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {String(item.value).padStart(2, '0')}
-                    </motion.div>
-                    <div className="text-xs sm:text-sm font-bold text-nf-white/80 uppercase tracking-wide">
-                      {item.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              
             </div>
           </motion.div>
 
@@ -295,7 +256,7 @@ const ComingSoon = () => {
                 delay: 2.6,
                 duration: 0.6
               }}>
-                  <Button type="submit" className="w-full h-12 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl bg-nf-red hover:bg-nf-red/90 text-nf-white border-0">
+                  <Button type="submit" className="w-full h-12 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 text-[#fffcfc] bg-[#ff0000]">
                     <Mail className="h-5 w-5 mr-2" />
                     Jetzt benachrichtigen lassen
                   </Button>
@@ -305,72 +266,39 @@ const ComingSoon = () => {
 
             {/* Legal Links - Integrated */}
             <motion.div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6" initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              delay: 2.8,
-              duration: 0.6
-            }}>
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            delay: 2.8,
+            duration: 0.6
+          }}>
               <div className="text-center">
                 <h4 className="text-nf-white/80 font-medium text-sm mb-3">Rechtliche Informationen</h4>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {legalLinks.map((link, index) => (
-                    <motion.div
-                      key={link.name}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 3 + index * 0.1, duration: 0.5 }}
-                    >
-                      <Link 
-                        to={link.href} 
-                        className="bg-nf-black/40 border border-nf-red/30 hover:border-nf-red px-4 py-2 rounded-lg text-nf-white hover:text-nf-red text-sm font-medium transition-all duration-300 hover:bg-nf-black/60 inline-block"
-                      >
+                  {legalLinks.map((link, index) => <motion.div key={link.name} initial={{
+                  opacity: 0,
+                  y: 10
+                }} animate={{
+                  opacity: 1,
+                  y: 0
+                }} transition={{
+                  delay: 3 + index * 0.1,
+                  duration: 0.5
+                }}>
+                      <Link to={link.href} className="bg-nf-black/40 border border-nf-red/30 hover:border-nf-red px-4 py-2 rounded-lg text-nf-white hover:text-nf-red text-sm font-medium transition-all duration-300 hover:bg-nf-black/60 inline-block">
                         {link.name}
                       </Link>
-                    </motion.div>
-                  ))}
+                    </motion.div>)}
                 </div>
               </div>
             </motion.div>
           </motion.div>
 
           {/* Social Links */}
-          <motion.div className="flex justify-center space-x-8 mb-12" initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          delay: 2.8,
-          duration: 0.8
-        }}>
-            {socialLinks.map((social, index) => <motion.a key={social.name} href={social.href} className="relative bg-card/70 backdrop-blur-sm shadow-soft hover:shadow-xl p-5 rounded-2xl transition-all duration-300 group border border-border/50" aria-label={social.name} whileHover={{
-            scale: 1.1,
-            y: -5
-          }} whileTap={{
-            scale: 0.95
-          }} initial={{
-            opacity: 0,
-            scale: 0.8,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            scale: 1,
-            y: 0
-          }} transition={{
-            delay: 2.8 + index * 0.2,
-            duration: 0.6,
-            type: "spring",
-            stiffness: 200
-          }}>
-                <motion.div className="absolute inset-0 bg-nf-red/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <social.icon className="relative h-7 w-7 text-muted-foreground group-hover:text-nf-red transition-all duration-300" />
-              </motion.a>)}
-          </motion.div>
+          
 
           <motion.div className="text-center" initial={{
           opacity: 0
