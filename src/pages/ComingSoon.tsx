@@ -39,7 +39,7 @@ const ComingSoon = () => {
         <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
           <div className="mb-8">
             <h1 className="text-6xl md:text-8xl font-bold text-foreground mb-4">
-              Niklas Hauger Coaching
+              Nick Hauger Coaching
             </h1>
             <div className="w-24 h-1 gradient-red mx-auto mb-6 rounded-full"></div>
             <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
@@ -52,7 +52,7 @@ const ComingSoon = () => {
             <div className="relative max-w-md mx-auto mb-8">
               <img 
                 src="/assets/team-photo.png" 
-                alt="Niklas und Fabienne - Dein Coaching Team"
+                alt="Nick und Fabienne - Dein Coaching Team"
                 className="w-full h-auto rounded-2xl shadow-large border border-border"
                 loading="lazy"
               />
@@ -65,7 +65,7 @@ const ComingSoon = () => {
               Ganzheitliches Online Health & Fitness Coaching
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 text-balance">
-              Niklas und Fabienne bereiten etwas Großartiges für dich vor. 
+              Nick und Fabienne bereiten etwas Großartiges für dich vor. 
               Erhalte als Erste*r Updates über unser revolutionäres Coaching-Programm.
             </p>
           </div>
@@ -113,7 +113,7 @@ const ComingSoon = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-primary-foreground/70 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} Niklas Hauger Coaching. Alle Rechte vorbehalten.
+              © {new Date().getFullYear()} Nick Hauger Coaching. Alle Rechte vorbehalten.
             </p>
             
             <div className="flex space-x-6">

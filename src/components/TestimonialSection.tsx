@@ -10,7 +10,7 @@ const TestimonialSection = () => {
     {
       name: 'Sarah M.',
       rating: 5,
-      text: 'Dank Niklas und Fabienne habe ich nicht nur 15kg abgenommen, sondern auch eine völlig neue Beziehung zu meinem Körper entwickelt. Das ganzheitliche Coaching hat mir gezeigt, dass es nicht nur um das Training geht.',
+      text: 'Dank Nick und Fabienne habe ich nicht nur 15kg abgenommen, sondern auch eine völlig neue Beziehung zu meinem Körper entwickelt. Das ganzheitliche Coaching hat mir gezeigt, dass es nicht nur um das Training geht.',
       result: '-15kg in 6 Monaten'
     },
     {
@@ -34,7 +34,7 @@ const TestimonialSection = () => {
     {
       name: 'Anna S.',
       rating: 5,
-      text: 'Endlich ein Coaching, das wirklich individuell ist! Niklas und Fabienne haben einen Plan entwickelt, der perfekt zu meinem Leben als berufstätige Mutter passt.',
+      text: 'Endlich ein Coaching, das wirklich individuell ist! Nick und Fabienne haben einen Plan entwickelt, der perfekt zu meinem Leben als berufstätige Mutter passt.',
       result: 'Mehr Energie & Kraft'
     }
   ];
