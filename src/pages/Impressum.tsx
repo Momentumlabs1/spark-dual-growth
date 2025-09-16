@@ -17,8 +17,8 @@ const Impressum = () => {
           <p className="text-nf-gray-600">Angaben gemäß § 5 TMG</p>
         </div>
 
-        <div className="prose prose-lg max-w-none">
-          <div className="bg-nf-white border border-nf-gray-200 rounded-lg p-8 shadow-soft">
+        <div className="prose prose-xl max-w-none">
+          <div className="bg-nf-white border border-nf-gray-200 rounded-lg p-8 md:p-12 shadow-soft">
             <div className="mb-6">
               <p className="text-nf-black"><strong>Niklas Hauger</strong></p>
               <p className="text-nf-gray-600">Fitness Online Coaching</p>

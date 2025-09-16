@@ -17,8 +17,8 @@ const AGB = () => {
           <p className="text-nf-gray-600">für die Erbringung von Dienstleistungen von Niklas Hauger Coaching</p>
         </div>
 
-        <div className="prose prose-lg max-w-none">
-          <div className="bg-nf-white border border-nf-gray-200 rounded-lg p-8 shadow-soft">
+        <div className="prose prose-xl max-w-none">
+          <div className="bg-nf-white border border-nf-gray-200 rounded-lg p-8 md:p-12 shadow-soft">
             <h2 className="text-2xl font-semibold text-nf-black mb-4">1. Allgemeines</h2>
             <div className="mb-6">
               <p className="text-nf-gray-600 mb-4">
