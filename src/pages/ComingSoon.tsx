@@ -44,34 +44,34 @@ const ComingSoon = () => {
   return (
     <div ref={containerRef} className="min-h-screen gradient-card flex flex-col">
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-20">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 md:pt-32">
         <div className="max-w-5xl mx-auto text-center">
           
           {/* Coming Soon Title */}
           <motion.div 
-            className="mb-12"
+            className="mb-16"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground mb-4 tracking-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              COMING
+              BALD
               <motion.span 
-                className="block text-secondary"
+                className="block text-nf-red"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                SOON
+                VERFÜGBAR
               </motion.span>
             </motion.h1>
             <motion.div 
-              className="w-32 h-1.5 gradient-red mx-auto rounded-full"
+              className="w-32 h-1.5 bg-nf-red mx-auto rounded-full"
               initial={{ width: 0 }}
               animate={{ width: 128 }}
               transition={{ delay: 0.8, duration: 0.8 }}
@@ -135,11 +135,11 @@ const ComingSoon = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6 bg-gradient-to-r from-foreground via-secondary to-foreground bg-clip-text text-transparent">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6">
                 Ganzheitliches Online Health & Fitness Coaching
               </h2>
               <motion.div 
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full"
+                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-nf-red rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: 96 }}
                 transition={{ delay: 1.2, duration: 0.6 }}
@@ -152,32 +152,14 @@ const ComingSoon = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }}
             >
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance mb-8">
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                >
-                  Niklas und Fabienne bereiten etwas 
-                </motion.span>
-                <motion.span
-                  className="inline-block text-secondary font-semibold mx-2"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.4, duration: 0.6 }}
-                >
-                  Großartiges
-                </motion.span>
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.6, duration: 0.6 }}
-                >
-                  für dich vor.
-                </motion.span>
-              </p>
+              <motion.p 
+                className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance mb-8"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+              >
+                Niklas und Fabienne bereiten etwas <span className="text-nf-red font-semibold">Großartiges</span> für dich vor.
+              </motion.p>
               
               <motion.p 
                 className="text-base md:text-lg text-muted-foreground/80"
