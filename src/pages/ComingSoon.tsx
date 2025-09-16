@@ -21,7 +21,7 @@ const ComingSoon = () => {
   };
 
   const socialLinks = [
-    { icon: Instagram, href: '#', name: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/niklas.hauger', name: 'Instagram' },
     { icon: Facebook, href: '#', name: 'Facebook' },
     { icon: Youtube, href: '#', name: 'YouTube' }
   ];
@@ -39,7 +39,7 @@ const ComingSoon = () => {
         <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
           <div className="mb-8">
             <h1 className="text-6xl md:text-8xl font-bold text-foreground mb-4">
-              NF COACHING
+              Niklas Hauger Coaching
             </h1>
             <div className="w-24 h-1 gradient-red mx-auto mb-6 rounded-full"></div>
             <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
@@ -90,7 +90,7 @@ const ComingSoon = () => {
           </div>
 
           <p className="text-muted-foreground animate-fade-in">
-            Kontakt: <a href="mailto:info@nf-coaching.de" className="text-secondary hover:underline transition-smooth">info@nf-coaching.de</a>
+            Kontakt: <a href="mailto:info@niklashauger.de" className="text-secondary hover:underline transition-smooth">info@niklashauger.de</a>
           </p>
         </div>
       </div>
@@ -100,7 +100,7 @@ const ComingSoon = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-primary-foreground/70 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} NF COACHING. Alle Rechte vorbehalten.
+              © {new Date().getFullYear()} Niklas Hauger Coaching. Alle Rechte vorbehalten.
             </p>
             
             <div className="flex space-x-6">

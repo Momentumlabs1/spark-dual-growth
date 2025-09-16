@@ -19,52 +19,34 @@ const Impressum = () => {
 
         <div className="prose prose-lg max-w-none">
           <div className="bg-nf-white border border-nf-gray-200 rounded-lg p-8 shadow-soft">
-            <h2 className="text-2xl font-semibold text-nf-black mb-4">Anbieter</h2>
             <div className="mb-6">
-              <p className="text-nf-black"><strong>NF COACHING</strong></p>
-              <p className="text-nf-gray-600">Niklas Fuchs & Fabienne Meyer</p>
-              <p className="text-nf-gray-600">Musterstraße 123</p>
-              <p className="text-nf-gray-600">12345 Musterstadt</p>
-              <p className="text-nf-gray-600">Deutschland</p>
+              <p className="text-nf-black"><strong>Niklas Hauger</strong></p>
+              <p className="text-nf-gray-600">Fitness Online Coaching</p>
+              <p className="text-nf-gray-600">Düsseldorfer Straße 38</p>
+              <p className="text-nf-gray-600">40667 Meerbusch</p>
             </div>
 
             <h2 className="text-2xl font-semibold text-nf-black mb-4">Kontakt</h2>
             <div className="mb-6">
-              <p className="text-nf-gray-600">Telefon: +49 (0) 123 456789</p>
-              <p className="text-nf-gray-600">E-Mail: info@nf-coaching.de</p>
+              <p className="text-nf-gray-600">Telefon: +49 1525 6961651</p>
+              <p className="text-nf-gray-600">E-Mail: info@niklashauger.de</p>
             </div>
 
             <h2 className="text-2xl font-semibold text-nf-black mb-4">Umsatzsteuer-ID</h2>
             <div className="mb-6">
               <p className="text-nf-gray-600">Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
-              <p className="text-nf-gray-600">DE123456789 (Beispiel - durch echte ID ersetzen)</p>
+              <p className="text-nf-gray-600">DE313550708</p>
             </div>
 
-            <h2 className="text-2xl font-semibold text-nf-black mb-4">Verantwortlich für den Inhalt</h2>
+            <h2 className="text-2xl font-semibold text-nf-black mb-4">Berufsbezeichnung und berufsrechtliche Regelungen</h2>
             <div className="mb-6">
-              <p className="text-nf-gray-600">Nach § 55 Abs. 2 RStV:</p>
-              <p className="text-nf-gray-600">Niklas Fuchs & Fabienne Meyer</p>
-              <p className="text-nf-gray-600">Musterstraße 123</p>
-              <p className="text-nf-gray-600">12345 Musterstadt</p>
+              <p className="text-nf-gray-600">Berufsbezeichnung: Online Coach</p>
+              <p className="text-nf-gray-600">Verliehen in: Deutschland</p>
             </div>
 
-            <h2 className="text-2xl font-semibold text-nf-black mb-4">Haftungsausschluss</h2>
-            <div className="space-y-4 text-nf-gray-600">
-              <div>
-                <h3 className="font-semibold text-nf-black">Haftung für Inhalte</h3>
-                <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold text-nf-black">Haftung für Links</h3>
-                <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
-              </div>
-            </div>
-
-            <div className="mt-8 p-4 bg-nf-gray-50 rounded-lg">
-              <p className="text-sm text-nf-gray-600">
-                <strong>Hinweis:</strong> Dies ist ein Muster-Impressum. Bitte passen Sie alle Angaben an Ihre tatsächlichen Daten an und lassen Sie es rechtlich prüfen.
-              </p>
+            <h2 className="text-2xl font-semibold text-nf-black mb-4">Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
+            <div className="mb-6">
+              <p className="text-nf-gray-600">Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
             </div>
           </div>
         </div>
