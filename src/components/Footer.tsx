@@ -27,7 +27,7 @@ const Footer = () => {
             <h3 className="text-2xl font-bold mb-4">NF COACHING</h3>
             <p className="text-nf-white/70 leading-relaxed">
               Ganzheitliches Online Health & Fitness Coaching für nachhaltigen Erfolg. 
-              Nick und Fabienne - dein Team für Körper und Geist.
+              Niklas und Fabienne - dein Team für Körper und Geist.
             </p>
           </div>
 

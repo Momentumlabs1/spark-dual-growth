@@ -5,7 +5,7 @@ import { Dumbbell, Apple, Heart, Target } from 'lucide-react';
 const TeamSection = () => {
   const teamMembers = [
     {
-      name: 'Nick',
+      name: 'Niklas',
       role: 'Training & Muskelaufbau',
       image: '/api/placeholder/400/500',
       specialties: [
