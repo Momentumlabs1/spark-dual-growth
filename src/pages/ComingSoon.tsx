@@ -87,45 +87,25 @@ const ComingSoon = () => {
             }} transition={{
               delay: 0.5,
               duration: 0.6
-            }} className="block text-nf-red">
+            }} className="block text-[#ff0000]">
                 BEGINNT BALD
               </motion.span>
             </motion.h1>
-            <motion.p className="text-lg md:text-xl text-nf-white/80 mt-4 font-medium" initial={{
+            <motion.p initial={{
             opacity: 0
           }} animate={{
             opacity: 1
           }} transition={{
             delay: 0.8,
             duration: 0.6
-          }}>
+          }} className="text-lg text-nf-white/80 mt-4 font-extrabold md:text-base">
               Ganzheitliches Health & Fitness Coaching
             </motion.p>
             
           </motion.div>
 
           {/* Rechtliche Informationen - prominent */}
-          <motion.div
-            className="mb-10"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-          >
-            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-card/40 border border-border/50 rounded-xl px-4 py-3 mx-auto">
-              <span className="text-nf-white/80 text-sm">Rechtliche Informationen:</span>
-              <div className="flex flex-col sm:flex-row gap-3">
-                {legalLinks.map(link => (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className="bg-card/10 border border-border/30 hover:border-nf-red/50 px-4 py-2 rounded-lg text-nf-white hover:text-nf-red text-sm font-medium transition-all duration-300 hover:bg-card/20 text-center"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          
 
           {/* Hero Image */}
           <motion.div className="mb-16" style={{
@@ -197,7 +177,7 @@ const ComingSoon = () => {
               delay: 1.2,
               duration: 0.8
             }}>
-                Niklas und Fabienne bereiten etwas <span className="font-semibold text-nf-red">Großartiges</span> für dich vor.
+                Niklas und Fabienne bereiten etwas <span className="font-semibold text-[#ff0000]">Großartiges</span> für dich vor.
               </motion.p>
               
               
