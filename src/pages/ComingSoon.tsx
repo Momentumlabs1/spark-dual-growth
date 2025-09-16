@@ -33,42 +33,42 @@ const ComingSoon = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-nf-white via-nf-gray-50 to-nf-white flex flex-col">
+    <div className="min-h-screen gradient-card flex flex-col">
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
           <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-bold text-nf-black mb-4">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground mb-4">
               NF COACHING
             </h1>
-            <div className="w-24 h-1 bg-nf-red mx-auto mb-6"></div>
-            <p className="text-2xl md:text-3xl text-nf-gray-600 mb-8">
+            <div className="w-24 h-1 gradient-red mx-auto mb-6 rounded-full"></div>
+            <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
               Coming Soon
             </p>
           </div>
 
           <div className="mb-12">
-            <h2 className="text-xl md:text-2xl font-semibold text-nf-black mb-4">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4">
               Ganzheitliches Online Health & Fitness Coaching
             </h2>
-            <p className="text-lg text-nf-gray-600 leading-relaxed mb-8">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8 text-balance">
               Niklas und Fabienne bereiten etwas Großartiges für dich vor. 
               Erhalte als Erste*r Updates über unser revolutionäres Coaching-Programm.
             </p>
           </div>
 
           {/* Email Signup */}
-          <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto mb-12">
+          <form onSubmit={handleEmailSubmit} className="max-w-md mx-auto mb-12 animate-fade-in">
             <div className="flex flex-col sm:flex-row gap-3">
               <Input
                 type="email"
                 placeholder="Deine E-Mail Adresse"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
+                className="flex-1 shadow-soft border-border"
                 required
               />
-              <Button type="submit" className="bg-nf-red hover:bg-nf-red/90">
+              <Button type="submit" variant="secondary" className="transition-smooth hover:shadow-medium">
                 <Mail className="h-4 w-4 mr-2" />
                 Benachrichtigen
               </Button>
@@ -76,30 +76,30 @@ const ComingSoon = () => {
           </form>
 
           {/* Social Links */}
-          <div className="flex justify-center space-x-6 mb-8">
+          <div className="flex justify-center space-x-6 mb-8 animate-slide-in-right">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
-                className="bg-nf-white shadow-soft hover:shadow-elegant p-4 rounded-full transition-smooth group border border-nf-gray-200"
+                className="bg-card shadow-soft hover:shadow-medium p-4 rounded-full transition-smooth group border border-border hover:-translate-y-1"
                 aria-label={social.name}
               >
-                <social.icon className="h-6 w-6 text-nf-gray-600 group-hover:text-nf-red transition-smooth" />
+                <social.icon className="h-6 w-6 text-muted-foreground group-hover:text-secondary transition-smooth" />
               </a>
             ))}
           </div>
 
-          <p className="text-nf-gray-600">
-            Kontakt: <a href="mailto:info@nf-coaching.de" className="text-nf-red hover:underline">info@nf-coaching.de</a>
+          <p className="text-muted-foreground animate-fade-in">
+            Kontakt: <a href="mailto:info@nf-coaching.de" className="text-secondary hover:underline transition-smooth">info@nf-coaching.de</a>
           </p>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-nf-black text-nf-white py-8">
+      <footer className="bg-primary text-primary-foreground py-8 shadow-large">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-nf-white/70 text-sm mb-4 md:mb-0">
+            <p className="text-primary-foreground/70 text-sm mb-4 md:mb-0">
               © {new Date().getFullYear()} NF COACHING. Alle Rechte vorbehalten.
             </p>
             
@@ -108,7 +108,7 @@ const ComingSoon = () => {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="text-nf-white/70 hover:text-nf-red text-sm transition-smooth"
+                  className="text-primary-foreground/70 hover:text-secondary text-sm transition-smooth hover:underline"
                 >
                   {link.name}
                 </Link>
