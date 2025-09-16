@@ -47,6 +47,19 @@ const ComingSoon = () => {
             </p>
           </div>
 
+          {/* Team Photo */}
+          <div className="mb-12 animate-fade-in">
+            <div className="relative max-w-md mx-auto mb-8">
+              <img 
+                src="/assets/team-photo.png" 
+                alt="Niklas und Fabienne - Dein Coaching Team"
+                className="w-full h-auto rounded-2xl shadow-large border border-border"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/20 to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+
           <div className="mb-12">
             <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4">
               Ganzheitliches Online Health & Fitness Coaching
