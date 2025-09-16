@@ -53,7 +53,7 @@ const ComingSoon = () => {
   }];
   return <div ref={containerRef} className="min-h-screen bg-nf-black flex flex-col">
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 md:pt-32">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 md:pt-32">
         <div className="max-w-5xl mx-auto text-center">
           
           {/* Coming Soon Title */}
@@ -87,11 +87,11 @@ const ComingSoon = () => {
             }} transition={{
               delay: 0.5,
               duration: 0.6
-            }} className="block text-[#f70000]">
+            }} className="block text-nf-red">
                 BEGINNT BALD
               </motion.span>
             </motion.h1>
-            <motion.p className="text-lg md:text-xl text-muted-foreground mt-4 font-medium" initial={{
+            <motion.p className="text-lg md:text-xl text-nf-white/80 mt-4 font-medium" initial={{
             opacity: 0
           }} animate={{
             opacity: 1
@@ -102,6 +102,29 @@ const ComingSoon = () => {
               Ganzheitliches Health & Fitness Coaching
             </motion.p>
             
+          </motion.div>
+
+          {/* Rechtliche Informationen - prominent */}
+          <motion.div
+            className="mb-10"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+          >
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-card/40 border border-border/50 rounded-xl px-4 py-3 mx-auto">
+              <span className="text-nf-white/80 text-sm">Rechtliche Informationen:</span>
+              <div className="flex flex-col sm:flex-row gap-3">
+                {legalLinks.map(link => (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className="bg-card/10 border border-border/30 hover:border-nf-red/50 px-4 py-2 rounded-lg text-nf-white hover:text-nf-red text-sm font-medium transition-all duration-300 hover:bg-card/20 text-center"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
           {/* Hero Image */}
@@ -127,8 +150,8 @@ const ComingSoon = () => {
               delay: 0.6,
               duration: 1
             }} />
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/10] overflow-hidden rounded-3xl">
-                <img src="/assets/niklas-fabienne-hero.png" alt="Niklas und Fabienne - Dein Coaching Team" className="w-full h-full object-cover object-top sm:object-center shadow-2xl border border-border/50" loading="lazy" />
+              <div className="relative rounded-3xl overflow-hidden sm:aspect-[16/10] md:aspect-[16/10]">
+                <img src="/assets/niklas-fabienne-hero.png" alt="Niklas und Fabienne - Dein Coaching Team" className="w-full h-auto sm:h-full object-contain sm:object-cover sm:object-center shadow-2xl border border-border/50" loading="lazy" />
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-nf-black/10 via-transparent to-transparent pointer-events-none"></div>
               </div>
             </div>
@@ -174,7 +197,7 @@ const ComingSoon = () => {
               delay: 1.2,
               duration: 0.8
             }}>
-                Niklas und Fabienne bereiten etwas <span className="font-semibold text-[#ff0000]">Großartiges</span> für dich vor.
+                Niklas und Fabienne bereiten etwas <span className="font-semibold text-nf-red">Großartiges</span> für dich vor.
               </motion.p>
               
               
@@ -231,7 +254,7 @@ const ComingSoon = () => {
                 delay: 2.6,
                 duration: 0.6
               }}>
-                  <Button type="submit" variant="secondary" className="w-full h-12 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl bg-[#ff0000]">
+                  <Button type="submit" variant="secondary" className="w-full h-12 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl bg-nf-red">
                     <Mail className="h-5 w-5 mr-2" />
                     Jetzt benachrichtigen lassen
                   </Button>
