@@ -55,21 +55,29 @@ const ComingSoon = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight"
+              className="text-3xl md:text-5xl lg:text-6xl font-black text-foreground mb-4 tracking-tight leading-tight"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              BALD
+              DEINE TRANSFORMATION
               <motion.span 
                 className="block text-nf-red"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                VERFÜGBAR
+                BEGINNT BALD
               </motion.span>
             </motion.h1>
+            <motion.p 
+              className="text-lg md:text-xl text-muted-foreground mt-4 font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              Ganzheitliches Health & Fitness Coaching
+            </motion.p>
             <motion.div 
               className="w-32 h-1.5 bg-nf-red mx-auto rounded-full"
               initial={{ width: 0 }}
@@ -86,39 +94,21 @@ const ComingSoon = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 1 }}
           >
-            <div className="relative max-w-3xl mx-auto">
+            <div className="relative max-w-2xl mx-auto">
               <motion.div
-                className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-3xl blur-xl"
-                animate={{ 
-                  scale: [1, 1.02, 1],
-                  opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{ 
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+                className="absolute -inset-2 bg-nf-black/5 dark:bg-nf-white/5 rounded-3xl blur-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 1 }}
               />
-              <div className="relative">
+              <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-3xl">
                 <img 
                   src="/assets/niklas-fabienne-hero.png" 
                   alt="Niklas und Fabienne - Dein Coaching Team"
-                  className="w-full h-auto rounded-3xl shadow-2xl border border-border/50"
+                  className="w-full h-full object-cover object-center shadow-2xl border border-border/50"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-primary/20 via-transparent to-transparent pointer-events-none"></div>
-                <motion.div 
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-secondary rounded-full"
-                  animate={{ 
-                    scale: [1, 1.5, 1],
-                    opacity: [0.7, 1, 0.7]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-nf-black/10 via-transparent to-transparent pointer-events-none"></div>
               </div>
             </div>
           </motion.div>
@@ -135,13 +125,13 @@ const ComingSoon = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6">
-                Ganzheitliches Online Health & Fitness Coaching
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-6">
+                Revolutionäres Online Coaching Erlebnis
               </h2>
               <motion.div 
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-nf-red rounded-full"
+                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-nf-red rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: 96 }}
+                animate={{ width: 80 }}
                 transition={{ delay: 1.2, duration: 0.6 }}
               />
             </motion.div>
@@ -250,9 +240,9 @@ const ComingSoon = () => {
                 }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-nf-red/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
-                <social.icon className="relative h-7 w-7 text-muted-foreground group-hover:text-secondary transition-all duration-300" />
+                <social.icon className="relative h-7 w-7 text-muted-foreground group-hover:text-nf-red transition-all duration-300" />
               </motion.a>
             ))}
           </motion.div>
@@ -268,7 +258,7 @@ const ComingSoon = () => {
             </p>
             <motion.a 
               href="mailto:info@niklashauger.de" 
-              className="inline-flex items-center text-secondary hover:text-secondary/80 font-medium transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center text-nf-red hover:text-nf-red/80 font-medium transition-all duration-300 hover:scale-105"
               whileHover={{ scale: 1.05 }}
             >
               <Mail className="h-4 w-4 mr-2" />
@@ -291,7 +281,7 @@ const ComingSoon = () => {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="text-primary-foreground/70 hover:text-secondary text-sm transition-smooth hover:underline"
+                  className="text-primary-foreground/70 hover:text-nf-red text-sm transition-smooth hover:underline"
                 >
                   {link.name}
                 </Link>
