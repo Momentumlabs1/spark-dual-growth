@@ -8,7 +8,7 @@ interface Testimonial {
   id: string;
   name: string;
   age: number;
-  avatar: string; // "avatar" für generisches Icon oder Foto-URL
+  avatar: string;
   useGenericAvatar: boolean;
   rating: 5;
   badge: string;
@@ -27,12 +27,14 @@ interface Testimonial {
   };
 }
 
+const VIEW_LABELS = ["Vorne", "Seite", "Hinten"];
+
 const testimonials: Testimonial[] = [
   {
     id: "1",
     name: "Lisa T.",
     age: 34,
-    avatar: "/testimonials/lisa-avatar.jpg",
+    avatar: "/assets/testimonials/lisa-avatar.jpg",
     useGenericAvatar: false,
     rating: 5,
     badge: "Traumfigur erreicht",
@@ -54,14 +56,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/testimonials/lisa-before-front.jpg",
-        "/testimonials/lisa-before-back.jpg",
-        "/testimonials/lisa-before-side.jpg",
+        "/assets/testimonials/lisa-before-front.jpg",
+        "/assets/testimonials/lisa-before-side.jpg",
+        "/assets/testimonials/lisa-before-back.jpg",
       ],
       after: [
-        "/testimonials/lisa-after-front.jpg",
-        "/testimonials/lisa-after-back.jpg",
-        "/testimonials/lisa-after-side.jpg",
+        "/assets/testimonials/lisa-after-front.jpg",
+        "/assets/testimonials/lisa-after-side.jpg",
+        "/assets/testimonials/lisa-after-back.jpg",
       ],
     },
   },
@@ -69,7 +71,7 @@ const testimonials: Testimonial[] = [
     id: "2",
     name: "David M.",
     age: 29,
-    avatar: "/testimonials/david-avatar.jpg",
+    avatar: "/assets/testimonials/david-avatar.jpg",
     useGenericAvatar: false,
     rating: 5,
     badge: "Traumfigur erreicht",
@@ -91,14 +93,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/testimonials/david-before-front.jpg",
-        "/testimonials/david-before-back.jpg",
-        "/testimonials/david-before-side.jpg",
+        "/assets/testimonials/david-before-front.jpg",
+        "/assets/testimonials/david-before-side.jpg",
+        "/assets/testimonials/david-before-back.jpg",
       ],
       after: [
-        "/testimonials/david-after-front.jpg",
-        "/testimonials/david-after-back.jpg",
-        "/testimonials/david-after-side.jpg",
+        "/assets/testimonials/david-after-front.jpg",
+        "/assets/testimonials/david-after-side.jpg",
+        "/assets/testimonials/david-after-back.jpg",
       ],
     },
   },
@@ -106,7 +108,7 @@ const testimonials: Testimonial[] = [
     id: "3",
     name: "Tahsin K.",
     age: 27,
-    avatar: "/testimonials/tahsin-avatar.jpg",
+    avatar: "/assets/testimonials/tahsin-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
     badge: "Wunschgewicht erreicht",
@@ -126,14 +128,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/testimonials/tahsin-before-front.jpg",
-        "/testimonials/tahsin-before-back.jpg",
-        "/testimonials/tahsin-before-side.jpg",
+        "/assets/testimonials/tahsin-before-front.jpg",
+        "/assets/testimonials/tahsin-before-side.jpg",
+        "/assets/testimonials/tahsin-before-back.jpg",
       ],
       after: [
-        "/testimonials/tahsin-after-front.jpg",
-        "/testimonials/tahsin-after-back.jpg",
-        "/testimonials/tahsin-after-side.jpg",
+        "/assets/testimonials/tahsin-after-front.jpg",
+        "/assets/testimonials/tahsin-after-side.jpg",
+        "/assets/testimonials/tahsin-after-back.jpg",
       ],
     },
   },
@@ -156,22 +158,20 @@ const TestimonialSection = () => {
 
   const nextImage = () => {
     if (selectedTestimonial) {
-      const images = showBefore ? selectedTestimonial.images.before : selectedTestimonial.images.after;
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % 3);
     }
   };
 
   const prevImage = () => {
     if (selectedTestimonial) {
-      const images = showBefore ? selectedTestimonial.images.before : selectedTestimonial.images.after;
-      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+      setCurrentImageIndex((prev) => (prev - 1 + 3) % 3);
     }
   };
 
   const GenericAvatar = () => (
-    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-nf-red/20 to-nf-black/20 flex items-center justify-center">
-      <div className="w-16 h-16 rounded-full bg-nf-red/30 flex items-center justify-center">
-        <span className="text-3xl font-bold text-nf-black">?</span>
+    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-500/20 to-gray-900/20 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-red-500/30 flex items-center justify-center">
+        <span className="text-3xl font-bold text-gray-900">?</span>
       </div>
     </div>
   );
@@ -186,10 +186,10 @@ const TestimonialSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-nf-black mb-4">
-            Was unsere <span className="text-nf-red">Kunden</span> sagen
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            Was unsere <span className="text-red-600">Kunden</span> sagen
           </h2>
-          <p className="text-lg md:text-xl text-nf-black/70">Echte Ergebnisse von echten Menschen</p>
+          <p className="text-lg md:text-xl text-gray-600">Echte Ergebnisse von echten Menschen</p>
         </motion.div>
 
         {/* Testimonial Cards Grid */}
@@ -203,14 +203,14 @@ const TestimonialSection = () => {
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.03, y: -5 }}
               onClick={() => handleCardClick(testimonial)}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-nf-black/5 hover:border-nf-red/30"
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-gray-100 hover:border-red-300"
             >
               {/* Avatar */}
               <div className="flex justify-center mb-4">
                 {testimonial.useGenericAvatar ? (
                   <GenericAvatar />
                 ) : (
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-nf-red/20">
+                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-red-100">
                     <img
                       src={testimonial.avatar}
                       alt={testimonial.name}
@@ -218,7 +218,7 @@ const TestimonialSection = () => {
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         e.currentTarget.parentElement!.innerHTML =
-                          '<div class="w-full h-full bg-gradient-to-br from-nf-red/20 to-nf-black/20 flex items-center justify-center"><span class="text-3xl font-bold text-nf-black">?</span></div>';
+                          '<div class="w-full h-full bg-gradient-to-br from-red-500/20 to-gray-900/20 flex items-center justify-center"><span class="text-3xl font-bold text-gray-900">?</span></div>';
                       }}
                     />
                   </div>
@@ -233,21 +233,21 @@ const TestimonialSection = () => {
               </div>
 
               {/* Name */}
-              <h3 className="text-xl font-bold text-nf-black text-center mb-2">{testimonial.name}</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">{testimonial.name}</h3>
 
               {/* Badge */}
               <div className="flex justify-center mb-4">
-                <span className="bg-nf-red/10 text-nf-red px-4 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-semibold">
                   {testimonial.badge}
                 </span>
               </div>
 
               {/* Short Quote */}
-              <p className="text-nf-black/70 text-center text-sm mb-4 line-clamp-2">"{testimonial.shortQuote}"</p>
+              <p className="text-gray-600 text-center text-sm mb-4 line-clamp-2">"{testimonial.shortQuote}"</p>
 
               {/* CTA */}
               <div className="text-center">
-                <button className="text-nf-red hover:text-nf-red/80 text-sm font-semibold transition-colors">
+                <button className="text-red-600 hover:text-red-700 text-sm font-semibold transition-colors">
                   Klicken für Details →
                 </button>
               </div>
@@ -279,7 +279,7 @@ const TestimonialSection = () => {
                         {selectedTestimonial.useGenericAvatar ? (
                           <GenericAvatar />
                         ) : (
-                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-nf-red/20">
+                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-100">
                             <img
                               src={selectedTestimonial.avatar}
                               alt={selectedTestimonial.name}
@@ -289,7 +289,7 @@ const TestimonialSection = () => {
                         )}
                       </div>
 
-                      <h3 className="text-2xl font-bold text-nf-black mb-2">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
                         {selectedTestimonial.name}, {selectedTestimonial.age}
                       </h3>
 
@@ -299,16 +299,14 @@ const TestimonialSection = () => {
                         ))}
                       </div>
 
-                      <span className="inline-block bg-nf-red text-white px-6 py-2 rounded-full text-sm font-bold">
+                      <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold">
                         {selectedTestimonial.badge}
                       </span>
                     </div>
 
                     {/* Full Quote */}
                     <div className="bg-gray-50 rounded-xl p-6">
-                      <p className="text-nf-black/80 italic text-lg leading-relaxed">
-                        "{selectedTestimonial.fullQuote}"
-                      </p>
+                      <p className="text-gray-700 italic text-lg leading-relaxed">"{selectedTestimonial.fullQuote}"</p>
                     </div>
 
                     {/* Before/After Image Slider */}
@@ -318,7 +316,7 @@ const TestimonialSection = () => {
                         <button
                           onClick={() => setShowBefore(true)}
                           className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            showBefore ? "bg-nf-red text-white" : "bg-gray-200 text-nf-black hover:bg-gray-300"
+                            showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           }`}
                         >
                           Vorher
@@ -326,11 +324,18 @@ const TestimonialSection = () => {
                         <button
                           onClick={() => setShowBefore(false)}
                           className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            !showBefore ? "bg-nf-red text-white" : "bg-gray-200 text-nf-black hover:bg-gray-300"
+                            !showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           }`}
                         >
                           Nachher
                         </button>
+                      </div>
+
+                      {/* View Label - NEW */}
+                      <div className="text-center">
+                        <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                          Ansicht: {VIEW_LABELS[currentImageIndex]}
+                        </span>
                       </div>
 
                       {/* Image Slider */}
@@ -341,7 +346,7 @@ const TestimonialSection = () => {
                               ? selectedTestimonial.images.before[currentImageIndex]
                               : selectedTestimonial.images.after[currentImageIndex]
                           }
-                          alt={`${showBefore ? "Vorher" : "Nachher"} Bild ${currentImageIndex + 1}`}
+                          alt={`${showBefore ? "Vorher" : "Nachher"} - ${VIEW_LABELS[currentImageIndex]}`}
                           className="w-full h-full object-cover"
                         />
 
@@ -359,16 +364,20 @@ const TestimonialSection = () => {
                           <ChevronRight className="h-6 w-6" />
                         </button>
 
-                        {/* Image Indicator */}
+                        {/* Image Indicator with Labels - IMPROVED */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                          {[0, 1, 2].map((index) => (
+                          {VIEW_LABELS.map((label, index) => (
                             <button
                               key={index}
                               onClick={() => setCurrentImageIndex(index)}
-                              className={`w-2 h-2 rounded-full transition-all ${
-                                currentImageIndex === index ? "bg-white w-6" : "bg-white/50"
+                              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                                currentImageIndex === index
+                                  ? "bg-white text-gray-900"
+                                  : "bg-white/50 text-white hover:bg-white/70"
                               }`}
-                            />
+                            >
+                              {label}
+                            </button>
                           ))}
                         </div>
                       </div>
@@ -378,7 +387,7 @@ const TestimonialSection = () => {
                   {/* RIGHT SIDE: Chart */}
                   <div className="space-y-6">
                     <div className="text-center">
-                      <h4 className="text-2xl font-bold text-nf-black mb-2">Gewichtsverlauf</h4>
+                      <h4 className="text-2xl font-bold text-gray-900 mb-2">Gewichtsverlauf</h4>
                     </div>
 
                     {/* Chart */}
@@ -418,28 +427,28 @@ const TestimonialSection = () => {
                     </div>
 
                     {/* Weight Loss Highlight */}
-                    <div className="bg-gradient-to-br from-nf-red/10 to-nf-red/5 rounded-xl p-8 text-center">
-                      <div className="text-6xl font-bold text-nf-red mb-2">
+                    <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
+                      <div className="text-6xl font-bold text-red-600 mb-2">
                         -{selectedTestimonial.weightLoss.totalLoss} kg
                       </div>
-                      <div className="text-xl text-nf-black/70 font-medium">
+                      <div className="text-xl text-gray-600 font-medium">
                         in {selectedTestimonial.weightLoss.weeks} Wochen
                       </div>
                     </div>
 
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white border-2 border-nf-black/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-nf-black mb-1">
+                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-gray-900 mb-1">
                           {selectedTestimonial.weightLoss.startWeight} kg
                         </div>
-                        <div className="text-sm text-nf-black/60">Startgewicht</div>
+                        <div className="text-sm text-gray-600">Startgewicht</div>
                       </div>
-                      <div className="bg-white border-2 border-nf-black/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-nf-red mb-1">
+                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-red-600 mb-1">
                           {selectedTestimonial.weightLoss.endWeight} kg
                         </div>
-                        <div className="text-sm text-nf-black/60">Aktuell</div>
+                        <div className="text-sm text-gray-600">Aktuell</div>
                       </div>
                     </div>
                   </div>
