@@ -62,18 +62,6 @@ const HeroSection = () => {
             Ganzheitliches Online Health & Fitness Coaching
           </motion.p>
 
-          {/* Video Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-8 md:mb-10"
-          >
-            <VideoEmbed 
-              src="/funnel/Niklas-Kompletter-Fitness-Funnel"
-              ctaLabel="Jetzt starten - Prüfe, wie wir dir helfen können"
-            />
-          </motion.div>
 
           {/* Stats Bar */}
           <motion.div
@@ -98,7 +86,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center"
           >
             <Button
-              onClick={() => scrollToSection('#kontakt')}
+              onClick={() => scrollToSection('#booking-funnel')}
               className="w-full sm:w-auto bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-red-glow animate-pulse-red transition-smooth"
               size="lg"
             >
