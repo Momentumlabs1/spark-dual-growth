@@ -22,8 +22,8 @@ interface Testimonial {
     chartData: Array<{ week: number; weight: number }>;
   };
   images: {
-    before: string[]; // [front, side, back]
-    after: string[]; // [front, side, back]
+    before: string[];
+    after: string[];
   };
 }
 
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
     useGenericAvatar: false,
     rating: 5,
     badge: "13 kg abgenommen",
-    shortQuote: "Von 'nur funktionieren' zu wirklich leben - mental, körperlich, emotional.",
+    shortQuote: "Von 'nur funktionieren' zu wirklich leben - mental, körperisch, emotional.",
     fullQuote:
       "Ich war überfordert, skeptisch und gestresst. Aber ich habe mich entschieden, mich selbst nicht mehr im Weg zu stehen. Mit Niklas und Fabienne habe ich von 88 kg auf 75 kg abgenommen – aber vor allem: Ich habe klaren Kopf statt Dauer-Frust, Energie statt Erschöpfung, und einen Wohlfühlkörper ohne Verzicht und Verbote bekommen.",
     weightLoss: {
@@ -120,12 +120,10 @@ const testimonials: Testimonial[] = [
 const TestimonialSection = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showBefore, setShowBefore] = useState(true);
 
   const handleCardClick = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
     setCurrentImageIndex(0);
-    setShowBefore(true);
   };
 
   const closeModal = () => {
@@ -191,6 +189,7 @@ const TestimonialSection = () => {
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       className="w-full h-full object-cover"
+                      loading="eager"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         e.currentTarget.parentElement!.innerHTML =
@@ -236,7 +235,7 @@ const TestimonialSection = () => {
       <AnimatePresence>
         {selectedTestimonial && (
           <Dialog open={!!selectedTestimonial} onOpenChange={closeModal}>
-            <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-0">
+            <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto p-0">
               <div className="relative bg-white rounded-2xl">
                 {/* Close Button */}
                 <button
@@ -246,185 +245,178 @@ const TestimonialSection = () => {
                   <X className="h-5 w-5" />
                 </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-                  {/* LEFT SIDE: Info & Images */}
-                  <div className="space-y-6">
-                    {/* Avatar & Info */}
-                    <div className="text-center">
-                      <div className="flex justify-center mb-4">
-                        {selectedTestimonial.useGenericAvatar ? (
-                          <GenericAvatar />
-                        ) : (
-                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-100">
-                            <img
-                              src={selectedTestimonial.avatar}
-                              alt={selectedTestimonial.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        )}
-                      </div>
-
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                        {selectedTestimonial.name}, {selectedTestimonial.age}
-                      </h3>
-
-                      <div className="flex justify-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </div>
-
-                      <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold">
-                        {selectedTestimonial.badge}
-                      </span>
+                <div className="p-8">
+                  {/* Header */}
+                  <div className="text-center mb-8">
+                    <div className="flex justify-center mb-4">
+                      {selectedTestimonial.useGenericAvatar ? (
+                        <GenericAvatar />
+                      ) : (
+                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-100">
+                          <img
+                            src={selectedTestimonial.avatar}
+                            alt={selectedTestimonial.name}
+                            className="w-full h-full object-cover"
+                            loading="eager"
+                          />
+                        </div>
+                      )}
                     </div>
 
-                    {/* Full Quote */}
-                    <div className="bg-gray-50 rounded-xl p-6">
-                      <p className="text-gray-700 italic text-lg leading-relaxed">"{selectedTestimonial.fullQuote}"</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                      {selectedTestimonial.name}, {selectedTestimonial.age}
+                    </h3>
+
+                    <div className="flex justify-center gap-1 mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                      ))}
                     </div>
 
-                    {/* Before/After Image Slider */}
+                    <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                      {selectedTestimonial.badge}
+                    </span>
+                  </div>
+
+                  {/* Full Quote */}
+                  <div className="bg-gray-50 rounded-xl p-6 mb-8 max-w-4xl mx-auto">
+                    <p className="text-gray-700 italic text-lg leading-relaxed text-center">
+                      "{selectedTestimonial.fullQuote}"
+                    </p>
+                  </div>
+
+                  {/* View Selector - Centered */}
+                  <div className="text-center mb-6">
+                    <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium mb-4">
+                      Ansicht: {VIEW_LABELS[currentImageIndex]}
+                    </span>
+                    <div className="flex justify-center gap-2">
+                      {VIEW_LABELS.map((label, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                            currentImageIndex === index
+                              ? "bg-red-600 text-white"
+                              : "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Side-by-Side Images */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    {/* VORHER */}
                     <div className="space-y-4">
-                      {/* Toggle Buttons */}
-                      <div className="flex gap-2 justify-center">
-                        <button
-                          onClick={() => setShowBefore(true)}
-                          className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          }`}
-                        >
-                          Vorher
-                        </button>
-                        <button
-                          onClick={() => setShowBefore(false)}
-                          className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            !showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          }`}
-                        >
-                          Nachher
-                        </button>
+                      <div className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg text-center font-bold text-lg">
+                        Vorher
                       </div>
-
-                      {/* View Label */}
-                      <div className="text-center">
-                        <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                          Ansicht: {VIEW_LABELS[currentImageIndex]}
-                        </span>
-                      </div>
-
-                      {/* Image Slider */}
-                      <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden">
+                      <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                         <img
-                          src={
-                            showBefore
-                              ? selectedTestimonial.images.before[currentImageIndex]
-                              : selectedTestimonial.images.after[currentImageIndex]
-                          }
-                          alt={`${showBefore ? "Vorher" : "Nachher"} - ${VIEW_LABELS[currentImageIndex]}`}
+                          src={selectedTestimonial.images.before[currentImageIndex]}
+                          alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                           className="w-full h-full object-cover"
+                          loading="eager"
                         />
-
-                        {/* Navigation Arrows */}
                         <button
                           onClick={prevImage}
                           className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
                         >
                           <ChevronLeft className="h-6 w-6" />
                         </button>
+                      </div>
+                    </div>
+
+                    {/* NACHHER */}
+                    <div className="space-y-4">
+                      <div className="bg-red-600 text-white px-6 py-3 rounded-lg text-center font-bold text-lg">
+                        Nachher
+                      </div>
+                      <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                        <img
+                          src={selectedTestimonial.images.after[currentImageIndex]}
+                          alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
+                          className="w-full h-full object-cover"
+                          loading="eager"
+                        />
                         <button
                           onClick={nextImage}
                           className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
                         >
                           <ChevronRight className="h-6 w-6" />
                         </button>
-
-                        {/* Image Indicator with Labels */}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                          {VIEW_LABELS.map((label, index) => (
-                            <button
-                              key={index}
-                              onClick={() => setCurrentImageIndex(index)}
-                              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                                currentImageIndex === index
-                                  ? "bg-white text-gray-900"
-                                  : "bg-white/50 text-white hover:bg-white/70"
-                              }`}
-                            >
-                              {label}
-                            </button>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* RIGHT SIDE: Chart */}
-                  <div className="space-y-6">
-                    <div className="text-center">
-                      <h4 className="text-2xl font-bold text-gray-900 mb-2">Gewichtsverlauf</h4>
-                    </div>
-
+                  {/* Chart & Stats */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Chart */}
-                    <div className="bg-gray-50 rounded-xl p-6">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={selectedTestimonial.weightLoss.chartData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                          <XAxis dataKey="week" label={{ value: "Wochen", position: "bottom" }} stroke="#6b7280" />
-                          <YAxis label={{ value: "Gewicht (kg)", angle: -90, position: "left" }} stroke="#6b7280" />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: "#1f2937",
-                              border: "none",
-                              borderRadius: "8px",
-                              color: "#fff",
-                            }}
-                            formatter={(value: any) => [`${value} kg`, "Gewicht"]}
-                            labelFormatter={(label) => `Woche ${label}`}
-                          />
-                          <defs>
-                            <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#DC2626" stopOpacity={0.3} />
-                              <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-                            </linearGradient>
-                          </defs>
-                          <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
-                          <Line
-                            type="monotone"
-                            dataKey="weight"
-                            stroke="#DC2626"
-                            strokeWidth={3}
-                            dot={{ fill: "#DC2626", r: 6 }}
-                            activeDot={{ r: 8 }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-
-                    {/* Weight Loss Highlight */}
-                    <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
-                      <div className="text-6xl font-bold text-red-600 mb-2">
-                        -{selectedTestimonial.weightLoss.totalLoss} kg
-                      </div>
-                      <div className="text-xl text-gray-600 font-medium">
-                        in {selectedTestimonial.weightLoss.weeks} Wochen
+                    <div className="space-y-6">
+                      <h4 className="text-2xl font-bold text-gray-900 text-center">Gewichtsverlauf</h4>
+                      <div className="bg-gray-50 rounded-xl p-6">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <LineChart data={selectedTestimonial.weightLoss.chartData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                            <XAxis dataKey="week" label={{ value: "Wochen", position: "bottom" }} stroke="#6b7280" />
+                            <YAxis label={{ value: "Gewicht (kg)", angle: -90, position: "left" }} stroke="#6b7280" />
+                            <Tooltip
+                              contentStyle={{
+                                backgroundColor: "#1f2937",
+                                border: "none",
+                                borderRadius: "8px",
+                                color: "#fff",
+                              }}
+                              formatter={(value: any) => [`${value} kg`, "Gewicht"]}
+                              labelFormatter={(label) => `Woche ${label}`}
+                            />
+                            <defs>
+                              <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#DC2626" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
+                            <Line
+                              type="monotone"
+                              dataKey="weight"
+                              stroke="#DC2626"
+                              strokeWidth={3}
+                              dot={{ fill: "#DC2626", r: 6 }}
+                              activeDot={{ r: 8 }}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-gray-900 mb-1">
-                          {selectedTestimonial.weightLoss.startWeight} kg
+                    <div className="space-y-6">
+                      <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
+                        <div className="text-6xl font-bold text-red-600 mb-2">
+                          -{selectedTestimonial.weightLoss.totalLoss} kg
                         </div>
-                        <div className="text-sm text-gray-600">Startgewicht</div>
+                        <div className="text-xl text-gray-600 font-medium">
+                          in {selectedTestimonial.weightLoss.weeks} Wochen
+                        </div>
                       </div>
-                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-red-600 mb-1">
-                          {selectedTestimonial.weightLoss.endWeight} kg
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                          <div className="text-2xl font-bold text-gray-900 mb-1">
+                            {selectedTestimonial.weightLoss.startWeight} kg
+                          </div>
+                          <div className="text-sm text-gray-600">Startgewicht</div>
                         </div>
-                        <div className="text-sm text-gray-600">Aktuell</div>
+                        <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                          <div className="text-2xl font-bold text-red-600 mb-1">
+                            {selectedTestimonial.weightLoss.endWeight} kg
+                          </div>
+                          <div className="text-sm text-gray-600">Aktuell</div>
+                        </div>
                       </div>
                     </div>
                   </div>
