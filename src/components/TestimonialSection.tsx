@@ -22,8 +22,8 @@ interface Testimonial {
     chartData: Array<{ week: number; weight: number }>;
   };
   images: {
-    before: string[]; // [front, back, side]
-    after: string[]; // [front, back, side]
+    before: string[]; // [front, side, back]
+    after: string[]; // [front, side, back]
   };
 }
 
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     id: "1",
     name: "Lisa S.",
     age: 32,
-    avatar: "/assets/testimonials/INFO.jpg",
+    avatar: "/assets/INFO.jpg",
     useGenericAvatar: false,
     rating: 5,
     badge: "13 kg abgenommen",
@@ -55,23 +55,15 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: [
-        "/assets/testimonials/lisa-before-front.png",
-        "/assets/testimonials/lisa-before-side.png",
-        "/assets/testimonials/lisa-before-back.png",
-      ],
-      after: [
-        "/assets/testimonials/lisa-after-front.png",
-        "/assets/testimonials/lisa-after-side.png",
-        "/assets/testimonials/lisa-after-back.png",
-      ],
+      before: ["/assets/lisa-before-front.png", "/assets/lisa-before-side.png", "/assets/lisa-before-back.png"],
+      after: ["/assets/lisa-after-front.png", "/assets/lisa-after-side.png", "/assets/lisa-after-back.png"],
     },
   },
   {
     id: "2",
     name: "David M.",
     age: 29,
-    avatar: "/assets/testimonials/david-avatar.jpg",
+    avatar: "/assets/david-avatar.jpg",
     useGenericAvatar: false,
     rating: 5,
     badge: "Traumfigur erreicht",
@@ -92,23 +84,15 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: [
-        "/assets/testimonials/david-before-front.jpg",
-        "/assets/testimonials/david-before-side.jpg",
-        "/assets/testimonials/david-before-back.jpg",
-      ],
-      after: [
-        "/assets/testimonials/david-after-front.jpg",
-        "/assets/testimonials/david-after-side.jpg",
-        "/assets/testimonials/david-after-back.jpg",
-      ],
+      before: ["/assets/david-before-front.jpg", "/assets/david-before-side.jpg", "/assets/david-before-back.jpg"],
+      after: ["/assets/david-after-front.jpg", "/assets/david-after-side.jpg", "/assets/david-after-back.jpg"],
     },
   },
   {
     id: "3",
     name: "Tahsin K.",
     age: 27,
-    avatar: "/assets/testimonials/tahsin-avatar.jpg",
+    avatar: "/assets/tahsin-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
     badge: "Wunschgewicht erreicht",
@@ -127,16 +111,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: [
-        "/assets/testimonials/tahsin-before-front.jpg",
-        "/assets/testimonials/tahsin-before-side.jpg",
-        "/assets/testimonials/tahsin-before-back.jpg",
-      ],
-      after: [
-        "/assets/testimonials/tahsin-after-front.jpg",
-        "/assets/testimonials/tahsin-after-side.jpg",
-        "/assets/testimonials/tahsin-after-back.jpg",
-      ],
+      before: ["/assets/tahsin-before-front.jpg", "/assets/tahsin-before-side.jpg", "/assets/tahsin-before-back.jpg"],
+      after: ["/assets/tahsin-after-front.jpg", "/assets/tahsin-after-side.jpg", "/assets/tahsin-after-back.jpg"],
     },
   },
 ];
@@ -331,7 +307,7 @@ const TestimonialSection = () => {
                         </button>
                       </div>
 
-                      {/* View Label - NEW */}
+                      {/* View Label */}
                       <div className="text-center">
                         <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium">
                           Ansicht: {VIEW_LABELS[currentImageIndex]}
@@ -364,7 +340,7 @@ const TestimonialSection = () => {
                           <ChevronRight className="h-6 w-6" />
                         </button>
 
-                        {/* Image Indicator with Labels - IMPROVED */}
+                        {/* Image Indicator with Labels */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                           {VIEW_LABELS.map((label, index) => (
                             <button
