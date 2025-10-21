@@ -56,14 +56,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/assets/testimonials/Lisa 88,1 10 2024 vorne 2.png",
-        "/assets/testimonials/Lisa 88,1 10 2024 seite 2.JPEG",
-        "/assets/testimonials/Lisa 88,1 10 2024 hinten 2.JPEG",
+        "/assets/testimonials/lisa-before-front.png",
+        "/assets/testimonials/lisa-before-side.png",
+        "/assets/testimonials/lisa-before-back.png",
       ],
       after: [
-        "/assets/testimonials/Lisa 74,9 0 4 2925 vorne 2.png",
-        "/assets/testimonials/Lisa 74,9 04 2925 seite 2.JPEG",
-        "/assets/testimonials/Lisa 74,9 04 2925 hinten 2.JPEG",
+        "/assets/testimonials/lisa-after-front.png",
+        "/assets/testimonials/lisa-after-side.png",
+        "/assets/testimonials/lisa-after-back.png",
       ],
     },
   },
