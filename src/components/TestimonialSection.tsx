@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Star, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area } from "recharts";
 
 interface Testimonial {
@@ -120,25 +120,74 @@ const testimonials: Testimonial[] = [
 const TestimonialSection = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
+  const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
+
+  // Preload all images when modal opens
+  useEffect(() => {
+    if (selectedTestimonial) {
+      setAllImagesPreloaded(false);
+      const imagesToPreload = [...selectedTestimonial.images.before, ...selectedTestimonial.images.after];
+
+      let loadedCount = 0;
+      const totalImages = imagesToPreload.length;
+
+      imagesToPreload.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setAllImagesPreloaded(true);
+          }
+        };
+        img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setAllImagesPreloaded(true);
+          }
+        };
+      });
+
+      // Timeout fallback
+      setTimeout(() => setAllImagesPreloaded(true), 3000);
+    }
+  }, [selectedTestimonial]);
+
+  // Track loading for current image pair
+  useEffect(() => {
+    if (selectedTestimonial && allImagesPreloaded) {
+      setImagesLoaded({ [currentImageIndex]: true });
+    }
+  }, [currentImageIndex, selectedTestimonial, allImagesPreloaded]);
 
   const handleCardClick = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
     setCurrentImageIndex(0);
+    setImagesLoaded({});
   };
 
   const closeModal = () => {
     setSelectedTestimonial(null);
+    setImagesLoaded({});
+    setAllImagesPreloaded(false);
   };
 
   const nextImage = () => {
-    if (selectedTestimonial) {
+    if (selectedTestimonial && allImagesPreloaded) {
       setCurrentImageIndex((prev) => (prev + 1) % 3);
     }
   };
 
   const prevImage = () => {
-    if (selectedTestimonial) {
+    if (selectedTestimonial && allImagesPreloaded) {
       setCurrentImageIndex((prev) => (prev - 1 + 3) % 3);
+    }
+  };
+
+  const handleImageIndexChange = (index: number) => {
+    if (allImagesPreloaded) {
+      setCurrentImageIndex(index);
     }
   };
 
@@ -189,7 +238,7 @@ const TestimonialSection = () => {
                       src={testimonial.avatar}
                       alt={testimonial.name}
                       className="w-full h-full object-cover"
-                      loading="eager"
+                      loading="lazy"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         e.currentTarget.parentElement!.innerHTML =
@@ -257,7 +306,6 @@ const TestimonialSection = () => {
                             src={selectedTestimonial.avatar}
                             alt={selectedTestimonial.name}
                             className="w-full h-full object-cover"
-                            loading="eager"
                           />
                         </div>
                       )}
@@ -285,141 +333,170 @@ const TestimonialSection = () => {
                     </p>
                   </div>
 
-                  {/* View Selector - Centered */}
-                  <div className="text-center mb-6">
-                    <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium mb-4">
-                      Ansicht: {VIEW_LABELS[currentImageIndex]}
-                    </span>
-                    <div className="flex justify-center gap-2">
-                      {VIEW_LABELS.map((label, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                            currentImageIndex === index
-                              ? "bg-red-600 text-white"
-                              : "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          }`}
-                        >
-                          {label}
-                        </button>
-                      ))}
+                  {/* Loading State */}
+                  {!allImagesPreloaded && (
+                    <div className="flex flex-col items-center justify-center py-20">
+                      <Loader2 className="h-12 w-12 animate-spin text-red-600 mb-4" />
+                      <p className="text-gray-600">Bilder werden geladen...</p>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Side-by-Side Images */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    {/* VORHER */}
-                    <div className="space-y-4">
-                      <div className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg text-center font-bold text-lg">
-                        Vorher
-                      </div>
-                      <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                        <img
-                          src={selectedTestimonial.images.before[currentImageIndex]}
-                          alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                          className="w-full h-full object-cover"
-                          loading="eager"
-                        />
-                        <button
-                          onClick={prevImage}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-                        >
-                          <ChevronLeft className="h-6 w-6" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* NACHHER */}
-                    <div className="space-y-4">
-                      <div className="bg-red-600 text-white px-6 py-3 rounded-lg text-center font-bold text-lg">
-                        Nachher
-                      </div>
-                      <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                        <img
-                          src={selectedTestimonial.images.after[currentImageIndex]}
-                          alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                          className="w-full h-full object-cover"
-                          loading="eager"
-                        />
-                        <button
-                          onClick={nextImage}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-                        >
-                          <ChevronRight className="h-6 w-6" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Chart & Stats */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Chart */}
-                    <div className="space-y-6">
-                      <h4 className="text-2xl font-bold text-gray-900 text-center">Gewichtsverlauf</h4>
-                      <div className="bg-gray-50 rounded-xl p-6">
-                        <ResponsiveContainer width="100%" height={300}>
-                          <LineChart data={selectedTestimonial.weightLoss.chartData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                            <XAxis dataKey="week" label={{ value: "Wochen", position: "bottom" }} stroke="#6b7280" />
-                            <YAxis label={{ value: "Gewicht (kg)", angle: -90, position: "left" }} stroke="#6b7280" />
-                            <Tooltip
-                              contentStyle={{
-                                backgroundColor: "#1f2937",
-                                border: "none",
-                                borderRadius: "8px",
-                                color: "#fff",
-                              }}
-                              formatter={(value: any) => [`${value} kg`, "Gewicht"]}
-                              labelFormatter={(label) => `Woche ${label}`}
-                            />
-                            <defs>
-                              <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#DC2626" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-                              </linearGradient>
-                            </defs>
-                            <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
-                            <Line
-                              type="monotone"
-                              dataKey="weight"
-                              stroke="#DC2626"
-                              strokeWidth={3}
-                              dot={{ fill: "#DC2626", r: 6 }}
-                              activeDot={{ r: 8 }}
-                            />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="space-y-6">
-                      <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
-                        <div className="text-6xl font-bold text-red-600 mb-2">
-                          -{selectedTestimonial.weightLoss.totalLoss} kg
-                        </div>
-                        <div className="text-xl text-gray-600 font-medium">
-                          in {selectedTestimonial.weightLoss.weeks} Wochen
+                  {/* View Selector - Only show when loaded */}
+                  {allImagesPreloaded && (
+                    <>
+                      <div className="text-center mb-6">
+                        <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium mb-4">
+                          Ansicht: {VIEW_LABELS[currentImageIndex]}
+                        </span>
+                        <div className="flex justify-center gap-2">
+                          {VIEW_LABELS.map((label, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleImageIndexChange(index)}
+                              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                                currentImageIndex === index
+                                  ? "bg-red-600 text-white"
+                                  : "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ))}
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                          <div className="text-2xl font-bold text-gray-900 mb-1">
-                            {selectedTestimonial.weightLoss.startWeight} kg
+                      {/* Side-by-Side Images */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        {/* VORHER */}
+                        <div className="space-y-4">
+                          <div className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg text-center font-bold text-lg">
+                            Vorher
                           </div>
-                          <div className="text-sm text-gray-600">Startgewicht</div>
+                          <motion.div
+                            key={`before-${currentImageIndex}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
+                          >
+                            <img
+                              src={selectedTestimonial.images.before[currentImageIndex]}
+                              alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <button
+                              onClick={prevImage}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                            >
+                              <ChevronLeft className="h-6 w-6" />
+                            </button>
+                          </motion.div>
                         </div>
-                        <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                          <div className="text-2xl font-bold text-red-600 mb-1">
-                            {selectedTestimonial.weightLoss.endWeight} kg
+
+                        {/* NACHHER */}
+                        <div className="space-y-4">
+                          <div className="bg-red-600 text-white px-6 py-3 rounded-lg text-center font-bold text-lg">
+                            Nachher
                           </div>
-                          <div className="text-sm text-gray-600">Aktuell</div>
+                          <motion.div
+                            key={`after-${currentImageIndex}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
+                          >
+                            <img
+                              src={selectedTestimonial.images.after[currentImageIndex]}
+                              alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <button
+                              onClick={nextImage}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                            >
+                              <ChevronRight className="h-6 w-6" />
+                            </button>
+                          </motion.div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+
+                      {/* Chart & Stats */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Chart */}
+                        <div className="space-y-6">
+                          <h4 className="text-2xl font-bold text-gray-900 text-center">Gewichtsverlauf</h4>
+                          <div className="bg-gray-50 rounded-xl p-6">
+                            <ResponsiveContainer width="100%" height={300}>
+                              <LineChart data={selectedTestimonial.weightLoss.chartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                <XAxis
+                                  dataKey="week"
+                                  label={{ value: "Wochen", position: "bottom" }}
+                                  stroke="#6b7280"
+                                />
+                                <YAxis
+                                  label={{ value: "Gewicht (kg)", angle: -90, position: "left" }}
+                                  stroke="#6b7280"
+                                />
+                                <Tooltip
+                                  contentStyle={{
+                                    backgroundColor: "#1f2937",
+                                    border: "none",
+                                    borderRadius: "8px",
+                                    color: "#fff",
+                                  }}
+                                  formatter={(value: any) => [`${value} kg`, "Gewicht"]}
+                                  labelFormatter={(label) => `Woche ${label}`}
+                                />
+                                <defs>
+                                  <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#DC2626" stopOpacity={0.3} />
+                                    <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+                                  </linearGradient>
+                                </defs>
+                                <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
+                                <Line
+                                  type="monotone"
+                                  dataKey="weight"
+                                  stroke="#DC2626"
+                                  strokeWidth={3}
+                                  dot={{ fill: "#DC2626", r: 6 }}
+                                  activeDot={{ r: 8 }}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+                        </div>
+
+                        {/* Stats */}
+                        <div className="space-y-6">
+                          <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
+                            <div className="text-6xl font-bold text-red-600 mb-2">
+                              -{selectedTestimonial.weightLoss.totalLoss} kg
+                            </div>
+                            <div className="text-xl text-gray-600 font-medium">
+                              in {selectedTestimonial.weightLoss.weeks} Wochen
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                              <div className="text-2xl font-bold text-gray-900 mb-1">
+                                {selectedTestimonial.weightLoss.startWeight} kg
+                              </div>
+                              <div className="text-sm text-gray-600">Startgewicht</div>
+                            </div>
+                            <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                              <div className="text-2xl font-bold text-red-600 mb-1">
+                                {selectedTestimonial.weightLoss.endWeight} kg
+                              </div>
+                              <div className="text-sm text-gray-600">Aktuell</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </DialogContent>
