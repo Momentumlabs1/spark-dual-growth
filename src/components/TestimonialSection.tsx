@@ -4,6 +4,22 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Star, X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area } from "recharts";
 
+// Import David images
+import davidVorneNeu from "@/assets/testimonials/david/david-vorne-neu.png";
+import davidSeiteNeu from "@/assets/testimonials/david/david-seite-neu.png";
+import davidHintenNeu from "@/assets/testimonials/david/david-hinten-neu.png";
+import davidVorneAlt from "@/assets/testimonials/david/david-vorne-alt.png";
+import davidSeiteAlt from "@/assets/testimonials/david/david-seite-alt.png";
+import davidHintenAlt from "@/assets/testimonials/david/david-hinten-alt.png";
+
+// Import Alex images
+import alexVorneNeu from "@/assets/testimonials/alex/alex-vorne-neu.png";
+import alexSeiteNeu from "@/assets/testimonials/alex/alex-seite-neu.png";
+import alexHintenNeu from "@/assets/testimonials/alex/alex-hinten-neu.png";
+import alexVorneAlt from "@/assets/testimonials/alex/alex-vorne-alt.png";
+import alexSeiteAlt from "@/assets/testimonials/alex/alex-seite-alt.png";
+import alexHintenAlt from "@/assets/testimonials/alex/alex-hinten-alt.png";
+
 interface Testimonial {
   id: string;
   name: string;
@@ -141,7 +157,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -169,8 +185,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/david-vorne-alt.png", "/assets/david-seite-alt.png", "/assets/david-hinten-alt.png"],
-      after: ["/assets/david-vorne-neu.png", "/assets/david-seite-neu.png", "/assets/david-hinten-neu.png"],
+      before: [davidVorneAlt, davidSeiteAlt, davidHintenAlt],
+      after: [davidVorneNeu, davidSeiteNeu, davidHintenNeu],
     },
   },
   {
@@ -227,8 +243,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/alex-vorne-alt.png", "/assets/alex-seite-alt.png", "/assets/alex-hinten-alt.png"],
-      after: ["/assets/alex-vorne-neu.png", "/assets/alex-seite-neu.png", "/assets/alex-hinten-neu.png"],
+      before: [alexVorneAlt, alexSeiteAlt, alexHintenAlt],
+      after: [alexVorneNeu, alexSeiteNeu, alexHintenNeu],
     },
   },
   {
@@ -592,6 +608,10 @@ const TestimonialSection = () => {
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.warn("Vorher-Bild konnte nicht geladen werden:", e.currentTarget.src);
+                                e.currentTarget.src = "/placeholder.svg";
+                              }}
                             />
                             <button
                               onClick={prevImage}
@@ -618,6 +638,10 @@ const TestimonialSection = () => {
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.warn("Nachher-Bild konnte nicht geladen werden:", e.currentTarget.src);
+                                e.currentTarget.src = selectedTestimonial.images.before[currentImageIndex];
+                              }}
                             />
                             <button
                               onClick={nextImage}
