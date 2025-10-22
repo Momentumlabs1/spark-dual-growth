@@ -344,33 +344,28 @@ const TestimonialSection = () => {
                   {/* View Selector - Only show when loaded */}
                   {allImagesPreloaded && (
                     <>
-                      <div className="text-center mb-6">
-                        <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium mb-4">
-                          Ansicht: {VIEW_LABELS[currentImageIndex]}
-                        </span>
-                        <div className="flex justify-center gap-2">
-                          {VIEW_LABELS.map((label, index) => (
-                            <button
-                              key={index}
-                              onClick={() => handleImageIndexChange(index)}
-                              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                                currentImageIndex === index
-                                  ? "bg-red-600 text-white"
-                                  : "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                              }`}
-                            >
-                              {label}
-                            </button>
-                          ))}
-                        </div>
+                      <div className="flex justify-center gap-2 mb-8">
+                        {VIEW_LABELS.map((label, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleImageIndexChange(index)}
+                            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                              currentImageIndex === index
+                                ? "bg-red-600 text-white shadow-lg"
+                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
                       </div>
 
                       {/* Side-by-Side Images */}
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                         {/* VORHER */}
-                        <div className="space-y-4">
-                          <div className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg text-center font-bold text-lg">
-                            Vorher
+                        <div className="space-y-3">
+                          <div className="text-center">
+                            <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Vorher</span>
                           </div>
                           <motion.div
                             key={`before-${currentImageIndex}`}
