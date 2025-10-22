@@ -83,8 +83,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lara-vorne-alt.png", "/assets/lara-seite-alt.png", "/assets/lara-hinten-alt.png"],
-      after: ["/assets/lara-vorne-neu.png", "/assets/lara-seite-neu.png", "/assets/lara-hinten-neu.png"],
+      before: ["/lara-vorne-alt.png", "/lara-seite-alt.png", "/lara-hinten-alt.png"],
+      after: ["/lara-vorne-neu.png", "/lara-seite-neu.png", "/lara-hinten-neu.png"],
     },
   },
   {
@@ -112,8 +112,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tanja-vorne-alt.png", "/assets/tanja-seite-alt.png", "/assets/tanja-hinten-alt.png"],
-      after: ["/assets/tanja-vorne-neu.png", "/assets/tanja-seite-neu.png", "/assets/tanja-hinten-neu.png"],
+      before: ["/tanja-vorne-alt.png", "/tanja-seite-alt.png", "/tanja-hinten-alt.png"],
+      after: ["/tanja-vorne-neu.png", "/tanja-seite-neu.png", "/tanja-hinten-neu.png"],
     },
   },
   {
@@ -140,8 +140,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
+      before: ["/sarah-vorne-alt.png", "/sarah-seite-alt.png", "/sarah-hinten-alt.png"],
+      after: ["/sarah-vorne-neu.png", "/sarah-seite-neu.png", "/sarah-hinten-neu.png"],
     },
   },
   {
@@ -169,8 +169,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/david-vorne-alt.png", "/assets/david-seite-alt.png", "/assets/david-hinten-alt.png"],
-      after: ["/assets/david-vorne-neu.png", "/assets/david-seite-neu.png", "/assets/david-hinten-neu.png"],
+      before: ["/david-vorne-alt.png", "/david-seite-alt.png", "/david-hinten-alt.png"],
+      after: ["/david-vorne-neu.png", "/david-seite-neu.png", "/david-hinten-neu.png"],
     },
   },
   {
@@ -198,8 +198,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/marco-vorne-alt.png", "/assets/marco-seite-alt.png", "/assets/marco-hinten-alt.png"],
-      after: ["/assets/marco-vorne-neu.png", "/assets/marco-seite-neu.png", "/assets/marco-hinten-neu.png"],
+      before: ["/marco-vorne-alt.png", "/marco-seite-alt.png", "/marco-hinten-alt.png"],
+      after: ["/marco-vorne-neu.png", "/marco-seite-neu.png", "/marco-hinten-neu.png"],
     },
   },
   {
@@ -227,8 +227,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/alex-vorne-alt.png", "/assets/alex-seite-alt.png", "/assets/alex-hinten-alt.png"],
-      after: ["/assets/alex-vorne-neu.png", "/assets/alex-seite-neu.png", "/assets/alex-hinten-neu.png"],
+      before: ["/alex-vorne-alt.png", "/alex-seite-alt.png", "/alex-hinten-alt.png"],
+      after: ["/alex-vorne-neu.png", "/alex-seite-neu.png", "/alex-hinten-neu.png"],
     },
   },
   {
@@ -255,8 +255,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tahsin-vorne-alt.png", "/assets/tahsin-seite-alt.png", "/assets/tahsin-hinten-alt.png"],
-      after: ["/assets/tahsin-vorne-neu.png", "/assets/tahsin-seite-neu.png", "/assets/tahsin-hinten-neu.png"],
+      before: ["/tahsin-vorne-alt.png", "/tahsin-seite-alt.png", "/tahsin-hinten-alt.png"],
+      after: ["/tahsin-vorne-neu.png", "/tahsin-seite-neu.png", "/tahsin-hinten-neu.png"],
     },
   },
 ];
