@@ -27,8 +27,6 @@ interface Testimonial {
   };
 }
 
-const VIEW_LABELS = ["Vorne", "Seite", "Hinten"];
-
 const testimonials: Testimonial[] = [
   {
     id: "1",
@@ -340,20 +338,22 @@ const TestimonialSection = () => {
 
   const nextImage = () => {
     if (selectedTestimonial) {
-      setCurrentImageIndex((prev) => (prev + 1) % 3);
+      const images = showBefore ? selectedTestimonial.images.before : selectedTestimonial.images.after;
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }
   };
 
   const prevImage = () => {
     if (selectedTestimonial) {
-      setCurrentImageIndex((prev) => (prev - 1 + 3) % 3);
+      const images = showBefore ? selectedTestimonial.images.before : selectedTestimonial.images.after;
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
     }
   };
 
   const GenericAvatar = () => (
-    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-500/20 to-gray-900/20 flex items-center justify-center">
-      <div className="w-16 h-16 rounded-full bg-red-500/30 flex items-center justify-center">
-        <span className="text-3xl font-bold text-gray-900">?</span>
+    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-nf-red/20 to-nf-black/20 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-nf-red/30 flex items-center justify-center">
+        <span className="text-3xl font-bold text-nf-black">?</span>
       </div>
     </div>
   );
@@ -361,18 +361,20 @@ const TestimonialSection = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Was unsere <span className="text-red-600">Kunden</span> sagen
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-nf-black mb-4">
+            Was unsere <span className="text-nf-red">Kunden</span> sagen
           </h2>
-          <p className="text-lg md:text-xl text-gray-600">Echte Ergebnisse von echten Menschen</p>
+          <p className="text-lg md:text-xl text-nf-black/70">Echte Ergebnisse von echten Menschen</p>
         </motion.div>
 
+        {/* Testimonial Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -383,13 +385,14 @@ const TestimonialSection = () => {
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.03, y: -5 }}
               onClick={() => handleCardClick(testimonial)}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-gray-100 hover:border-red-300"
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-nf-black/5 hover:border-nf-red/30"
             >
+              {/* Avatar */}
               <div className="flex justify-center mb-4">
                 {testimonial.useGenericAvatar ? (
                   <GenericAvatar />
                 ) : (
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-red-100">
+                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-nf-red/20">
                     <img
                       src={testimonial.avatar}
                       alt={testimonial.name}
@@ -397,31 +400,36 @@ const TestimonialSection = () => {
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         e.currentTarget.parentElement!.innerHTML =
-                          '<div class="w-full h-full bg-gradient-to-br from-red-500/20 to-gray-900/20 flex items-center justify-center"><span class="text-3xl font-bold text-gray-900">?</span></div>';
+                          '<div class="w-full h-full bg-gradient-to-br from-nf-red/20 to-nf-black/20 flex items-center justify-center"><span class="text-3xl font-bold text-nf-black">?</span></div>';
                       }}
                     />
                   </div>
                 )}
               </div>
 
+              {/* Stars */}
               <div className="flex justify-center gap-1 mb-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">{testimonial.name}</h3>
+              {/* Name */}
+              <h3 className="text-xl font-bold text-nf-black text-center mb-2">{testimonial.name}</h3>
 
+              {/* Badge */}
               <div className="flex justify-center mb-4">
-                <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-nf-red/10 text-nf-red px-4 py-1 rounded-full text-sm font-semibold">
                   {testimonial.badge}
                 </span>
               </div>
 
-              <p className="text-gray-600 text-center text-sm mb-4 line-clamp-2">"{testimonial.shortQuote}"</p>
+              {/* Short Quote */}
+              <p className="text-nf-black/70 text-center text-sm mb-4 line-clamp-2">"{testimonial.shortQuote}"</p>
 
+              {/* CTA */}
               <div className="text-center">
-                <button className="text-red-600 hover:text-red-700 text-sm font-semibold transition-colors">
+                <button className="text-nf-red hover:text-nf-red/80 text-sm font-semibold transition-colors">
                   Klicken für Details →
                 </button>
               </div>
@@ -430,11 +438,13 @@ const TestimonialSection = () => {
         </div>
       </div>
 
+      {/* Modal */}
       <AnimatePresence>
         {selectedTestimonial && (
           <Dialog open={!!selectedTestimonial} onOpenChange={closeModal}>
             <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-0">
               <div className="relative bg-white rounded-2xl">
+                {/* Close Button */}
                 <button
                   onClick={closeModal}
                   className="absolute top-4 right-4 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
@@ -443,13 +453,15 @@ const TestimonialSection = () => {
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                  {/* LEFT SIDE: Info & Images */}
                   <div className="space-y-6">
+                    {/* Avatar & Info */}
                     <div className="text-center">
                       <div className="flex justify-center mb-4">
                         {selectedTestimonial.useGenericAvatar ? (
                           <GenericAvatar />
                         ) : (
-                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-100">
+                          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-nf-red/20">
                             <img
                               src={selectedTestimonial.avatar}
                               alt={selectedTestimonial.name}
@@ -459,7 +471,7 @@ const TestimonialSection = () => {
                         )}
                       </div>
 
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-2xl font-bold text-nf-black mb-2">
                         {selectedTestimonial.name}, {selectedTestimonial.age}
                       </h3>
 
@@ -469,21 +481,26 @@ const TestimonialSection = () => {
                         ))}
                       </div>
 
-                      <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                      <span className="inline-block bg-nf-red text-white px-6 py-2 rounded-full text-sm font-bold">
                         {selectedTestimonial.badge}
                       </span>
                     </div>
 
+                    {/* Full Quote */}
                     <div className="bg-gray-50 rounded-xl p-6">
-                      <p className="text-gray-700 italic text-lg leading-relaxed">"{selectedTestimonial.fullQuote}"</p>
+                      <p className="text-nf-black/80 italic text-lg leading-relaxed">
+                        "{selectedTestimonial.fullQuote}"
+                      </p>
                     </div>
 
+                    {/* Before/After Image Slider */}
                     <div className="space-y-4">
+                      {/* Toggle Buttons */}
                       <div className="flex gap-2 justify-center">
                         <button
                           onClick={() => setShowBefore(true)}
                           className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                            showBefore ? "bg-nf-red text-white" : "bg-gray-200 text-nf-black hover:bg-gray-300"
                           }`}
                         >
                           Vorher
@@ -491,19 +508,14 @@ const TestimonialSection = () => {
                         <button
                           onClick={() => setShowBefore(false)}
                           className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                            !showBefore ? "bg-red-600 text-white" : "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                            !showBefore ? "bg-nf-red text-white" : "bg-gray-200 text-nf-black hover:bg-gray-300"
                           }`}
                         >
                           Nachher
                         </button>
                       </div>
 
-                      <div className="text-center">
-                        <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                          Ansicht: {VIEW_LABELS[currentImageIndex]}
-                        </span>
-                      </div>
-
+                      {/* Image Slider */}
                       <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden">
                         <img
                           src={
@@ -511,10 +523,11 @@ const TestimonialSection = () => {
                               ? selectedTestimonial.images.before[currentImageIndex]
                               : selectedTestimonial.images.after[currentImageIndex]
                           }
-                          alt={`${showBefore ? "Vorher" : "Nachher"} - ${VIEW_LABELS[currentImageIndex]}`}
+                          alt={`${showBefore ? "Vorher" : "Nachher"} Bild ${currentImageIndex + 1}`}
                           className="w-full h-full object-cover"
                         />
 
+                        {/* Navigation Arrows */}
                         <button
                           onClick={prevImage}
                           className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
@@ -528,36 +541,42 @@ const TestimonialSection = () => {
                           <ChevronRight className="h-6 w-6" />
                         </button>
 
+                        {/* Image Indicator */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                          {VIEW_LABELS.map((label, index) => (
+                          {[0, 1, 2].map((index) => (
                             <button
                               key={index}
                               onClick={() => setCurrentImageIndex(index)}
-                              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                                currentImageIndex === index
-                                  ? "bg-white text-gray-900"
-                                  : "bg-white/50 text-white hover:bg-white/70"
+                              className={`w-2 h-2 rounded-full transition-all ${
+                                currentImageIndex === index ? "bg-white w-6" : "bg-white/50"
                               }`}
-                            >
-                              {label}
-                            </button>
+                            />
                           ))}
                         </div>
                       </div>
                     </div>
                   </div>
 
+                  {/* RIGHT SIDE: Chart */}
                   <div className="space-y-6">
                     <div className="text-center">
-                      <h4 className="text-2xl font-bold text-gray-900 mb-2">Gewichtsverlauf</h4>
+                      <h4 className="text-2xl font-bold text-nf-black mb-2">Gewichtsverlauf</h4>
                     </div>
 
+                    {/* Chart */}
                     <div className="bg-gray-50 rounded-xl p-6">
                       <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={selectedTestimonial.weightLoss.chartData}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                           <XAxis dataKey="week" label={{ value: "Wochen", position: "bottom" }} stroke="#6b7280" />
-                          <YAxis label={{ value: "Gewicht (kg)", angle: -90, position: "left" }} stroke="#6b7280" />
+                          <YAxis
+                            label={{
+                              value: "Gewicht (kg)",
+                              angle: -90,
+                              position: "left",
+                            }}
+                            stroke="#6b7280"
+                          />
                           <Tooltip
                             contentStyle={{
                               backgroundColor: "#1f2937",
@@ -587,27 +606,29 @@ const TestimonialSection = () => {
                       </ResponsiveContainer>
                     </div>
 
-                    <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
-                      <div className="text-6xl font-bold text-red-600 mb-2">
+                    {/* Weight Loss Highlight */}
+                    <div className="bg-gradient-to-br from-nf-red/10 to-nf-red/5 rounded-xl p-8 text-center">
+                      <div className="text-6xl font-bold text-nf-red mb-2">
                         -{selectedTestimonial.weightLoss.totalLoss} kg
                       </div>
-                      <div className="text-xl text-gray-600 font-medium">
+                      <div className="text-xl text-nf-black/70 font-medium">
                         in {selectedTestimonial.weightLoss.weeks} Wochen
                       </div>
                     </div>
 
+                    {/* Stats */}
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-gray-900 mb-1">
+                      <div className="bg-white border-2 border-nf-black/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-nf-black mb-1">
                           {selectedTestimonial.weightLoss.startWeight} kg
                         </div>
-                        <div className="text-sm text-gray-600">Startgewicht</div>
+                        <div className="text-sm text-nf-black/60">Startgewicht</div>
                       </div>
-                      <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-red-600 mb-1">
+                      <div className="bg-white border-2 border-nf-black/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-nf-red mb-1">
                           {selectedTestimonial.weightLoss.endWeight} kg
                         </div>
-                        <div className="text-sm text-gray-600">Aktuell</div>
+                        <div className="text-sm text-nf-black/60">Aktuell</div>
                       </div>
                     </div>
                   </div>
