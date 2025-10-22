@@ -51,7 +51,7 @@ const HeroSection = () => {
             <img
               src="/assets/hero-image.png"
               alt="Niklas und Fabienne - Dein Coaching Team für Körper & Geist"
-              className="w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto h-auto rounded-2xl shadow-red-glow border border-nf-white/20"
+              className="w-full max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] mx-auto h-auto rounded-2xl shadow-red-glow border border-nf-white/20"
               loading="eager"
             />
           </motion.div>
@@ -95,12 +95,12 @@ const HeroSection = () => {
               KOSTENLOSES GESPRÄCH
             </Button>
             <Button
-              onClick={() => scrollToSection("#team")}
+              onClick={() => scrollToSection("#testimonials")}
               variant="outline"
               className="w-full sm:w-auto border-nf-white text-nf-white hover:bg-nf-white hover:text-nf-black px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold transition-smooth"
               size="lg"
             >
-              MEHR ERFAHREN
+              ERFOLGE
             </Button>
           </motion.div>
         </motion.div>
