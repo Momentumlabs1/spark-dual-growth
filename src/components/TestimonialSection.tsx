@@ -363,10 +363,10 @@ const TestimonialSection = () => {
                       {/* Side-by-Side Images */}
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                         {/* VORHER */}
-                        <div className="space-y-3">
-                          <div className="text-center">
-                            <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Vorher</span>
-                          </div>
+                        <div className="space-y-2">
+                          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                            Vorher
+                          </p>
                           <motion.div
                             key={`before-${currentImageIndex}`}
                             initial={{ opacity: 0 }}
@@ -389,10 +389,10 @@ const TestimonialSection = () => {
                         </div>
 
                         {/* NACHHER */}
-                        <div className="space-y-4">
-                          <div className="bg-red-600 text-white px-6 py-3 rounded-lg text-center font-bold text-lg">
+                        <div className="space-y-2">
+                          <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
-                          </div>
+                          </p>
                           <motion.div
                             key={`after-${currentImageIndex}`}
                             initial={{ opacity: 0 }}
