@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
     useGenericAvatar: false,
     rating: 5,
     badge: "13 kg abgenommen",
-    shortQuote: "Von 'nur funktionieren' zu wirklich leben - mental, körperisch, emotional.",
+    shortQuote: "Von 'nur funktionieren' zu wirklich leben - mental, körperlich, emotional.",
     fullQuote:
       "Ich war überfordert, skeptisch und gestresst. Aber ich habe mich entschieden, mich selbst nicht mehr im Weg zu stehen. Mit Niklas und Fabienne habe ich von 88 kg auf 75 kg abgenommen – aber vor allem: Ich habe klaren Kopf statt Dauer-Frust, Energie statt Erschöpfung, und einen Wohlfühlkörper ohne Verzicht und Verbote bekommen.",
     weightLoss: {
@@ -55,64 +55,207 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lisa-before-front.png", "/assets/lisa-before-side.png", "/assets/lisa-before-back.png"],
-      after: ["/assets/lisa-after-front.png", "/assets/lisa-after-side.png", "/assets/lisa-after-back.png"],
+      before: ["/assets/lisa-vorne-alt.png", "/assets/lisa-seite-alt.png", "/assets/lisa-hinten-alt.png"],
+      after: ["/assets/lisa-vorne-neu.png", "/assets/lisa-seite-neu.png", "/assets/lisa-hinten-neu.png"],
     },
   },
   {
     id: "2",
-    name: "David M.",
+    name: "Lara G.",
     age: 29,
-    avatar: "/assets/david-avatar.jpg",
+    avatar: "/assets/lara-avatar.jpg",
     useGenericAvatar: false,
     rating: 5,
-    badge: "Traumfigur erreicht",
-    shortQuote: "Endlich die Transformation die ich wollte!",
+    badge: "15 kg abgenommen",
+    shortQuote: "Endlich fühle ich mich wieder wohl in meinem Körper!",
     fullQuote:
-      "Mit Niklas und Fabienne habe ich endlich meine Ziele erreicht. Die Kombination aus Training und Ernährung war perfekt auf mich abgestimmt.",
+      "Nach der Schwangerschaft hatte ich das Gefühl, meinen Körper verloren zu haben. Mit NF Coaching habe ich nicht nur abgenommen, sondern auch mein Selbstbewusstsein zurückgewonnen. 15 kg weniger und unendlich viel mehr Lebensfreude!",
     weightLoss: {
-      startWeight: 95,
-      endWeight: 82,
-      totalLoss: 13,
-      weeks: 20,
+      startWeight: 82,
+      endWeight: 67,
+      totalLoss: 15,
+      weeks: 18,
       chartData: [
-        { week: 0, weight: 95 },
-        { week: 5, weight: 91 },
-        { week: 10, weight: 87 },
-        { week: 15, weight: 84 },
-        { week: 20, weight: 82 },
+        { week: 0, weight: 82 },
+        { week: 6, weight: 76 },
+        { week: 12, weight: 71 },
+        { week: 18, weight: 67 },
       ],
     },
     images: {
-      before: ["/assets/david-before-front.jpg", "/assets/david-before-side.jpg", "/assets/david-before-back.jpg"],
-      after: ["/assets/david-after-front.jpg", "/assets/david-after-side.jpg", "/assets/david-after-back.jpg"],
+      before: ["/assets/lara-vorne-alt.png", "/assets/lara-seite-alt.png", "/assets/lara-hinten-alt.png"],
+      after: ["/assets/lara-vorne-neu.png", "/assets/lara-seite-neu.png", "/assets/lara-hinten-neu.png"],
     },
   },
   {
     id: "3",
-    name: "Tahsin K.",
-    age: 27,
-    avatar: "/assets/tahsin-avatar.jpg",
+    name: "Sarah N.",
+    age: 35,
+    avatar: "/assets/sarah-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "Wunschgewicht erreicht",
-    shortQuote: "Beste Entscheidung meines Lebens!",
-    fullQuote: "Das Team-Coaching hat den Unterschied gemacht. Ich fühle mich fitter und gesünder als je zuvor.",
+    badge: "12 kg abgenommen",
+    shortQuote: "Ohne Verzicht zum Traumkörper - ich kann es kaum glauben!",
+    fullQuote:
+      "Jahrelang habe ich Diäten ausprobiert und immer wieder zugenommen. Mit Niklas und Fabienne habe ich endlich verstanden, wie Ernährung wirklich funktioniert. 12 kg weniger und ich esse mehr als je zuvor!",
     weightLoss: {
-      startWeight: 102,
-      endWeight: 88,
-      totalLoss: 14,
-      weeks: 18,
+      startWeight: 79,
+      endWeight: 67,
+      totalLoss: 12,
+      weeks: 14,
       chartData: [
-        { week: 0, weight: 102 },
-        { week: 6, weight: 96 },
-        { week: 12, weight: 91 },
-        { week: 18, weight: 88 },
+        { week: 0, weight: 79 },
+        { week: 4, weight: 75 },
+        { week: 8, weight: 71 },
+        { week: 14, weight: 67 },
       ],
     },
     images: {
-      before: ["/assets/tahsin-before-front.jpg", "/assets/tahsin-before-side.jpg", "/assets/tahsin-before-back.jpg"],
-      after: ["/assets/tahsin-after-front.jpg", "/assets/tahsin-after-side.jpg", "/assets/tahsin-after-back.jpg"],
+      before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
+    },
+  },
+  {
+    id: "4",
+    name: "Tanja K.",
+    age: 27,
+    avatar: "/assets/tanja-avatar.jpg",
+    useGenericAvatar: false,
+    rating: 5,
+    badge: "10 kg abgenommen",
+    shortQuote: "Mehr Energie, bessere Laune, weniger Gewicht!",
+    fullQuote:
+      "Ich wollte eigentlich nur ein paar Kilos verlieren, aber bekommen habe ich so viel mehr: Ein neues Körpergefühl, mehr Energie im Alltag und endlich wieder Spaß an Bewegung. Danke!",
+    weightLoss: {
+      startWeight: 73,
+      endWeight: 63,
+      totalLoss: 10,
+      weeks: 12,
+      chartData: [
+        { week: 0, weight: 73 },
+        { week: 4, weight: 69 },
+        { week: 8, weight: 66 },
+        { week: 12, weight: 63 },
+      ],
+    },
+    images: {
+      before: ["/assets/tanja-vorne-alt.png", "/assets/tanja-seite-alt.png", "/assets/tanja-hinten-alt.png"],
+      after: ["/assets/tanja-vorne-neu.png", "/assets/tanja-seite-neu.png", "/assets/tanja-hinten-neu.png"],
+    },
+  },
+  {
+    id: "5",
+    name: "David R.",
+    age: 34,
+    avatar: "/assets/david-avatar.jpg",
+    useGenericAvatar: false,
+    rating: 5,
+    badge: "18 kg abgenommen",
+    shortQuote: "Von Büro-Speck zur Bestform meines Lebens!",
+    fullQuote:
+      "Als Softwareentwickler saß ich 10 Stunden täglich. Die 18 kg Extra-Gewicht waren mein Tiefpunkt. Mit NF Coaching habe ich gelernt, wie ich trotz Schreibtischjob fit bleiben kann. Heute bin ich fitter als mit 20!",
+    weightLoss: {
+      startWeight: 102,
+      endWeight: 84,
+      totalLoss: 18,
+      weeks: 20,
+      chartData: [
+        { week: 0, weight: 102 },
+        { week: 5, weight: 96 },
+        { week: 10, weight: 91 },
+        { week: 15, weight: 87 },
+        { week: 20, weight: 84 },
+      ],
+    },
+    images: {
+      before: ["/assets/david-vorne-alt.png", "/assets/david-seite-alt.png", "/assets/david-hinten-alt.png"],
+      after: ["/assets/david-vorne-neu.png", "/assets/david-seite-neu.png", "/assets/david-hinten-neu.png"],
+    },
+  },
+  {
+    id: "6",
+    name: "Marco D.",
+    age: 29,
+    avatar: "/assets/marco-avatar.jpg",
+    useGenericAvatar: true,
+    rating: 5,
+    badge: "16 kg abgenommen",
+    shortQuote: "Endlich verstehe ich, wie mein Körper funktioniert!",
+    fullQuote:
+      "Ich habe jahrelang im Fitnessstudio trainiert, aber die Erfolge blieben aus. Mit der richtigen Ernährungsstrategie von Niklas und Fabienne habe ich in 5 Monaten mehr erreicht als in 3 Jahren zuvor. Unglaublich!",
+    weightLoss: {
+      startWeight: 95,
+      endWeight: 79,
+      totalLoss: 16,
+      weeks: 20,
+      chartData: [
+        { week: 0, weight: 95 },
+        { week: 5, weight: 90 },
+        { week: 10, weight: 85 },
+        { week: 15, weight: 82 },
+        { week: 20, weight: 79 },
+      ],
+    },
+    images: {
+      before: ["/assets/marco-vorne-alt.png", "/assets/marco-seite-alt.png", "/assets/marco-hinten-alt.png"],
+      after: ["/assets/marco-vorne-neu.png", "/assets/marco-seite-neu.png", "/assets/marco-hinten-neu.png"],
+    },
+  },
+  {
+    id: "7",
+    name: "Flo W.",
+    age: 31,
+    avatar: "/assets/flo-avatar.jpg",
+    useGenericAvatar: true,
+    rating: 5,
+    badge: "14 kg abgenommen",
+    shortQuote: "Vom Zweifler zum Überzeugten!",
+    fullQuote:
+      "Ich war skeptisch, ob Online-Coaching funktioniert. Aber die Betreuung war so persönlich und professionell, dass ich jeden Zweifel verloren habe. 14 kg weniger und ich fühle mich 10 Jahre jünger!",
+    weightLoss: {
+      startWeight: 91,
+      endWeight: 77,
+      totalLoss: 14,
+      weeks: 16,
+      chartData: [
+        { week: 0, weight: 91 },
+        { week: 4, weight: 87 },
+        { week: 8, weight: 83 },
+        { week: 12, weight: 80 },
+        { week: 16, weight: 77 },
+      ],
+    },
+    images: {
+      before: ["/assets/flo-vorne-alt.png", "/assets/flo-seite-alt.png", "/assets/flo-hinten-alt.png"],
+      after: ["/assets/flo-vorne-neu.png", "/assets/flo-seite-neu.png", "/assets/flo-hinten-neu.png"],
+    },
+  },
+  {
+    id: "8",
+    name: "Tahsin B.",
+    age: 26,
+    avatar: "/assets/tahsin-avatar.jpg",
+    useGenericAvatar: false,
+    rating: 5,
+    badge: "11 kg abgenommen",
+    shortQuote: "Beste Investition in mich selbst!",
+    fullQuote:
+      "Als Student mit wenig Budget war ich unsicher. Aber diese Investition war jeden Cent wert. Nicht nur 11 kg weniger, sondern auch mehr Fokus beim Lernen und bessere Stimmung. Top!",
+    weightLoss: {
+      startWeight: 88,
+      endWeight: 77,
+      totalLoss: 11,
+      weeks: 14,
+      chartData: [
+        { week: 0, weight: 88 },
+        { week: 4, weight: 84 },
+        { week: 8, weight: 81 },
+        { week: 14, weight: 77 },
+      ],
+    },
+    images: {
+      before: ["/assets/tahsin-vorne-alt.png", "/assets/tahsin-seite-alt.png", "/assets/tahsin-hinten-alt.png"],
+      after: ["/assets/tahsin-vorne-neu.png", "/assets/tahsin-seite-neu.png", "/assets/tahsin-hinten-neu.png"],
     },
   },
 ];
@@ -123,7 +266,6 @@ const TestimonialSection = () => {
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
   const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
 
-  // Preload all images when modal opens
   useEffect(() => {
     if (selectedTestimonial) {
       setAllImagesPreloaded(false);
@@ -149,12 +291,10 @@ const TestimonialSection = () => {
         };
       });
 
-      // Timeout fallback
       setTimeout(() => setAllImagesPreloaded(true), 3000);
     }
   }, [selectedTestimonial]);
 
-  // Track loading for current image pair
   useEffect(() => {
     if (selectedTestimonial && allImagesPreloaded) {
       setImagesLoaded({ [currentImageIndex]: true });
@@ -202,7 +342,6 @@ const TestimonialSection = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -215,20 +354,18 @@ const TestimonialSection = () => {
           <p className="text-lg md:text-xl text-gray-600">Echte Ergebnisse von echten Menschen</p>
         </motion.div>
 
-        {/* Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.03, y: -5 }}
               onClick={() => handleCardClick(testimonial)}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-gray-100 hover:border-red-300"
             >
-              {/* Avatar */}
               <div className="flex justify-center mb-4">
                 {testimonial.useGenericAvatar ? (
                   <GenericAvatar />
@@ -249,27 +386,22 @@ const TestimonialSection = () => {
                 )}
               </div>
 
-              {/* Stars */}
               <div className="flex justify-center gap-1 mb-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
 
-              {/* Name */}
               <h3 className="text-xl font-bold text-gray-900 text-center mb-2">{testimonial.name}</h3>
 
-              {/* Badge */}
               <div className="flex justify-center mb-4">
                 <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-semibold">
                   {testimonial.badge}
                 </span>
               </div>
 
-              {/* Short Quote */}
               <p className="text-gray-600 text-center text-sm mb-4 line-clamp-2">"{testimonial.shortQuote}"</p>
 
-              {/* CTA */}
               <div className="text-center">
                 <button className="text-red-600 hover:text-red-700 text-sm font-semibold transition-colors">
                   Klicken für Details →
@@ -280,13 +412,11 @@ const TestimonialSection = () => {
         </div>
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selectedTestimonial && (
           <Dialog open={!!selectedTestimonial} onOpenChange={closeModal}>
             <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto p-0">
               <div className="relative bg-white rounded-2xl">
-                {/* Close Button */}
                 <button
                   onClick={closeModal}
                   className="absolute top-4 right-4 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
@@ -295,7 +425,6 @@ const TestimonialSection = () => {
                 </button>
 
                 <div className="p-8">
-                  {/* Header */}
                   <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
                       {selectedTestimonial.useGenericAvatar ? (
@@ -326,14 +455,6 @@ const TestimonialSection = () => {
                     </span>
                   </div>
 
-                  {/* Full Quote */}
-                  <div className="bg-gray-50 rounded-xl p-6 mb-8 max-w-4xl mx-auto">
-                    <p className="text-gray-700 italic text-lg leading-relaxed text-center">
-                      "{selectedTestimonial.fullQuote}"
-                    </p>
-                  </div>
-
-                  {/* Loading State */}
                   {!allImagesPreloaded && (
                     <div className="flex flex-col items-center justify-center py-20">
                       <Loader2 className="h-12 w-12 animate-spin text-red-600 mb-4" />
@@ -341,84 +462,10 @@ const TestimonialSection = () => {
                     </div>
                   )}
 
-                  {/* View Selector - Only show when loaded */}
                   {allImagesPreloaded && (
                     <>
-                      <div className="flex justify-center gap-2 mb-8">
-                        {VIEW_LABELS.map((label, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleImageIndexChange(index)}
-                            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                              currentImageIndex === index
-                                ? "bg-red-600 text-white shadow-lg"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Side-by-Side Images */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        {/* VORHER */}
-                        <div className="space-y-2">
-                          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                            Vorher
-                          </p>
-                          <motion.div
-                            key={`before-${currentImageIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
-                          >
-                            <img
-                              src={selectedTestimonial.images.before[currentImageIndex]}
-                              alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-cover"
-                            />
-                            <button
-                              onClick={prevImage}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-                            >
-                              <ChevronLeft className="h-6 w-6" />
-                            </button>
-                          </motion.div>
-                        </div>
-
-                        {/* NACHHER */}
-                        <div className="space-y-2">
-                          <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
-                            Nachher
-                          </p>
-                          <motion.div
-                            key={`after-${currentImageIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
-                          >
-                            <img
-                              src={selectedTestimonial.images.after[currentImageIndex]}
-                              alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-cover"
-                            />
-                            <button
-                              onClick={nextImage}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-                            >
-                              <ChevronRight className="h-6 w-6" />
-                            </button>
-                          </motion.div>
-                        </div>
-                      </div>
-
-                      {/* Chart & Stats */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Chart */}
-                        <div className="space-y-6">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                        <div className="space-y-4">
                           <h4 className="text-2xl font-bold text-gray-900 text-center">Gewichtsverlauf</h4>
                           <div className="bg-gray-50 rounded-xl p-6">
                             <ResponsiveContainer width="100%" height={300}>
@@ -463,8 +510,7 @@ const TestimonialSection = () => {
                           </div>
                         </div>
 
-                        {/* Stats */}
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
                             <div className="text-6xl font-bold text-red-600 mb-2">
                               -{selectedTestimonial.weightLoss.totalLoss} kg
@@ -489,6 +535,80 @@ const TestimonialSection = () => {
                             </div>
                           </div>
                         </div>
+                      </div>
+
+                      <div className="flex justify-center gap-2 mb-8">
+                        {VIEW_LABELS.map((label, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleImageIndexChange(index)}
+                            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                              currentImageIndex === index
+                                ? "bg-red-600 text-white shadow-lg"
+                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div className="space-y-2">
+                          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                            Vorher
+                          </p>
+                          <motion.div
+                            key={`before-${currentImageIndex}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
+                          >
+                            <img
+                              src={selectedTestimonial.images.before[currentImageIndex]}
+                              alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <button
+                              onClick={prevImage}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                            >
+                              <ChevronLeft className="h-6 w-6" />
+                            </button>
+                          </motion.div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
+                            Nachher
+                          </p>
+                          <motion.div
+                            key={`after-${currentImageIndex}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
+                          >
+                            <img
+                              src={selectedTestimonial.images.after[currentImageIndex]}
+                              alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <button
+                              onClick={nextImage}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                            >
+                              <ChevronRight className="h-6 w-6" />
+                            </button>
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-50 rounded-xl p-6 mb-8 max-w-4xl mx-auto">
+                        <p className="text-gray-700 italic text-lg leading-relaxed text-center">
+                          "{selectedTestimonial.fullQuote}"
+                        </p>
                       </div>
                     </>
                   )}
