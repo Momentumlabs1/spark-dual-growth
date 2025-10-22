@@ -1,34 +1,37 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Star, Users, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import VideoEmbed from '@/components/VideoEmbed';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Star, Users, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import VideoEmbed from "@/components/VideoEmbed";
+import { useRef } from "react";
 
 const HeroSection = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   const stats = [
-    { icon: Users, label: '500+ Kunden', value: '500+' },
-    { icon: Star, label: '4.9/5 ⭐', value: '4.9/5' },
-    { icon: TrendingUp, label: '95% Erfolgsrate', value: '95%' },
+    { icon: Users, label: "500+ Kunden", value: "500+" },
+    { icon: Star, label: "4.9/5 ⭐", value: "4.9/5" },
+    { icon: TrendingUp, label: "95% Erfolgsrate", value: "95%" },
   ];
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-nf-black via-nf-black/95 to-nf-red/20 py-12 md:py-20">
+    <section
+      ref={ref}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-nf-black via-nf-black/95 to-nf-red/20 py-12 md:py-20"
+    >
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -45,15 +48,15 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 0.1 }}
             className="mb-6 md:mb-8"
           >
-            <img 
-              src="/assets/hero-image.png" 
+            <img
+              src="/assets/hero-image.png"
               alt="Niklas und Fabienne - Dein Coaching Team für Körper & Geist"
-              className="w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto h-auto rounded-2xl shadow-red-glow border border-nf-white/20"
+              className="w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto h-auto rounded-2xl shadow-red-glow border border-nf-white/20"
               loading="eager"
             />
           </motion.div>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -61,7 +64,6 @@ const HeroSection = () => {
           >
             Ganzheitliches Online Health & Fitness Coaching
           </motion.p>
-
 
           {/* Stats Bar */}
           <motion.div
@@ -86,14 +88,14 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center"
           >
             <Button
-              onClick={() => scrollToSection('#booking-funnel')}
+              onClick={() => scrollToSection("#booking-funnel")}
               className="w-full sm:w-auto bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-red-glow animate-pulse-red transition-smooth"
               size="lg"
             >
               KOSTENLOSES GESPRÄCH
             </Button>
             <Button
-              onClick={() => scrollToSection('#team')}
+              onClick={() => scrollToSection("#team")}
               variant="outline"
               className="w-full sm:w-auto border-nf-white text-nf-white hover:bg-nf-white hover:text-nf-black px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold transition-smooth"
               size="lg"
