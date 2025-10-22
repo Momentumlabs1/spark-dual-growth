@@ -141,7 +141,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/sarah-vorne-alt.png", "/sarah-seite-alt.png", "/sarah-hinten-alt.png"],
-      after: ["/sarah-vorne-neu.png", "/sarah-seite-neu.png", "/sarah-hinten-neu.png"],
+      after: ["/sarah-vorne-neu.png", "/sarah-seite-neu.png.png", "/sarah-hinten-neu.png"],
     },
   },
   {
