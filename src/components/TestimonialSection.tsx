@@ -55,8 +55,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lisa-before-front.png?v=1", "/assets/lisa-before-side.png?v=1", "/assets/lisa-before-back.png?v=1"],
-      after: ["/assets/lisa-after-front.png?v=1", "/assets/lisa-after-side.png?v=1", "/assets/lisa-after-back.png?v=1"],
+      before: ["/assets/lisa-before-front.png", "/assets/lisa-before-side.png", "/assets/lisa-before-back.png"],
+      after: ["/assets/lisa-after-front.png", "/assets/lisa-after-side.png", "/assets/lisa-after-back.png"],
     },
   },
   {
@@ -83,8 +83,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lara-vorne-alt.png?v=1", "/assets/lara-seite-alt.png?v=1", "/assets/lara-hinten-alt.png?v=1"],
-      after: ["/assets/lara-vorne-neu.png?v=1", "/assets/lara-seite-neu.png?v=1", "/assets/lara-hinten-neu.png?v=1"],
+      before: ["/assets/lara-vorne-alt.png", "/assets/lara-seite-alt.png", "/assets/lara-hinten-alt.png"],
+      after: ["/assets/lara-vorne-neu.png", "/assets/lara-seite-neu.png", "/assets/lara-hinten-neu.png"],
     },
   },
   {
@@ -112,8 +112,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tanja-vorne-alt.png?v=1", "/assets/tanja-seite-alt.png?v=1", "/assets/tanja-hinten-alt.png?v=1"],
-      after: ["/assets/tanja-vorne-neu.png?v=1", "/assets/tanja-seite-neu.png?v=1", "/assets/tanja-hinten-neu.png?v=1"],
+      before: ["/assets/tanja-vorne-alt.png", "/assets/tanja-seite-alt.png", "/assets/tanja-hinten-alt.png"],
+      after: ["/assets/tanja-vorne-neu.png", "/assets/tanja-seite-neu.png", "/assets/tanja-hinten-neu.png"],
     },
   },
   {
@@ -140,8 +140,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/sarah-vorne-alt.png?v=1", "/assets/sarah-seite-alt.png?v=1", "/assets/sarah-hinten-alt.png?v=1"],
-      after: ["/assets/sarah-vorne-neu.png?v=1", "/assets/sarah-seite-neu.png?v=1", "/assets/sarah-hinten-neu.png?v=1"],
+      before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -169,8 +169,16 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/david-vorne-alt.png?v=2", "/assets/david-seite-alt.png?v=2", "/assets/david-hinten-alt.png?v=2"],
-      after: ["/assets/david-vorne-neu.png?v=2", "/assets/david-seite-neu.png?v=2", "/assets/david-hinten-neu.png?v=2"],
+      before: [
+        "/assets/testimonials/david/david-vorne-alt.png",
+        "/assets/testimonials/david/david-seite-alt.png",
+        "/assets/testimonials/david/david-hinten-alt.png",
+      ],
+      after: [
+        "/assets/testimonials/david/david-vorne-neu.png",
+        "/assets/testimonials/david/david-seite-neu.png",
+        "/assets/testimonials/david/david-hinten-neu.png",
+      ],
     },
   },
   {
@@ -198,8 +206,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/marco-vorne-alt.png?v=1", "/assets/marco-seite-alt.png?v=1", "/assets/marco-hinten-alt.png?v=1"],
-      after: ["/assets/marco-vorne-neu.png?v=1", "/assets/marco-seite-neu.png?v=1", "/assets/marco-hinten-neu.png?v=1"],
+      before: ["/assets/marco-vorne-alt.png", "/assets/marco-seite-alt.png", "/assets/marco-hinten-alt.png"],
+      after: ["/assets/marco-vorne-neu.png", "/assets/marco-seite-neu.png", "/assets/marco-hinten-neu.png"],
     },
   },
   {
@@ -227,8 +235,16 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/2alex-vorne-alt.png?v=1", "/assets/4alex-seite-alt.png?v=1", "/assets/6alex-hinten-alt.png?v=1"],
-      after: ["/assets/1alex-vorne-neu.png?v=1", "/assets/3alex-seite-neu.png?v=1", "/assets/5alex-hinten-neu.png?v=1"],
+      before: [
+        "/assets/testimonials/alex/alex-vorne-alt.png",
+        "/assets/testimonials/alex/alex-seite-alt.png",
+        "/assets/testimonials/alex/alex-hinten-alt.png",
+      ],
+      after: [
+        "/assets/testimonials/alex/alex-vorne-neu.png",
+        "/assets/testimonials/alex/alex-seite-neu.png",
+        "/assets/testimonials/alex/alex-hinten-neu.png",
+      ],
     },
   },
   {
@@ -255,8 +271,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tahsin-vorne-alt.png?v=1", "/assets/tahsin-seite-alt.png?v=1", "/assets/tahsin-hinten-alt.png?v=1"],
-      after: ["/assets/tahsin-vorne-neu.png?v=1", "/assets/tahsin-seite-neu.png?v=1", "/assets/tahsin-hinten-neu.png?v=1"],
+      before: ["/assets/tahsin-vorne-alt.png", "/assets/tahsin-seite-alt.png", "/assets/tahsin-hinten-alt.png"],
+      after: ["/assets/tahsin-vorne-neu.png", "/assets/tahsin-seite-neu.png", "/assets/tahsin-hinten-neu.png"],
     },
   },
 ];
@@ -594,18 +610,11 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
                             Vorher
                           </p>
-                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[70vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
-                              onError={(e) => {
-                                console.warn(
-                                  "⚠️ Bild konnte nicht geladen werden:",
-                                  selectedTestimonial.images.before[currentImageIndex],
-                                );
-                                e.currentTarget.src = "/placeholder.svg";
-                              }}
                             />
                             <button
                               onClick={prevImage}
@@ -621,18 +630,11 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
                           </p>
-                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[70vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
-                              onError={(e) => {
-                                console.warn(
-                                  "⚠️ Bild konnte nicht geladen werden:",
-                                  selectedTestimonial.images.after[currentImageIndex],
-                                );
-                                e.currentTarget.src = "/placeholder.svg";
-                              }}
                             />
                             <button
                               onClick={nextImage}
