@@ -141,7 +141,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -227,8 +227,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/alex-vorne-alt.png", "/assets/alex-seite-alt.png", "/assets/alex-hinten-alt.png"],
-      after: ["/assets/alex-vorne-neu.png", "/assets/alex-seite-neu.png", "/assets/alex-hinten-neu.png"],
+      before: ["/assets/2alex-vorne-alt.png", "/assets/4alex-seite-alt.png", "/assets/6alex-hinten-alt.png"],
+      after: ["/assets/1alex-vorne-neu.png", "/assets/3alex-seite-neu.png", "/assets/5alex-hinten-neu.png"],
     },
   },
   {
