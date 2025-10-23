@@ -426,25 +426,43 @@ const TestimonialSection = () => {
               onClick={() => handleCardClick(testimonial)}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-gray-100 hover:border-red-300"
             >
-              {/* Avatar */}
-              <div className="flex justify-center mb-4">
-                {testimonial.useGenericAvatar ? (
-                  <GenericAvatar />
-                ) : (
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-red-100">
+              {/* Before/After Images - NEW! */}
+              <div className="relative mb-4 h-48 rounded-xl overflow-hidden">
+                <div className="absolute inset-0 grid grid-cols-2 gap-1">
+                  {/* VORHER */}
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900/60 via-gray-900/40 to-transparent z-10"></div>
                     <img
-                      src={testimonial.avatar}
-                      alt={testimonial.name}
+                      src={testimonial.images.before[0]}
+                      alt="Vorher"
                       className="w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        e.currentTarget.parentElement!.innerHTML =
-                          '<div class="w-full h-full bg-gradient-to-br from-red-500/20 to-gray-900/20 flex items-center justify-center"><span class="text-3xl font-bold text-gray-900">?</span></div>';
+                        e.currentTarget.src = testimonial.images.after[0];
                       }}
                     />
+                    <div className="absolute top-2 left-2 z-20 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-bold text-gray-700">
+                      VORHER
+                    </div>
                   </div>
-                )}
+
+                  {/* NACHHER */}
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-transparent z-10"></div>
+                    <img
+                      src={testimonial.images.after[0]}
+                      alt="Nachher"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-2 right-2 z-20 bg-red-600 px-2 py-0.5 rounded text-xs font-bold text-white">
+                      NACHHER
+                    </div>
+                  </div>
+                </div>
+
+                {/* Center Divider Line */}
+                <div className="absolute top-0 left-1/2 h-full w-0.5 bg-white/80 z-20"></div>
               </div>
 
               {/* Stars */}
@@ -515,14 +533,14 @@ const TestimonialSection = () => {
                   <X className="h-5 w-5" />
                 </button>
 
-                <div className="p-8">
+                <div className="p-4 md:p-8">
                   {/* Header */}
-                  <div className="text-center mb-8">
-                    <div className="flex justify-center mb-4">
+                  <div className="text-center mb-4 md:mb-8">
+                    <div className="flex justify-center mb-3 md:mb-4">
                       {selectedTestimonial.useGenericAvatar ? (
                         <GenericAvatar />
                       ) : (
-                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-100">
+                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-red-100">
                           <img
                             src={selectedTestimonial.avatar}
                             alt={selectedTestimonial.name}
@@ -532,17 +550,17 @@ const TestimonialSection = () => {
                       )}
                     </div>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
                       {selectedTestimonial.name}, {selectedTestimonial.age}
                     </h3>
 
-                    <div className="flex justify-center gap-1 mb-3">
+                    <div className="flex justify-center gap-0.5 md:gap-1 mb-2 md:mb-3">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                        <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
 
-                    <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                    <span className="inline-block bg-red-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold">
                       {selectedTestimonial.badge}
                     </span>
                   </div>
@@ -558,91 +576,70 @@ const TestimonialSection = () => {
                   {/* Content - Only show when images are loaded */}
                   {allImagesPreloaded && (
                     <>
-                      {/* CONTEXT SECTION - Shows Journey */}
-                      <div className="mb-8">
-                        <h3 className="text-2xl font-bold text-gray-900 text-center mb-6">Die Transformation</h3>
-                        <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-2xl p-6 border-2 border-gray-200">
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {/* Ausgangssituation */}
-                            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                                📍 Ausgangssituation
-                              </div>
-                              <div className="text-4xl font-bold text-gray-900 mb-2">
+                      {/* CONTEXT SECTION - Mobile Optimized */}
+                      <div className="mb-4">
+                        <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg p-3 border border-gray-200">
+                          <div className="flex justify-between items-center gap-2">
+                            {/* Start */}
+                            <div className="flex-1 text-center">
+                              <div className="text-xs text-gray-500 mb-1">📍 Start</div>
+                              <div className="text-xl md:text-2xl font-bold text-gray-900">
                                 {selectedTestimonial.weightLoss.startWeight} kg
                               </div>
-                              <div className="text-sm text-gray-600">{selectedTestimonial.age} Jahre alt</div>
                             </div>
 
-                            {/* Das Ziel */}
+                            {/* Arrow */}
+                            <div className="text-2xl">→</div>
+
+                            {/* Ziel */}
                             <div
-                              className={`text-center p-4 rounded-xl shadow-sm ${
-                                selectedTestimonial.goal === "muscleGain"
-                                  ? "bg-blue-50 border-2 border-blue-200"
-                                  : "bg-red-50 border-2 border-red-200"
+                              className={`flex-1 text-center px-2 py-1 rounded-lg ${
+                                selectedTestimonial.goal === "muscleGain" ? "bg-blue-50" : "bg-red-50"
                               }`}
                             >
-                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                                🎯 Das Ziel
-                              </div>
+                              <div className="text-xs text-gray-500 mb-1">🎯</div>
                               <div
-                                className={`text-3xl font-bold mb-2 ${
+                                className={`text-sm md:text-base font-bold ${
                                   selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                                 }`}
                               >
-                                {selectedTestimonial.goal === "muscleGain" ? "Muskelaufbau 💪" : "Abnehmen 🔥"}
-                              </div>
-                              <div className="text-sm text-gray-700 font-medium">
-                                {selectedTestimonial.weightLoss.weeks} Wochen Coaching
+                                {selectedTestimonial.goal === "muscleGain" ? "Aufbau" : "Abnehmen"}
                               </div>
                             </div>
 
-                            {/* Das Ergebnis */}
-                            <div
-                              className={`text-center p-4 rounded-xl shadow-sm ${
-                                selectedTestimonial.goal === "muscleGain"
-                                  ? "bg-blue-50 border-2 border-blue-300"
-                                  : "bg-red-50 border-2 border-red-300"
-                              }`}
-                            >
-                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                                ✨ Das Ergebnis
-                              </div>
+                            {/* Arrow */}
+                            <div className="text-2xl">→</div>
+
+                            {/* Ergebnis */}
+                            <div className="flex-1 text-center">
+                              <div className="text-xs text-gray-500 mb-1">✨ Jetzt</div>
                               <div
-                                className={`text-4xl font-bold mb-2 ${
+                                className={`text-xl md:text-2xl font-bold ${
                                   selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                                 }`}
                               >
                                 {selectedTestimonial.weightLoss.endWeight} kg
-                              </div>
-                              <div
-                                className={`text-sm font-bold ${
-                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-700" : "text-red-700"
-                                }`}
-                              >
-                                {selectedTestimonial.goal === "muscleGain" ? "+" : ""}
-                                {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg Transformation!
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      {/* Quote */}
-                      <div className="mb-8 bg-gray-50 rounded-xl p-6">
-                        <p className="text-lg text-gray-700 italic leading-relaxed text-center">
+                      {/* Quote - Very Compact */}
+                      <div className="mb-4 bg-gray-50 rounded-lg p-3">
+                        <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center line-clamp-4">
                           "{selectedTestimonial.fullQuote}"
                         </p>
                       </div>
 
                       {/* View Selector & Images - MOVED UP BEFORE CHART */}
-                      <div className="mb-8">
-                        <div className="flex justify-center gap-2 mb-4">
+                      <div className="mb-4 md:mb-8">
+                        <div className="flex justify-center gap-2 mb-3 md:mb-4">
                           {VIEW_LABELS.map((label, index) => (
                             <button
                               key={index}
                               onClick={() => handleImageIndexChange(index)}
-                              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                              className={`px-3 py-2 md:px-5 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all ${
                                 currentImageIndex === index
                                   ? "bg-red-600 text-white shadow-lg"
                                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -654,13 +651,13 @@ const TestimonialSection = () => {
                         </div>
 
                         {/* Side-by-Side Images */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
                           {/* VORHER */}
-                          <div className="space-y-2">
-                            <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                          <div className="space-y-1 md:space-y-2">
+                            <p className="text-center text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-wider">
                               Vorher
                             </p>
-                            <div className="relative h-[50vh] rounded-xl overflow-hidden shadow-lg">
+                            <div className="relative h-[35vh] md:h-[50vh] rounded-lg md:rounded-xl overflow-hidden shadow-lg">
                               <img
                                 src={selectedTestimonial.images.before[currentImageIndex]}
                                 alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
@@ -683,11 +680,11 @@ const TestimonialSection = () => {
                           </div>
 
                           {/* NACHHER */}
-                          <div className="space-y-2">
-                            <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
+                          <div className="space-y-1 md:space-y-2">
+                            <p className="text-center text-xs md:text-sm font-semibold text-red-600 uppercase tracking-wider">
                               Nachher
                             </p>
-                            <div className="relative h-[50vh] rounded-xl overflow-hidden shadow-lg">
+                            <div className="relative h-[35vh] md:h-[50vh] rounded-lg md:rounded-xl overflow-hidden shadow-lg">
                               <img
                                 src={selectedTestimonial.images.after[currentImageIndex]}
                                 alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
@@ -705,23 +702,23 @@ const TestimonialSection = () => {
                       </div>
 
                       {/* Chart & Stats - NOW BELOW IMAGES */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mb-4 md:mb-8">
                         {/* Chart */}
-                        <div className="space-y-4">
-                          <div className="flex items-center justify-center gap-3 mb-2">
-                            <h4 className="text-2xl font-bold text-gray-900">Gewichtsverlauf</h4>
+                        <div className="space-y-2 md:space-y-4">
+                          <div className="flex items-center justify-center gap-2 md:gap-3 mb-2">
+                            <h4 className="text-lg md:text-2xl font-bold text-gray-900">Gewichtsverlauf</h4>
                             <span
-                              className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                              className={`px-2 py-0.5 md:px-4 md:py-1 rounded-full text-xs md:text-sm font-semibold ${
                                 selectedTestimonial.goal === "muscleGain"
                                   ? "bg-blue-100 text-blue-700"
                                   : "bg-red-100 text-red-700"
                               }`}
                             >
-                              Ziel: {selectedTestimonial.goal === "muscleGain" ? "Muskelaufbau 💪" : "Abnehmen 🔥"}
+                              {selectedTestimonial.goal === "muscleGain" ? "💪 Aufbau" : "🔥 Abnehmen"}
                             </span>
                           </div>
-                          <div className="bg-gray-50 rounded-xl p-6">
-                            <ResponsiveContainer width="100%" height={300}>
+                          <div className="bg-gray-50 rounded-lg md:rounded-xl p-3 md:p-6">
+                            <ResponsiveContainer width="100%" height={250}>
                               <LineChart data={selectedTestimonial.weightLoss.chartData}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                                 <XAxis
@@ -730,6 +727,10 @@ const TestimonialSection = () => {
                                   stroke="#6b7280"
                                 />
                                 <YAxis
+                                  domain={[
+                                    (dataMin: number) => Math.floor(dataMin - 5),
+                                    (dataMax: number) => Math.ceil(dataMax + 5),
+                                  ]}
                                   label={{ value: "Gewicht (kg)", angle: -90, position: "left" }}
                                   stroke="#6b7280"
                                 />
@@ -775,43 +776,43 @@ const TestimonialSection = () => {
                         </div>
 
                         {/* Stats */}
-                        <div className="space-y-4">
+                        <div className="space-y-3 md:space-y-4">
                           <div
-                            className={`rounded-xl p-8 text-center ${
+                            className={`rounded-lg md:rounded-xl p-4 md:p-8 text-center ${
                               selectedTestimonial.goal === "muscleGain"
                                 ? "bg-gradient-to-br from-blue-50 to-blue-100/50"
                                 : "bg-gradient-to-br from-red-50 to-red-100/50"
                             }`}
                           >
                             <div
-                              className={`text-6xl font-bold mb-2 ${
+                              className={`text-4xl md:text-6xl font-bold mb-1 md:mb-2 ${
                                 selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                               }`}
                             >
                               {selectedTestimonial.goal === "muscleGain" ? "+" : "-"}
                               {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg
                             </div>
-                            <div className="text-xl text-gray-600 font-medium">
+                            <div className="text-base md:text-xl text-gray-600 font-medium">
                               in {selectedTestimonial.weightLoss.weeks} Wochen
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                              <div className="text-2xl font-bold text-gray-900 mb-1">
+                          <div className="grid grid-cols-2 gap-3 md:gap-4">
+                            <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
+                              <div className="text-xl md:text-2xl font-bold text-gray-900 mb-1">
                                 {selectedTestimonial.weightLoss.startWeight} kg
                               </div>
-                              <div className="text-sm text-gray-600">Startgewicht</div>
+                              <div className="text-xs md:text-sm text-gray-600">Startgewicht</div>
                             </div>
-                            <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                            <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
                               <div
-                                className={`text-2xl font-bold mb-1 ${
+                                className={`text-xl md:text-2xl font-bold mb-1 ${
                                   selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                                 }`}
                               >
                                 {selectedTestimonial.weightLoss.endWeight} kg
                               </div>
-                              <div className="text-sm text-gray-600">Aktuell</div>
+                              <div className="text-xs md:text-sm text-gray-600">Aktuell</div>
                             </div>
                           </div>
                         </div>
