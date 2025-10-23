@@ -55,8 +55,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lisa-before-front.png", "/assets/lisa-before-side.png", "/assets/lisa-before-back.png"],
-      after: ["/assets/lisa-after-front.png", "/assets/lisa-after-side.png", "/assets/lisa-after-back.png"],
+      before: ["/assets/lisa-before-front.png?v=1", "/assets/lisa-before-side.png?v=1", "/assets/lisa-before-back.png?v=1"],
+      after: ["/assets/lisa-after-front.png?v=1", "/assets/lisa-after-side.png?v=1", "/assets/lisa-after-back.png?v=1"],
     },
   },
   {
@@ -83,8 +83,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/lara-vorne-alt.png", "/assets/lara-seite-alt.png", "/assets/lara-hinten-alt.png"],
-      after: ["/assets/lara-vorne-neu.png", "/assets/lara-seite-neu.png", "/assets/lara-hinten-neu.png"],
+      before: ["/assets/lara-vorne-alt.png?v=1", "/assets/lara-seite-alt.png?v=1", "/assets/lara-hinten-alt.png?v=1"],
+      after: ["/assets/lara-vorne-neu.png?v=1", "/assets/lara-seite-neu.png?v=1", "/assets/lara-hinten-neu.png?v=1"],
     },
   },
   {
@@ -112,8 +112,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tanja-vorne-alt.png", "/assets/tanja-seite-alt.png", "/assets/tanja-hinten-alt.png"],
-      after: ["/assets/tanja-vorne-neu.png", "/assets/tanja-seite-neu.png", "/assets/tanja-hinten-neu.png"],
+      before: ["/assets/tanja-vorne-alt.png?v=1", "/assets/tanja-seite-alt.png?v=1", "/assets/tanja-hinten-alt.png?v=1"],
+      after: ["/assets/tanja-vorne-neu.png?v=1", "/assets/tanja-seite-neu.png?v=1", "/assets/tanja-hinten-neu.png?v=1"],
     },
   },
   {
@@ -140,8 +140,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
+      before: ["/assets/sarah-vorne-alt.png?v=1", "/assets/sarah-seite-alt.png?v=1", "/assets/sarah-hinten-alt.png?v=1"],
+      after: ["/assets/sarah-vorne-neu.png?v=1", "/assets/sarah-seite-neu.png?v=1", "/assets/sarah-hinten-neu.png?v=1"],
     },
   },
   {
@@ -169,8 +169,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/david-vorne-alt.png", "/assets/david-seite-alt.png", "/assets/david-hinten-alt.png"],
-      after: ["/assets/david-vorne-neu.png", "/assets/david-seite-neu.png", "/assets/david-hinten-neu.png"],
+      before: ["/assets/david-vorne-alt.png?v=2", "/assets/david-seite-alt.png?v=2", "/assets/david-hinten-alt.png?v=2"],
+      after: ["/assets/david-vorne-neu.png?v=2", "/assets/david-seite-neu.png?v=2", "/assets/david-hinten-neu.png?v=2"],
     },
   },
   {
@@ -198,8 +198,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/marco-vorne-alt.png", "/assets/marco-seite-alt.png", "/assets/marco-hinten-alt.png"],
-      after: ["/assets/marco-vorne-neu.png", "/assets/marco-seite-neu.png", "/assets/marco-hinten-neu.png"],
+      before: ["/assets/marco-vorne-alt.png?v=1", "/assets/marco-seite-alt.png?v=1", "/assets/marco-hinten-alt.png?v=1"],
+      after: ["/assets/marco-vorne-neu.png?v=1", "/assets/marco-seite-neu.png?v=1", "/assets/marco-hinten-neu.png?v=1"],
     },
   },
   {
@@ -227,8 +227,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/2alex-vorne-alt.png", "/assets/4alex-seite-alt.png", "/assets/6alex-hinten-alt.png"],
-      after: ["/assets/1alex-vorne-neu.png", "/assets/3alex-seite-neu.png", "/assets/5alex-hinten-neu.png"],
+      before: ["/assets/2alex-vorne-alt.png?v=1", "/assets/4alex-seite-alt.png?v=1", "/assets/6alex-hinten-alt.png?v=1"],
+      after: ["/assets/1alex-vorne-neu.png?v=1", "/assets/3alex-seite-neu.png?v=1", "/assets/5alex-hinten-neu.png?v=1"],
     },
   },
   {
@@ -255,8 +255,8 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/tahsin-vorne-alt.png", "/assets/tahsin-seite-alt.png", "/assets/tahsin-hinten-alt.png"],
-      after: ["/assets/tahsin-vorne-neu.png", "/assets/tahsin-seite-neu.png", "/assets/tahsin-hinten-neu.png"],
+      before: ["/assets/tahsin-vorne-alt.png?v=1", "/assets/tahsin-seite-alt.png?v=1", "/assets/tahsin-hinten-alt.png?v=1"],
+      after: ["/assets/tahsin-vorne-neu.png?v=1", "/assets/tahsin-seite-neu.png?v=1", "/assets/tahsin-hinten-neu.png?v=1"],
     },
   },
 ];
@@ -600,11 +600,11 @@ const TestimonialSection = () => {
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                console.error(
-                                  "Failed to load image:",
+                                console.warn(
+                                  "⚠️ Bild konnte nicht geladen werden:",
                                   selectedTestimonial.images.before[currentImageIndex],
                                 );
-                                e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
+                                e.currentTarget.src = "/placeholder.svg";
                               }}
                             />
                             <button
@@ -626,6 +626,13 @@ const TestimonialSection = () => {
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.warn(
+                                  "⚠️ Bild konnte nicht geladen werden:",
+                                  selectedTestimonial.images.after[currentImageIndex],
+                                );
+                                e.currentTarget.src = "/placeholder.svg";
+                              }}
                             />
                             <button
                               onClick={nextImage}
