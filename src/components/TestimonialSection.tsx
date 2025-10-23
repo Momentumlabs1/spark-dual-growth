@@ -169,8 +169,16 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/david-vorne-alt.png", "/assets/david-seite-alt.png", "/assets/david-hinten-alt.png"],
-      after: ["/assets/david-vorne-neu.png", "/assets/david-seite-neu.png", "/assets/david-hinten-neu.png"],
+      before: [
+        "/assets/testimonials/david/david-vorne-alt.png",
+        "/assets/testimonials/david/david-seite-alt.png",
+        "/assets/testimonials/david/david-hinten-alt.png",
+      ],
+      after: [
+        "/assets/testimonials/david/david-vorne-neu.png",
+        "/assets/testimonials/david/david-seite-neu.png",
+        "/assets/testimonials/david/david-hinten-neu.png",
+      ],
     },
   },
   {
@@ -227,8 +235,16 @@ const testimonials: Testimonial[] = [
       ],
     },
     images: {
-      before: ["/assets/alex-vorne-alt.png", "/assets/alex-seite-alt.png", "/assets/alex-hinten-alt.png"],
-      after: ["/assets/alex-vorne-neu.png", "/assets/alex-seite-neu.png", "/assets/alex-hinten-neu.png"],
+      before: [
+        "/assets/testimonials/alex/alex-vorne-alt.png",
+        "/assets/testimonials/alex/alex-seite-alt.png",
+        "/assets/testimonials/alex/alex-hinten-alt.png",
+      ],
+      after: [
+        "/assets/testimonials/alex/alex-vorne-neu.png",
+        "/assets/testimonials/alex/alex-seite-neu.png",
+        "/assets/testimonials/alex/alex-hinten-neu.png",
+      ],
     },
   },
   {
@@ -594,13 +610,7 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
                             Vorher
                           </p>
-                          <motion.div
-                            key={`before-${currentImageIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
-                          >
+                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
@@ -608,11 +618,11 @@ const TestimonialSection = () => {
                             />
                             <button
                               onClick={prevImage}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
                             >
                               <ChevronLeft className="h-6 w-6" />
                             </button>
-                          </motion.div>
+                          </div>
                         </div>
 
                         {/* NACHHER */}
@@ -620,13 +630,7 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
                           </p>
-                          <motion.div
-                            key={`after-${currentImageIndex}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg"
-                          >
+                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
@@ -634,11 +638,11 @@ const TestimonialSection = () => {
                             />
                             <button
                               onClick={nextImage}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
                             >
                               <ChevronRight className="h-6 w-6" />
                             </button>
-                          </motion.div>
+                          </div>
                         </div>
                       </div>
 
