@@ -535,33 +535,14 @@ const TestimonialSection = () => {
                 </button>
 
                 <div className="p-4 md:p-8">
-                  {/* Header */}
-                  <div className="text-center mb-4 md:mb-8">
-                    <div className="flex justify-center mb-3 md:mb-4">
-                      {selectedTestimonial.useGenericAvatar ? (
-                        <GenericAvatar />
-                      ) : (
-                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-red-100">
-                          <img
-                            src={selectedTestimonial.avatar}
-                            alt={selectedTestimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      )}
+                  {/* Compact Header */}
+                  <div className="flex items-center justify-between mb-3 md:mb-4 pb-3 border-b border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base md:text-lg font-bold text-gray-900">
+                        {selectedTestimonial.name}, {selectedTestimonial.age}
+                      </h3>
                     </div>
-
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                      {selectedTestimonial.name}, {selectedTestimonial.age}
-                    </h3>
-
-                    <div className="flex justify-center gap-0.5 md:gap-1 mb-2 md:mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
-
-                    <span className="inline-block bg-red-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold">
+                    <span className="inline-block bg-red-600 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap">
                       {selectedTestimonial.badge}
                     </span>
                   </div>
@@ -626,11 +607,18 @@ const TestimonialSection = () => {
                         </div>
                       </div>
 
-                      {/* Quote - Very Compact */}
-                      <div className="mb-4 bg-gray-50 rounded-lg p-3">
-                        <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center line-clamp-4">
-                          "{selectedTestimonial.fullQuote}"
-                        </p>
+                      {/* Quote with Star Rating */}
+                      <div className="mb-4">
+                        <div className="flex justify-center gap-0.5 mb-2">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <div className="bg-gray-50 rounded-lg p-3">
+                          <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center line-clamp-4">
+                            "{selectedTestimonial.fullQuote}"
+                          </p>
+                        </div>
                       </div>
 
                       {/* View Selector & Images - MOVED UP BEFORE CHART */}
