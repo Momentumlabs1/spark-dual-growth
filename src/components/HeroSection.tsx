@@ -61,7 +61,7 @@ const HeroSection = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-nf-red/30 via-transparent to-transparent blur-3xl" />
 
             <img
-              src="/assets/niklas-fabienne-hero.png"
+              src="/assets/niklas-fabienne-hero22.png"
               alt="Niklas und Fabienne"
               className="relative z-10 w-full h-auto"
             />
