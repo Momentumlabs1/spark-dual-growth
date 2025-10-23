@@ -141,7 +141,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -170,14 +170,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/assets/testimonials/david/david-vorne-alt.png",
-        "/assets/testimonials/david/david-seite-alt.png",
-        "/assets/testimonials/david/david-hinten-alt.png",
+        "/assets/david-vorne-alt.png",
+        "/assets/david-seite-alt.png",
+        "/assets/david-hinten-alt.png",
       ],
       after: [
-        "/assets/testimonials/david/david-vorne-neu.png",
-        "/assets/testimonials/david/david-seite-neu.png",
-        "/assets/testimonials/david/david-hinten-neu.png",
+        "/assets/david-vorne-neu.png",
+        "/assets/david-seite-neu.png",
+        "/assets/david-hinten-neu.png",
       ],
     },
   },
@@ -236,14 +236,14 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: [
-        "/assets/testimonials/alex/alex-vorne-alt.png",
-        "/assets/testimonials/alex/alex-seite-alt.png",
-        "/assets/testimonials/alex/alex-hinten-alt.png",
+        "/assets/2alex-vorne-alt.png",
+        "/assets/4alex-seite-alt.png",
+        "/assets/6alex-hinten-alt.png",
       ],
       after: [
-        "/assets/testimonials/alex/alex-vorne-neu.png",
-        "/assets/testimonials/alex/alex-seite-neu.png",
-        "/assets/testimonials/alex/alex-hinten-neu.png",
+        "/assets/1alex-vorne-neu.png",
+        "/assets/3alex-seite-neu.png",
+        "/assets/5alex-hinten-neu.png",
       ],
     },
   },
