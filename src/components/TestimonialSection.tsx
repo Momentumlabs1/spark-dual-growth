@@ -414,7 +414,7 @@ const TestimonialSection = () => {
         </motion.div>
 
         {/* Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -476,9 +476,13 @@ const TestimonialSection = () => {
               {/* Name */}
               <h3 className="text-xl font-bold text-gray-900 text-center mb-2">{testimonial.name}</h3>
 
-              {/* Badge */}
+              {/* Badge - Different colors based on goal */}
               <div className="flex justify-center mb-4">
-                <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-semibold">
+                <span
+                  className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                    testimonial.goal === "muscleGain" ? "bg-blue-100 text-blue-600" : "bg-red-100 text-red-600"
+                  }`}
+                >
                   {testimonial.badge}
                 </span>
               </div>
@@ -542,7 +546,11 @@ const TestimonialSection = () => {
                         {selectedTestimonial.name}, {selectedTestimonial.age}
                       </h3>
                     </div>
-                    <span className="inline-block bg-red-600 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap">
+                    <span
+                      className={`inline-block text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap ${
+                        selectedTestimonial.goal === "muscleGain" ? "bg-blue-600" : "bg-red-600"
+                      }`}
+                    >
                       {selectedTestimonial.badge}
                     </span>
                   </div>
@@ -550,7 +558,11 @@ const TestimonialSection = () => {
                   {/* Loading State */}
                   {!allImagesPreloaded && (
                     <div className="flex flex-col items-center justify-center py-20">
-                      <Loader2 className="h-12 w-12 animate-spin text-red-600 mb-4" />
+                      <Loader2
+                        className={`h-12 w-12 animate-spin mb-4 ${
+                          selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                        }`}
+                      />
                       <p className="text-gray-600">Bilder werden geladen...</p>
                     </div>
                   )}
@@ -614,43 +626,62 @@ const TestimonialSection = () => {
                             <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
                           ))}
                         </div>
-                        <div className="bg-gray-50 rounded-lg p-3">
-                          <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center line-clamp-4">
+                        <div className="bg-gray-50 rounded-lg p-4 md:p-6">
+                          <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center">
                             "{selectedTestimonial.fullQuote}"
                           </p>
                         </div>
                       </div>
 
-                      {/* View Selector & Images - MOVED UP BEFORE CHART */}
+                      {/* View Selector & Images */}
                       <div className="mb-4 md:mb-8">
-                        <div className="flex justify-center gap-2 mb-3 md:mb-4">
-                          {VIEW_LABELS.map((label, index) => (
-                            <button
-                              key={index}
-                              onClick={() => handleImageIndexChange(index)}
-                              className={`px-3 py-2 md:px-5 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all ${
-                                currentImageIndex === index
-                                  ? "bg-red-600 text-white shadow-lg"
-                                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                              }`}
-                            >
-                              {label}
-                            </button>
-                          ))}
+                        {/* View Selector with Navigation */}
+                        <div className="flex justify-center items-center gap-3 mb-4 md:mb-6">
+                          <button
+                            onClick={prevImage}
+                            className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </button>
+
+                          <div className="flex gap-2">
+                            {VIEW_LABELS.map((label, index) => (
+                              <button
+                                key={index}
+                                onClick={() => handleImageIndexChange(index)}
+                                className={`px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all ${
+                                  currentImageIndex === index
+                                    ? selectedTestimonial.goal === "muscleGain"
+                                      ? "bg-blue-600 text-white shadow-lg"
+                                      : "bg-red-600 text-white shadow-lg"
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                                }`}
+                              >
+                                {label}
+                              </button>
+                            ))}
+                          </div>
+
+                          <button
+                            onClick={nextImage}
+                            className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
+                          >
+                            <ChevronRight className="h-5 w-5" />
+                          </button>
                         </div>
 
-                        {/* Side-by-Side Images */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
+                        {/* Side-by-Side Images - Always 2 columns */}
+                        <div className="grid grid-cols-2 gap-3 md:gap-6">
                           {/* VORHER */}
-                          <div className="space-y-1 md:space-y-2">
-                            <p className="text-center text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                          <div className="space-y-2">
+                            <p className="text-center text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wider">
                               Vorher
                             </p>
-                            <div className="relative h-[35vh] md:h-[50vh] rounded-lg md:rounded-xl overflow-hidden shadow-lg">
+                            <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
                               <img
                                 src={selectedTestimonial.images.before[currentImageIndex]}
                                 alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                                className="w-full h-full object-contain bg-white"
+                                className="w-full h-full object-cover"
                                 onError={(e) => {
                                   console.error(
                                     "Failed to load image:",
@@ -659,32 +690,24 @@ const TestimonialSection = () => {
                                   e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
                                 }}
                               />
-                              <button
-                                onClick={prevImage}
-                                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
-                              >
-                                <ChevronLeft className="h-6 w-6" />
-                              </button>
                             </div>
                           </div>
 
                           {/* NACHHER */}
-                          <div className="space-y-1 md:space-y-2">
-                            <p className="text-center text-xs md:text-sm font-semibold text-red-600 uppercase tracking-wider">
+                          <div className="space-y-2">
+                            <p
+                              className={`text-center text-xs md:text-sm font-bold uppercase tracking-wider ${
+                                selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                              }`}
+                            >
                               Nachher
                             </p>
-                            <div className="relative h-[35vh] md:h-[50vh] rounded-lg md:rounded-xl overflow-hidden shadow-lg">
+                            <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
                               <img
                                 src={selectedTestimonial.images.after[currentImageIndex]}
                                 alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                                className="w-full h-full object-contain bg-white"
+                                className="w-full h-full object-cover"
                               />
-                              <button
-                                onClick={nextImage}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
-                              >
-                                <ChevronRight className="h-6 w-6" />
-                              </button>
                             </div>
                           </div>
                         </div>
