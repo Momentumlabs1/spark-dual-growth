@@ -12,6 +12,7 @@ interface Testimonial {
   useGenericAvatar: boolean;
   rating: 5;
   badge: string;
+  goal: "weightLoss" | "muscleGain"; // NEW: Goal type for color coding
   shortQuote: string;
   fullQuote: string;
   weightLoss: {
@@ -38,6 +39,7 @@ const testimonials: Testimonial[] = [
     useGenericAvatar: false,
     rating: 5,
     badge: "13 kg abgenommen",
+    goal: "weightLoss",
     shortQuote: "Von 'nur funktionieren' zu wirklich leben - mental, körperlich, emotional.",
     fullQuote:
       "Ich war überfordert, skeptisch und gestresst. Aber ich habe mich entschieden, mich selbst nicht mehr im Weg zu stehen. Mit Niklas und Fabienne habe ich von 88 kg auf 75 kg abgenommen – aber vor allem: Ich habe klaren Kopf statt Dauer-Frust, Energie statt Erschöpfung, und einen Wohlfühlkörper ohne Verzicht und Verbote bekommen.",
@@ -66,20 +68,21 @@ const testimonials: Testimonial[] = [
     avatar: "/assets/lara-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "15 kg abgenommen",
+    badge: "13 kg abgenommen",
+    goal: "weightLoss",
     shortQuote: "Endlich wieder selbstbewusst und voller Energie!",
     fullQuote:
-      "Nach der Schwangerschaft fühlte ich mich in meinem Körper nicht mehr wohl. Mit dem Team-Coaching habe ich nicht nur 15 kg abgenommen, sondern auch meine Lebensfreude wiedergefunden. Ich bin stolz auf mich!",
+      "Nach der Schwangerschaft fühlte ich mich in meinem Körper nicht mehr wohl. Mit dem Team-Coaching habe ich nicht nur 13 kg abgenommen, sondern auch meine Lebensfreude wiedergefunden. Ich bin stolz auf mich!",
     weightLoss: {
-      startWeight: 82,
-      endWeight: 67,
-      totalLoss: 15,
-      weeks: 18,
+      startWeight: 90,
+      endWeight: 77,
+      totalLoss: 13,
+      weeks: 12,
       chartData: [
-        { week: 0, weight: 82 },
-        { week: 6, weight: 77 },
-        { week: 12, weight: 72 },
-        { week: 18, weight: 67 },
+        { week: 0, weight: 90 },
+        { week: 4, weight: 85 },
+        { week: 8, weight: 81 },
+        { week: 12, weight: 77 },
       ],
     },
     images: {
@@ -94,21 +97,22 @@ const testimonials: Testimonial[] = [
     avatar: "/assets/tanja-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "12 kg abgenommen",
+    badge: "4 kg abgenommen",
+    goal: "weightLoss",
     shortQuote: "Mein Leben hat sich komplett verändert!",
     fullQuote:
-      "Ich hatte schon so viele Diäten probiert, aber nichts hat nachhaltig funktioniert. Mit Niklas und Fabienne habe ich endlich verstanden, wie Ernährung wirklich funktioniert. 12 kg weniger und ich fühle mich großartig!",
+      "Ich hatte schon so viele Diäten probiert, aber nichts hat nachhaltig funktioniert. Mit Niklas und Fabienne habe ich endlich verstanden, wie Ernährung wirklich funktioniert. Ich fühle mich großartig und bin auf dem besten Weg zu meinem Ziel!",
     weightLoss: {
-      startWeight: 78,
-      endWeight: 66,
-      totalLoss: 12,
-      weeks: 14,
+      startWeight: 62.3,
+      endWeight: 58.2,
+      totalLoss: 4.1,
+      weeks: 16,
       chartData: [
-        { week: 0, weight: 78 },
-        { week: 4, weight: 74 },
-        { week: 8, weight: 70 },
-        { week: 12, weight: 67 },
-        { week: 14, weight: 66 },
+        { week: 0, weight: 62.3 },
+        { week: 4, weight: 61 },
+        { week: 8, weight: 60 },
+        { week: 12, weight: 59 },
+        { week: 16, weight: 58.2 },
       ],
     },
     images: {
@@ -124,6 +128,7 @@ const testimonials: Testimonial[] = [
     useGenericAvatar: true,
     rating: 5,
     badge: "11 kg abgenommen",
+    goal: "weightLoss",
     shortQuote: "Ich habe meine Traumfigur erreicht!",
     fullQuote:
       "Das Coaching war genau das, was ich gebraucht habe. Die Kombination aus persönlicher Betreuung und flexibler Ernährung hat perfekt funktioniert. 11 kg weniger und ich fühle mich so gut wie noch nie!",
@@ -141,7 +146,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -151,34 +156,28 @@ const testimonials: Testimonial[] = [
     avatar: "/assets/david-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "13 kg abgenommen",
-    shortQuote: "Endlich die Transformation die ich wollte!",
+    badge: "10 kg Muskeln aufgebaut",
+    goal: "muscleGain",
+    shortQuote: "Körperlich wie mental ein völlig neuer Mensch! 💪",
     fullQuote:
-      "Mit Niklas und Fabienne habe ich endlich meine Ziele erreicht. Die Kombination aus Training und Ernährung war perfekt auf mich abgestimmt. Ich fühle mich stärker und fitter als je zuvor!",
+      "In nur 15 Monaten Coaching habe ich mehr verändert als in 5 Jahren alleine. Mit dem Wunsch 'fitter zu werden' gestartet - heute stehe ich mit 102,5 Kilo Muskelmasse vor dem Spiegel. Kein Gramm ist Zufall, sondern durchdachter Muskelaufbau mit System. Fitness ist für mich kein Ziel mehr, sondern Alltag. Ich gehe heute mit einem Selbstbewusstsein durchs Leben, das spürbar ist.",
     weightLoss: {
-      startWeight: 95,
-      endWeight: 82,
-      totalLoss: 13,
-      weeks: 20,
+      startWeight: 89,
+      endWeight: 99,
+      totalLoss: -10,
+      weeks: 30,
       chartData: [
-        { week: 0, weight: 95 },
-        { week: 5, weight: 91 },
-        { week: 10, weight: 87 },
-        { week: 15, weight: 84 },
-        { week: 20, weight: 82 },
+        { week: 0, weight: 89 },
+        { week: 6, weight: 91 },
+        { week: 12, weight: 93 },
+        { week: 18, weight: 95 },
+        { week: 24, weight: 97 },
+        { week: 30, weight: 99 },
       ],
     },
     images: {
-      before: [
-        "/assets/david-vorne-alt.png",
-        "/assets/david-seite-alt.png",
-        "/assets/david-hinten-alt.png",
-      ],
-      after: [
-        "/assets/david-vorne-neu.png",
-        "/assets/david-seite-neu.png",
-        "/assets/david-hinten-neu.png",
-      ],
+      before: ["/assets/2david-vorne-alt.png", "/assets/4david-seite-alt.png", "/assets/6david-hinten-alt.png"],
+      after: ["/assets/1david-vorne-neu.png", "/assets/3david-seite-neu.png", "/assets/5david-hinten-neu.png"],
     },
   },
   {
@@ -189,9 +188,10 @@ const testimonials: Testimonial[] = [
     useGenericAvatar: true,
     rating: 5,
     badge: "16 kg abgenommen",
-    shortQuote: "Vom Büromenschen zum Fitnessfan!",
+    goal: "weightLoss",
+    shortQuote: "Stick to the plan! 💪",
     fullQuote:
-      "Ich saß nur am Schreibtisch und hatte null Motivation für Sport. Das Team hat mich motiviert und mir gezeigt, wie ich Training in meinen Alltag integrieren kann. 16 kg weniger und endlich wieder fit!",
+      "Ich habe schon mal ein wenig abgenommen, aber das Gewicht war dann meist auch schnell wieder da. Ich habe also nach einem nachhaltigen Weg gesucht, dauerhaft abzunehmen und das gewünschte Gewicht zu halten. Ich habe im März mit diesem Programm angefangen und kann es nach anfänglicher Skepsis beruhigt weiterempfehlen. Der Plan für die Ernährung lässt sich super in den Alltag integrieren und die Gerichteauswahl ist sehr vielfältig. Der Sportplan funktioniert für mich auch super. Top Coach, Top Pläne, Top App!",
     weightLoss: {
       startWeight: 98,
       endWeight: 82,
@@ -217,34 +217,27 @@ const testimonials: Testimonial[] = [
     avatar: "/assets/alex-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "14 kg abgenommen",
-    shortQuote: "Beste Entscheidung für meine Gesundheit!",
+    badge: "12 kg abgenommen",
+    goal: "weightLoss",
+    shortQuote: "Anfangs war ich skeptisch - jetzt bin ich überzeugt! 💪",
     fullQuote:
-      "Ich wollte schon lange etwas ändern, aber wusste nicht wie. Das Coaching hat mir den Weg gezeigt. 14 kg weniger, mehr Muskeln und ein komplett neues Lebensgefühl!",
+      "Ich hatte jahrelang Erfahrung im Krafttraining, Boxen und Fußball. Motivation war nie mein Problem, aber bei der Ernährung hat immer der letzte Feinschliff gefehlt. Mit dem Coaching hat sich das komplett verändert. Kein Druck, kein Zwang, sondern Struktur, ehrliche Unterstützung und alltagstaugliche Tipps. In 4 Monaten 12 Kilo abgenommen - und das ganz ohne Verzicht, sondern mit einem Plan, der zu meinem Leben passt.",
     weightLoss: {
-      startWeight: 92,
-      endWeight: 78,
-      totalLoss: 14,
-      weeks: 19,
+      startWeight: 97.4,
+      endWeight: 85.4,
+      totalLoss: 12,
+      weeks: 16,
       chartData: [
-        { week: 0, weight: 92 },
-        { week: 5, weight: 87 },
-        { week: 10, weight: 83 },
-        { week: 15, weight: 80 },
-        { week: 19, weight: 78 },
+        { week: 0, weight: 97.4 },
+        { week: 4, weight: 94 },
+        { week: 8, weight: 90 },
+        { week: 12, weight: 87 },
+        { week: 16, weight: 85.4 },
       ],
     },
     images: {
-      before: [
-        "/assets/2alex-vorne-alt.png",
-        "/assets/4alex-seite-alt.png",
-        "/assets/6alex-hinten-alt.png",
-      ],
-      after: [
-        "/assets/1alex-vorne-neu.png",
-        "/assets/3alex-seite-neu.png",
-        "/assets/5alex-hinten-neu.png",
-      ],
+      before: ["/assets/2alex-vorne-alt.png", "/assets/4alex-seite-alt.png", "/assets/6alex-hinten-alt.png"],
+      after: ["/assets/1alex-vorne-neu.png", "/assets/3alex-seite-neu.png", "/assets/5alex-hinten-neu.png"],
     },
   },
   {
@@ -254,25 +247,57 @@ const testimonials: Testimonial[] = [
     avatar: "/assets/tahsin-avatar.jpg",
     useGenericAvatar: true,
     rating: 5,
-    badge: "14 kg abgenommen",
-    shortQuote: "Beste Entscheidung meines Lebens!",
+    badge: "9 kg abgenommen",
+    goal: "weightLoss",
+    shortQuote: "Das Coaching war der Schlüssel zum Erfolg!",
     fullQuote:
-      "Das Team-Coaching hat den Unterschied gemacht. Ich fühle mich fitter und gesünder als je zuvor. Die Betreuung war top und die Ergebnisse sprechen für sich!",
+      "Meine Geschichte: Es ist nicht deine Frau, Freundin, die Familie oder der Freundeskreis der aus einem das macht was man sich erarbeitet. Sondern du selbst... Das Leben hat mich erst vor kurzem zu Boden geworfen, aber ich habe nicht den Mut und die Kraft verloren trotz alle dem an mich zu glauben und weiter zu machen. Das Coaching von und mit Niklas war für mich der Schlüssel zum Erfolg! Mit Nik an meiner Seite habe ich das geschafft worauf ich schon lange hingearbeitet habe.",
     weightLoss: {
-      startWeight: 102,
-      endWeight: 88,
-      totalLoss: 14,
-      weeks: 18,
+      startWeight: 83.4,
+      endWeight: 74.7,
+      totalLoss: 8.7,
+      weeks: 12,
       chartData: [
-        { week: 0, weight: 102 },
-        { week: 6, weight: 96 },
-        { week: 12, weight: 91 },
-        { week: 18, weight: 88 },
+        { week: 0, weight: 83.4 },
+        { week: 3, weight: 80 },
+        { week: 6, weight: 78 },
+        { week: 9, weight: 76 },
+        { week: 12, weight: 74.7 },
       ],
     },
     images: {
       before: ["/assets/tahsin-vorne-alt.png", "/assets/tahsin-seite-alt.png", "/assets/tahsin-hinten-alt.png"],
       after: ["/assets/tahsin-vorne-neu.png", "/assets/tahsin-seite-neu.png", "/assets/tahsin-hinten-neu.png"],
+    },
+  },
+  {
+    id: "9",
+    name: "Florian J.",
+    age: 29,
+    avatar: "/assets/florian-avatar.jpg",
+    useGenericAvatar: true,
+    rating: 5,
+    badge: "12 kg Muskeln aufgebaut",
+    goal: "muscleGain",
+    shortQuote: "Aktuell in meiner besten Form! 💪",
+    fullQuote:
+      "War über ein Jahr bei Niklas im Coaching. Wir haben zusammen viel erreicht, was mir davor alleine über Jahre nicht gelungen war. Aktuell beste Form! Top Coach, Top Pläne, Top App.",
+    weightLoss: {
+      startWeight: 80,
+      endWeight: 92,
+      totalLoss: -12,
+      weeks: 52,
+      chartData: [
+        { week: 0, weight: 80 },
+        { week: 12, weight: 83 },
+        { week: 24, weight: 86 },
+        { week: 36, weight: 89 },
+        { week: 52, weight: 92 },
+      ],
+    },
+    images: {
+      before: ["/assets/2flo-vorne-alt.png", "/assets/4flo-seite-alt.png", "/assets/6flo-hinten-alt.png"],
+      after: ["/assets/1flo-vorne-neu.png", "/assets/3flo-seite-neu.png", "/assets/5flo-hinten-neu.png"],
     },
   },
 ];
@@ -451,6 +476,29 @@ const TestimonialSection = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 md:mt-20"
+        >
+          <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-3xl p-8 md:p-12 text-center shadow-2xl">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Willst du auch so eine Transformation?
+            </h3>
+            <p className="text-xl md:text-2xl text-red-50 mb-8 max-w-2xl mx-auto">
+              Starte jetzt deine Reise zu deinem Traumkörper – genauso wie unsere 500+ erfolgreichen Kunden!
+            </p>
+            <button
+              onClick={() => (window.location.href = "/#contact")}
+              className="bg-white text-red-600 px-10 py-4 rounded-full text-lg md:text-xl font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:scale-105 transform"
+            >
+              Jetzt starten! 🔥
+            </button>
+          </div>
+        </motion.div>
       </div>
 
       {/* Modal */}
@@ -514,7 +562,18 @@ const TestimonialSection = () => {
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                         {/* Chart */}
                         <div className="space-y-4">
-                          <h4 className="text-2xl font-bold text-gray-900 text-center">Gewichtsverlauf</h4>
+                          <div className="flex items-center justify-center gap-3 mb-2">
+                            <h4 className="text-2xl font-bold text-gray-900">Gewichtsverlauf</h4>
+                            <span
+                              className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                                selectedTestimonial.goal === "muscleGain"
+                                  ? "bg-blue-100 text-blue-700"
+                                  : "bg-red-100 text-red-700"
+                              }`}
+                            >
+                              Ziel: {selectedTestimonial.goal === "muscleGain" ? "Muskelaufbau 💪" : "Abnehmen 🔥"}
+                            </span>
+                          </div>
                           <div className="bg-gray-50 rounded-xl p-6">
                             <ResponsiveContainer width="100%" height={300}>
                               <LineChart data={selectedTestimonial.weightLoss.chartData}>
@@ -540,17 +599,28 @@ const TestimonialSection = () => {
                                 />
                                 <defs>
                                   <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#DC2626" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+                                    <stop
+                                      offset="5%"
+                                      stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
+                                      stopOpacity={0.3}
+                                    />
+                                    <stop
+                                      offset="95%"
+                                      stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
+                                      stopOpacity={0}
+                                    />
                                   </linearGradient>
                                 </defs>
                                 <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
                                 <Line
                                   type="monotone"
                                   dataKey="weight"
-                                  stroke="#DC2626"
+                                  stroke={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
                                   strokeWidth={3}
-                                  dot={{ fill: "#DC2626", r: 6 }}
+                                  dot={{
+                                    fill: selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626",
+                                    r: 6,
+                                  }}
                                   activeDot={{ r: 8 }}
                                 />
                               </LineChart>
@@ -560,9 +630,20 @@ const TestimonialSection = () => {
 
                         {/* Stats */}
                         <div className="space-y-4">
-                          <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-8 text-center">
-                            <div className="text-6xl font-bold text-red-600 mb-2">
-                              -{selectedTestimonial.weightLoss.totalLoss} kg
+                          <div
+                            className={`rounded-xl p-8 text-center ${
+                              selectedTestimonial.goal === "muscleGain"
+                                ? "bg-gradient-to-br from-blue-50 to-blue-100/50"
+                                : "bg-gradient-to-br from-red-50 to-red-100/50"
+                            }`}
+                          >
+                            <div
+                              className={`text-6xl font-bold mb-2 ${
+                                selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                              }`}
+                            >
+                              {selectedTestimonial.goal === "muscleGain" ? "+" : "-"}
+                              {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg
                             </div>
                             <div className="text-xl text-gray-600 font-medium">
                               in {selectedTestimonial.weightLoss.weeks} Wochen
@@ -577,7 +658,11 @@ const TestimonialSection = () => {
                               <div className="text-sm text-gray-600">Startgewicht</div>
                             </div>
                             <div className="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
-                              <div className="text-2xl font-bold text-red-600 mb-1">
+                              <div
+                                className={`text-2xl font-bold mb-1 ${
+                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                                }`}
+                              >
                                 {selectedTestimonial.weightLoss.endWeight} kg
                               </div>
                               <div className="text-sm text-gray-600">Aktuell</div>
@@ -610,11 +695,18 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
                             Vorher
                           </p>
-                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[55vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.error(
+                                  "Failed to load image:",
+                                  selectedTestimonial.images.before[currentImageIndex],
+                                );
+                                e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
+                              }}
                             />
                             <button
                               onClick={prevImage}
@@ -630,7 +722,7 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
                           </p>
-                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[55vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
