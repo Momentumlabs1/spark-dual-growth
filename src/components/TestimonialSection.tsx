@@ -594,11 +594,18 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
                             Vorher
                           </p>
-                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[70vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.error(
+                                  "Failed to load image:",
+                                  selectedTestimonial.images.before[currentImageIndex],
+                                );
+                                e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
+                              }}
                             />
                             <button
                               onClick={prevImage}
@@ -614,7 +621,7 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
                           </p>
-                          <div className="relative aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[70vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                             <img
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
