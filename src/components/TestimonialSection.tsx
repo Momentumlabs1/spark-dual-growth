@@ -426,12 +426,11 @@ const TestimonialSection = () => {
               onClick={() => handleCardClick(testimonial)}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer border-2 border-gray-100 hover:border-red-300"
             >
-              {/* Before/After Images - NEW! */}
-              <div className="relative mb-4 h-48 rounded-xl overflow-hidden">
+              {/* Before/After Images - Subtle Version */}
+              <div className="relative mb-4 h-48 rounded-xl overflow-hidden group">
                 <div className="absolute inset-0 grid grid-cols-2 gap-1">
                   {/* VORHER */}
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900/60 via-gray-900/40 to-transparent z-10"></div>
+                  <div className="relative">
                     <img
                       src={testimonial.images.before[0]}
                       alt="Vorher"
@@ -441,28 +440,30 @@ const TestimonialSection = () => {
                         e.currentTarget.src = testimonial.images.after[0];
                       }}
                     />
-                    <div className="absolute top-2 left-2 z-20 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-bold text-gray-700">
-                      VORHER
+                    <div className="absolute top-2 left-2 z-20 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-semibold text-white">
+                      Vorher
                     </div>
                   </div>
 
                   {/* NACHHER */}
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-transparent z-10"></div>
+                  <div className="relative">
                     <img
                       src={testimonial.images.after[0]}
                       alt="Nachher"
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute top-2 right-2 z-20 bg-red-600 px-2 py-0.5 rounded text-xs font-bold text-white">
-                      NACHHER
+                    <div className="absolute top-2 right-2 z-20 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-semibold text-white">
+                      Nachher
                     </div>
                   </div>
                 </div>
 
+                {/* Black Overlay über ALLE Bilder - dämpft sie */}
+                <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/20 transition-all duration-300"></div>
+
                 {/* Center Divider Line */}
-                <div className="absolute top-0 left-1/2 h-full w-0.5 bg-white/80 z-20"></div>
+                <div className="absolute top-0 left-1/2 h-full w-0.5 bg-white/50 z-20"></div>
               </div>
 
               {/* Stars */}
