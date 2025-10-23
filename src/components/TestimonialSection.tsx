@@ -558,6 +558,83 @@ const TestimonialSection = () => {
                   {/* Content - Only show when images are loaded */}
                   {allImagesPreloaded && (
                     <>
+                      {/* CONTEXT SECTION - Shows Journey */}
+                      <div className="mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900 text-center mb-6">Die Transformation</h3>
+                        <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-2xl p-6 border-2 border-gray-200">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {/* Ausgangssituation */}
+                            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
+                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                📍 Ausgangssituation
+                              </div>
+                              <div className="text-4xl font-bold text-gray-900 mb-2">
+                                {selectedTestimonial.weightLoss.startWeight} kg
+                              </div>
+                              <div className="text-sm text-gray-600">{selectedTestimonial.age} Jahre alt</div>
+                            </div>
+
+                            {/* Das Ziel */}
+                            <div
+                              className={`text-center p-4 rounded-xl shadow-sm ${
+                                selectedTestimonial.goal === "muscleGain"
+                                  ? "bg-blue-50 border-2 border-blue-200"
+                                  : "bg-red-50 border-2 border-red-200"
+                              }`}
+                            >
+                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                🎯 Das Ziel
+                              </div>
+                              <div
+                                className={`text-3xl font-bold mb-2 ${
+                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                                }`}
+                              >
+                                {selectedTestimonial.goal === "muscleGain" ? "Muskelaufbau 💪" : "Abnehmen 🔥"}
+                              </div>
+                              <div className="text-sm text-gray-700 font-medium">
+                                {selectedTestimonial.weightLoss.weeks} Wochen Coaching
+                              </div>
+                            </div>
+
+                            {/* Das Ergebnis */}
+                            <div
+                              className={`text-center p-4 rounded-xl shadow-sm ${
+                                selectedTestimonial.goal === "muscleGain"
+                                  ? "bg-blue-50 border-2 border-blue-300"
+                                  : "bg-red-50 border-2 border-red-300"
+                              }`}
+                            >
+                              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                ✨ Das Ergebnis
+                              </div>
+                              <div
+                                className={`text-4xl font-bold mb-2 ${
+                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                                }`}
+                              >
+                                {selectedTestimonial.weightLoss.endWeight} kg
+                              </div>
+                              <div
+                                className={`text-sm font-bold ${
+                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-700" : "text-red-700"
+                                }`}
+                              >
+                                {selectedTestimonial.goal === "muscleGain" ? "+" : ""}
+                                {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg Transformation!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Quote */}
+                      <div className="mb-8 bg-gray-50 rounded-xl p-6">
+                        <p className="text-lg text-gray-700 italic leading-relaxed text-center">
+                          "{selectedTestimonial.fullQuote}"
+                        </p>
+                      </div>
+
                       {/* Chart & Stats - TOP SECTION */}
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                         {/* Chart */}
@@ -695,11 +772,11 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
                             Vorher
                           </p>
-                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[55vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative h-[45vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
                             <img
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                               onError={(e) => {
                                 console.error(
                                   "Failed to load image:",
@@ -722,11 +799,11 @@ const TestimonialSection = () => {
                           <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
                             Nachher
                           </p>
-                          <div className="relative aspect-[3/4] lg:aspect-auto lg:h-[55vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                          <div className="relative h-[45vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
                             <img
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                             />
                             <button
                               onClick={nextImage}
