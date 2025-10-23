@@ -30,12 +30,12 @@ const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-nf-black via-nf-black/95 to-nf-red/20 py-12 md:py-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-nf-black via-nf-black to-nf-red/20 py-12 md:py-20"
     >
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
-          style={{ y, opacity }}
+          style={{ opacity }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -51,7 +51,7 @@ const HeroSection = () => {
             <img
               src="/assets/hero-image.png"
               alt="Niklas und Fabienne - Dein Coaching Team für Körper & Geist"
-              className="w-full max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] mx-auto h-auto rounded-2xl shadow-red-glow border border-nf-white/20"
+              className="w-full max-w-[85%] sm:max-w-[75%] md:max-w-[70%] lg:max-w-[65%] mx-auto h-auto rounded-2xl shadow-[0_20px_60px_-15px_rgba(239,68,68,0.5)]"
               loading="eager"
             />
           </motion.div>
