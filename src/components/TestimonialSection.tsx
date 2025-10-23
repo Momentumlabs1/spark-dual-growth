@@ -635,7 +635,76 @@ const TestimonialSection = () => {
                         </p>
                       </div>
 
-                      {/* Chart & Stats - TOP SECTION */}
+                      {/* View Selector & Images - MOVED UP BEFORE CHART */}
+                      <div className="mb-8">
+                        <div className="flex justify-center gap-2 mb-4">
+                          {VIEW_LABELS.map((label, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleImageIndexChange(index)}
+                              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                                currentImageIndex === index
+                                  ? "bg-red-600 text-white shadow-lg"
+                                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Side-by-Side Images */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          {/* VORHER */}
+                          <div className="space-y-2">
+                            <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                              Vorher
+                            </p>
+                            <div className="relative h-[50vh] rounded-xl overflow-hidden shadow-lg">
+                              <img
+                                src={selectedTestimonial.images.before[currentImageIndex]}
+                                alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
+                                className="w-full h-full object-contain bg-white"
+                                onError={(e) => {
+                                  console.error(
+                                    "Failed to load image:",
+                                    selectedTestimonial.images.before[currentImageIndex],
+                                  );
+                                  e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
+                                }}
+                              />
+                              <button
+                                onClick={prevImage}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
+                              >
+                                <ChevronLeft className="h-6 w-6" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* NACHHER */}
+                          <div className="space-y-2">
+                            <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
+                              Nachher
+                            </p>
+                            <div className="relative h-[50vh] rounded-xl overflow-hidden shadow-lg">
+                              <img
+                                src={selectedTestimonial.images.after[currentImageIndex]}
+                                alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
+                                className="w-full h-full object-contain bg-white"
+                              />
+                              <button
+                                onClick={nextImage}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
+                              >
+                                <ChevronRight className="h-6 w-6" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Chart & Stats - NOW BELOW IMAGES */}
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                         {/* Chart */}
                         <div className="space-y-4">
@@ -746,78 +815,6 @@ const TestimonialSection = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
-
-                      {/* View Selector */}
-                      <div className="flex justify-center gap-2 mb-8">
-                        {VIEW_LABELS.map((label, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleImageIndexChange(index)}
-                            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                              currentImageIndex === index
-                                ? "bg-red-600 text-white shadow-lg"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Side-by-Side Images */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        {/* VORHER */}
-                        <div className="space-y-2">
-                          <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                            Vorher
-                          </p>
-                          <div className="relative h-[45vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
-                            <img
-                              src={selectedTestimonial.images.before[currentImageIndex]}
-                              alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-contain"
-                              onError={(e) => {
-                                console.error(
-                                  "Failed to load image:",
-                                  selectedTestimonial.images.before[currentImageIndex],
-                                );
-                                e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
-                              }}
-                            />
-                            <button
-                              onClick={prevImage}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
-                            >
-                              <ChevronLeft className="h-6 w-6" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* NACHHER */}
-                        <div className="space-y-2">
-                          <p className="text-center text-sm font-semibold text-red-600 uppercase tracking-wider">
-                            Nachher
-                          </p>
-                          <div className="relative h-[45vh] bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
-                            <img
-                              src={selectedTestimonial.images.after[currentImageIndex]}
-                              alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                              className="w-full h-full object-contain"
-                            />
-                            <button
-                              onClick={nextImage}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
-                            >
-                              <ChevronRight className="h-6 w-6" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Full Quote */}
-                      <div className="bg-gray-50 rounded-xl p-6 text-center">
-                        <p className="text-lg text-gray-700 italic">"{selectedTestimonial.fullQuote}"</p>
                       </div>
                     </>
                   )}
