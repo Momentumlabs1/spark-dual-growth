@@ -10,7 +10,7 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -20,93 +20,92 @@ const HeroSection = () => {
   };
 
   return (
-    <section
-      ref={containerRef}
-      className="relative bg-black overflow-hidden pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28"
-    >
-      <div className="absolute inset-0 bg-gradient-radial from-nf-red/10 via-transparent to-transparent" />
+    <section ref={containerRef} className="relative bg-black min-h-screen flex items-center overflow-hidden">
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-nf-red/20 via-purple-900/20 to-pink-900/20 opacity-40" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-nf-red/10 via-transparent to-transparent" />
+      </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* Title - CLEANER & BREITER */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-16">
+        {/* Clean Title - NO red text above */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 sm:mb-16 md:mb-20 max-w-5xl mx-auto"
+          className="text-center mb-8"
         >
-          <span className="inline-block text-nf-red text-xs sm:text-sm md:text-base font-semibold tracking-[0.2em] uppercase mb-6 md:mb-8">
-            DEIN WEG ZUR BESTEN VERSION
-          </span>
-
-          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-bold leading-[0.9] mb-6">
-            <span className="text-white block">KÖRPER</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red via-pink-500 to-pink-600 block">
+          <h1 className="text-7xl sm:text-8xl md:text-9xl font-black leading-[0.85] tracking-tight mb-4">
+            <span className="text-white">KÖRPER</span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red via-pink-500 to-pink-600">
               & GEIST
             </span>
           </h1>
 
-          <p className="text-xl sm:text-2xl md:text-3xl text-white/50 font-light tracking-wide">
-            Ganzheitliches Online Coaching
-          </p>
+          <p className="text-xl md:text-2xl text-white/70 font-light tracking-wide">Ganzheitliches Online Coaching</p>
         </motion.div>
 
-        {/* Characters Container */}
-        <div className="relative max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto">
+        {/* Characters with Gradient Background */}
+        <div className="relative max-w-2xl md:max-w-3xl mx-auto">
+          {/* Cool Gradient Behind Characters */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-gradient-to-br from-nf-red/30 via-pink-600/20 to-purple-600/30 blur-[100px] rounded-full" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] h-[60%] bg-gradient-to-t from-nf-red/40 via-pink-500/20 to-transparent blur-[80px]" />
+          </div>
+
           <motion.div
             style={{ y }}
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 1, delay: 0.2 }}
             className="relative"
           >
-            {/* COOLER GRADIENT EFFEKT HINTER CHARAKTEREN */}
-            <div className="absolute inset-0 -z-10">
-              {/* Hauptgradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-nf-red/30 via-pink-500/20 to-transparent blur-3xl" />
-
-              {/* Zusätzliche Glows */}
-              <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-nf-red/40 rounded-full blur-[100px] animate-pulse" />
-              <div
-                className="absolute top-1/3 right-1/4 w-72 h-72 bg-pink-500/30 rounded-full blur-[120px] animate-pulse"
-                style={{ animationDelay: "1s" }}
-              />
-              <div
-                className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-purple-500/20 rounded-full blur-[140px] animate-pulse"
-                style={{ animationDelay: "2s" }}
-              />
-
-              {/* Radiale Wellen */}
-              <div className="absolute inset-0 bg-gradient-radial from-nf-red/20 via-transparent to-transparent opacity-60" />
-              <div className="absolute inset-0 bg-gradient-radial from-pink-500/20 via-transparent to-transparent opacity-40" />
-            </div>
-
+            {/* Characters Image */}
             <img
               src="/assets/niklas-fabienne-hero22.png"
               alt="Niklas & Fabienne"
               className="w-full h-auto relative z-10"
             />
 
-            {/* CTA Button - GROSS UND ÜBER FÜSSE */}
+            {/* Big Button OVER Feet - Positioned absolute */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] sm:w-[80%] md:w-[75%] z-30"
+              className="absolute left-0 right-0 bottom-[8%] md:bottom-[10%] z-20 px-4"
             >
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="relative">
-                {/* Glow Effekt um Button */}
-                <div className="absolute inset-0 bg-gradient-to-r from-nf-red via-pink-500 to-nf-red blur-xl opacity-50" />
-
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Button
                   onClick={() => scrollToSection("#booking-funnel")}
-                  className="relative w-full bg-gradient-to-r from-nf-red via-pink-600 to-nf-red hover:from-nf-red/90 hover:via-pink-600/90 hover:to-nf-red/90 text-white px-8 py-7 sm:py-8 md:py-10 lg:py-12 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold rounded-2xl shadow-2xl border-2 border-white/10 backdrop-blur-sm"
+                  className="w-full bg-gradient-to-r from-nf-red to-pink-600 hover:from-nf-red/90 hover:to-pink-500 text-white px-8 py-7 md:py-9 text-lg md:text-2xl font-black rounded-2xl shadow-[0_20px_60px_-15px_rgba(239,68,68,0.6)] border-2 border-white/10"
                   size="lg"
                 >
-                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mr-2 sm:mr-3 animate-pulse" />
+                  <Zap className="w-6 h-6 md:w-7 md:h-7 mr-3" />
                   KOSTENLOSES GESPRÄCH
-                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ml-2 sm:ml-3 animate-pulse" />
                 </Button>
               </motion.div>
+            </motion.div>
+
+            {/* Subtle Stats Line Below Characters */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="absolute left-0 right-0 -bottom-8 md:-bottom-12 z-10 flex items-center justify-center gap-6 text-white/40 text-xs md:text-sm"
+            >
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-nf-red" />
+                500+ Kunden
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-yellow-500" />
+                4.9/5 Rating
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+                95% Erfolgsrate
+              </span>
             </motion.div>
           </motion.div>
         </div>
