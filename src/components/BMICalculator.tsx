@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Calculator, TrendingUp, Target, Users, Flame } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calculator, TrendingUp, Target, Users, Flame, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
 import {
   PieChart,
   Pie,
@@ -20,15 +20,19 @@ import {
   Tooltip,
 } from "recharts";
 
-const BMICalculator = () => {
+const BMICalculatorFunnel = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [height, setHeight] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [activityLevel, setActivityLevel] = useState<string>("");
+  const [goal, setGoal] = useState<string>("");
   const [bmi, setBMI] = useState<number | null>(null);
   const [bmr, setBMR] = useState<number | null>(null);
   const [tdee, setTDEE] = useState<number | null>(null);
+
+  const totalSteps = 6;
 
   const calculateMetrics = () => {
     const h = parseFloat(height);
@@ -72,10 +76,23 @@ const BMICalculator = () => {
   };
 
   const getBMIAdvice = (bmiValue: number) => {
-    if (bmiValue < 18.5) return "Spreche mit einem Arzt über gesunde Gewichtszunahme.";
-    if (bmiValue < 25) return "Großartig! Du hast ein gesundes Gewicht.";
-    if (bmiValue < 30) return "Leichtes Übergewicht. Wir können dir beim Abnehmen helfen.";
-    return "Deutliches Übergewicht. Professionelle Betreuung ist empfehlenswert.";
+    if (bmiValue < 18.5) return "Wir helfen dir, auf gesunde Weise zuzunehmen.";
+    if (bmiValue < 25) return "Großartig! Wir helfen dir, dein Gewicht zu halten.";
+    if (bmiValue < 30) return "Wir helfen dir, nachhaltig abzunehmen.";
+    return "Wir begleiten dich professionell auf deinem Weg.";
+  };
+
+  const getCalorieGoal = (tdeeValue: number, goalType: string) => {
+    switch (goalType) {
+      case "lose":
+        return tdeeValue - 500;
+      case "maintain":
+        return tdeeValue;
+      case "gain":
+        return tdeeValue + 300;
+      default:
+        return tdeeValue;
+    }
   };
 
   const bmiChartData = bmi
@@ -100,228 +117,468 @@ const BMICalculator = () => {
     }
   };
 
-  return (
-    <section id="bmi-rechner" className="py-20 bg-nf-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Calculator className="h-8 w-8 text-nf-red" />
-            <h2 className="text-3xl md:text-4xl font-bold text-nf-black">Gesundheits-Rechner</h2>
-          </div>
-          <p className="text-lg text-nf-gray max-w-2xl mx-auto">
-            Berechne deinen BMI und täglichen Kalorienbedarf für optimale Ergebnisse
-          </p>
-        </motion.div>
+  const nextStep = () => {
+    if (currentStep === 4) {
+      calculateMetrics();
+    }
+    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+  };
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Calculator Input */}
+  const prevStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+  };
+
+  const canProceed = () => {
+    switch (currentStep) {
+      case 0:
+        return goal !== "";
+      case 1:
+        return gender !== "";
+      case 2:
+        return age !== "" && parseFloat(age) > 0;
+      case 3:
+        return height !== "" && weight !== "" && parseFloat(height) > 0 && parseFloat(weight) > 0;
+      case 4:
+        return activityLevel !== "";
+      default:
+        return true;
+    }
+  };
+
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+    }),
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 0:
+        return (
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            key="step0"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
           >
-            <Card className="shadow-elegant">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5 text-nf-red" />
-                  Deine Daten eingeben
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Height Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="height">Körpergröße (cm)</Label>
-                  <Input
-                    id="height"
-                    type="number"
-                    placeholder="175"
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                  />
-                </div>
-
-                {/* Weight Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="weight">Gewicht (kg)</Label>
-                  <Input
-                    id="weight"
-                    type="number"
-                    placeholder="70"
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                  />
-                </div>
-
-                {/* Age Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="age">Alter (Jahre)</Label>
-                  <Input id="age" type="number" placeholder="30" value={age} onChange={(e) => setAge(e.target.value)} />
-                </div>
-
-                {/* Gender Selection */}
-                <div className="space-y-2">
-                  <Label>Geschlecht</Label>
-                  <Select value={gender} onValueChange={setGender}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Geschlecht auswählen" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="male">Männlich</SelectItem>
-                      <SelectItem value="female">Weiblich</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Activity Level */}
-                <div className="space-y-2">
-                  <Label>Aktivitätslevel</Label>
-                  <Select value={activityLevel} onValueChange={setActivityLevel}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Aktivitätslevel auswählen" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sedentary">Wenig/keine Bewegung</SelectItem>
-                      <SelectItem value="light">Leichte Aktivität (1-3 Tage/Woche)</SelectItem>
-                      <SelectItem value="moderate">Moderate Aktivität (3-5 Tage/Woche)</SelectItem>
-                      <SelectItem value="active">Hohe Aktivität (6-7 Tage/Woche)</SelectItem>
-                      <SelectItem value="very-active">Sehr hohe Aktivität (2x täglich)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Calculate Button */}
-                <Button
-                  onClick={calculateMetrics}
-                  className="w-full bg-nf-red hover:bg-nf-red/90 text-nf-white font-semibold py-3"
-                  disabled={!height || !weight || !age || !gender || !activityLevel}
-                >
-                  Werte berechnen
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Results */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            {bmi || tdee ? (
-              <div className="space-y-6">
-                {/* BMI Results */}
-                {bmi && (
-                  <Card className="shadow-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5 text-nf-red" />
-                        Dein BMI
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-nf-black mb-2">{bmi}</div>
-                        <Badge variant="secondary" className={`text-sm px-3 py-1 ${getBMICategory(bmi).bgColor}`}>
-                          {getBMICategory(bmi).category}
-                        </Badge>
-                      </div>
-                      <div className="h-24">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                            <Pie
-                              data={bmiChartData}
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={20}
-                              outerRadius={40}
-                              startAngle={90}
-                              endAngle={450}
-                              dataKey="value"
-                            >
-                              {bmiChartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.fill} />
-                              ))}
-                            </Pie>
-                          </PieChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Calorie Results */}
-                {tdee && bmr && (
-                  <Card className="shadow-elegant">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Flame className="h-5 w-5 text-nf-red" />
-                        Dein Kalorienbedarf
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4 text-center">
-                        <div>
-                          <div className="text-2xl font-bold text-nf-black">{bmr}</div>
-                          <div className="text-sm text-nf-gray">Grundumsatz (BMR)</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-nf-black">{tdee}</div>
-                          <div className="text-sm text-nf-gray">Tagesbedarf (TDEE)</div>
-                        </div>
-                      </div>
-                      <div className="h-32">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={calorieChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
-                            <XAxis dataKey="name" fontSize={10} stroke="hsl(var(--muted-foreground))" />
-                            <YAxis hide />
-                            <Tooltip
-                              formatter={(value) => [`${value} kcal`, "Kalorien"]}
-                              labelStyle={{ color: "hsl(var(--foreground))" }}
-                            />
-                            <Bar dataKey="value" radius={[2, 2, 0, 0]} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Advice */}
-                {bmi && tdee && (
-                  <div className="bg-nf-light p-4 rounded-lg">
-                    <p className="text-sm text-nf-gray mb-3">
-                      {getBMIAdvice(bmi)} Dein täglicher Kalorienbedarf beträgt {tdee} kcal.
-                    </p>
-                    <Button onClick={scrollToContact} className="w-full bg-nf-red hover:bg-nf-red/90 text-nf-white">
-                      Kostenloses Beratungsgespräch
-                    </Button>
-                  </div>
-                )}
+            <div className="text-center mb-8">
+              <Target className="h-16 w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-nf-black mb-2">Willkommen zum Gesundheits-Check!</h3>
+              <p className="text-nf-gray">In nur 2 Minuten erfährst du deinen BMI und Kalorienbedarf</p>
+            </div>
+            <div className="space-y-3">
+              <Label className="text-lg font-semibold">Was ist dein Hauptziel?</Label>
+              <div className="grid gap-3">
+                {[
+                  { value: "lose", label: "🔥 Abnehmen", desc: "Gewicht verlieren" },
+                  { value: "maintain", label: "⚖️ Gewicht halten", desc: "Aktuelle Form beibehalten" },
+                  { value: "gain", label: "💪 Zunehmen", desc: "Muskeln aufbauen" },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => setGoal(option.value)}
+                    className={`p-4 rounded-lg border-2 text-left transition-all ${
+                      goal === option.value ? "border-nf-red bg-nf-red/5" : "border-gray-200 hover:border-nf-red/50"
+                    }`}
+                  >
+                    <div className="font-semibold text-nf-black">{option.label}</div>
+                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                  </button>
+                ))}
               </div>
-            ) : (
-              <Card className="shadow-elegant">
-                <CardContent className="py-16">
-                  <div className="text-center text-nf-gray/60">
-                    <Users className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                    <p className="text-lg">Gib deine Daten ein, um BMI und Kalorienbedarf zu berechnen</p>
+            </div>
+          </motion.div>
+        );
+
+      case 1:
+        return (
+          <motion.div
+            key="step1"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <Users className="h-16 w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-nf-black mb-2">Über dich</h3>
+              <p className="text-nf-gray">Wir passen die Berechnung auf dich an</p>
+            </div>
+            <div className="space-y-3">
+              <Label className="text-lg font-semibold">Geschlecht</Label>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { value: "male", label: "👨 Männlich" },
+                  { value: "female", label: "👩 Weiblich" },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => setGender(option.value)}
+                    className={`p-6 rounded-lg border-2 text-center transition-all ${
+                      gender === option.value ? "border-nf-red bg-nf-red/5" : "border-gray-200 hover:border-nf-red/50"
+                    }`}
+                  >
+                    <div className="text-xl font-semibold">{option.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 2:
+        return (
+          <motion.div
+            key="step2"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <CheckCircle2 className="h-16 w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie alt bist du?</h3>
+              <p className="text-nf-gray">Das Alter beeinflusst deinen Kalorienbedarf</p>
+            </div>
+            <div className="space-y-3">
+              <Label htmlFor="age" className="text-lg font-semibold">
+                Alter (Jahre)
+              </Label>
+              <Input
+                id="age"
+                type="number"
+                placeholder="30"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                className="text-2xl h-16 text-center"
+                autoFocus
+              />
+            </div>
+          </motion.div>
+        );
+
+      case 3:
+        return (
+          <motion.div
+            key="step3"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <TrendingUp className="h-16 w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-nf-black mb-2">Deine Körpermaße</h3>
+              <p className="text-nf-gray">Damit berechnen wir deinen BMI</p>
+            </div>
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="height" className="text-lg font-semibold">
+                  Körpergröße (cm)
+                </Label>
+                <Input
+                  id="height"
+                  type="number"
+                  placeholder="175"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  className="text-2xl h-16 text-center"
+                  autoFocus
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="weight" className="text-lg font-semibold">
+                  Gewicht (kg)
+                </Label>
+                <Input
+                  id="weight"
+                  type="number"
+                  placeholder="70"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  className="text-2xl h-16 text-center"
+                />
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 4:
+        return (
+          <motion.div
+            key="step4"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <Flame className="h-16 w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie aktiv bist du?</h3>
+              <p className="text-nf-gray">Damit berechnen wir deinen täglichen Kalorienbedarf</p>
+            </div>
+            <div className="space-y-3">
+              <Label className="text-lg font-semibold">Aktivitätslevel</Label>
+              <div className="grid gap-3">
+                {[
+                  { value: "sedentary", label: "🪑 Wenig Bewegung", desc: "Bürojob, wenig Sport" },
+                  { value: "light", label: "🚶 Leicht aktiv", desc: "1-3 Tage Sport/Woche" },
+                  { value: "moderate", label: "🏃 Moderat aktiv", desc: "3-5 Tage Sport/Woche" },
+                  { value: "active", label: "💪 Sehr aktiv", desc: "6-7 Tage Sport/Woche" },
+                  { value: "very-active", label: "🔥 Extrem aktiv", desc: "Zweimal täglich Training" },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => setActivityLevel(option.value)}
+                    className={`p-4 rounded-lg border-2 text-left transition-all ${
+                      activityLevel === option.value
+                        ? "border-nf-red bg-nf-red/5"
+                        : "border-gray-200 hover:border-nf-red/50"
+                    }`}
+                  >
+                    <div className="font-semibold text-nf-black">{option.label}</div>
+                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 5:
+        return (
+          <motion.div
+            key="step5"
+            custom={1}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-8">
+              <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+              <h3 className="text-3xl font-bold text-nf-black mb-2">Deine Ergebnisse sind bereit! 🎉</h3>
+              <p className="text-nf-gray">Hier ist deine persönliche Analyse</p>
+            </div>
+
+            {/* BMI Card */}
+            {bmi && (
+              <Card className="shadow-elegant border-2 border-nf-red/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-nf-red" />
+                    Dein BMI
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-5xl font-bold text-nf-black mb-3">{bmi}</div>
+                    <Badge variant="secondary" className={`text-lg px-4 py-2 ${getBMICategory(bmi).bgColor}`}>
+                      {getBMICategory(bmi).category}
+                    </Badge>
+                  </div>
+                  <div className="h-32">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={bmiChartData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={30}
+                          outerRadius={50}
+                          startAngle={90}
+                          endAngle={450}
+                          dataKey="value"
+                        >
+                          {bmiChartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.fill} />
+                          ))}
+                        </Pie>
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <p className="text-center text-nf-gray">{getBMIAdvice(bmi)}</p>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Calorie Card */}
+            {tdee && bmr && (
+              <Card className="shadow-elegant border-2 border-nf-red/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Flame className="h-5 w-5 text-nf-red" />
+                    Dein Kalorienbedarf
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-5">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="p-4 bg-nf-light rounded-lg">
+                      <div className="text-3xl font-bold text-nf-black">{bmr}</div>
+                      <div className="text-sm text-nf-gray mt-1">Grundumsatz (BMR)</div>
+                    </div>
+                    <div className="p-4 bg-nf-red/10 rounded-lg">
+                      <div className="text-3xl font-bold text-nf-red">{tdee}</div>
+                      <div className="text-sm text-nf-gray mt-1">Tagesbedarf (TDEE)</div>
+                    </div>
+                  </div>
+
+                  {goal && (
+                    <div className="p-4 bg-green-50 rounded-lg border-2 border-green-200">
+                      <div className="text-center">
+                        <div className="text-sm text-nf-gray mb-1">
+                          {goal === "lose" && "Zum Abnehmen empfohlen:"}
+                          {goal === "maintain" && "Zum Gewicht halten:"}
+                          {goal === "gain" && "Zum Zunehmen empfohlen:"}
+                        </div>
+                        <div className="text-4xl font-bold text-nf-black">
+                          {getCalorieGoal(tdee, goal)}
+                          <span className="text-lg ml-1">kcal</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="h-40">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={calorieChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
+                        <XAxis dataKey="name" fontSize={11} stroke="hsl(var(--muted-foreground))" />
+                        <YAxis hide />
+                        <Tooltip
+                          formatter={(value) => [`${value} kcal`, "Kalorien"]}
+                          labelStyle={{ color: "hsl(var(--foreground))" }}
+                        />
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
             )}
+
+            {/* CTA Section */}
+            <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-6 rounded-lg text-white">
+              <h4 className="text-2xl font-bold mb-2">🎯 Bereit, deine Ziele zu erreichen?</h4>
+              <p className="mb-4 opacity-90">
+                Unsere Experten erstellen einen maßgeschneiderten Plan für dich - 100% kostenlos und unverbindlich!
+              </p>
+              <Button
+                onClick={scrollToContact}
+                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-6 text-lg"
+                size="lg"
+              >
+                Jetzt kostenloses Beratungsgespräch sichern →
+              </Button>
+              <p className="text-xs text-center mt-3 opacity-75">
+                ✓ Individuelle Ernährungsberatung ✓ Persönlicher Trainingsplan ✓ Langfristige Betreuung
+              </p>
+            </div>
           </motion.div>
-        </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <section id="bmi-rechner" className="py-20 bg-nf-light">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Progress Bar */}
+        {currentStep < 5 && (
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-nf-gray">
+                Schritt {currentStep + 1} von {totalSteps}
+              </span>
+              <span className="text-sm font-semibold text-nf-red">
+                {Math.round(((currentStep + 1) / totalSteps) * 100)}% komplett
+              </span>
+            </div>
+            <Progress value={((currentStep + 1) / totalSteps) * 100} className="h-2" />
+          </motion.div>
+        )}
+
+        {/* Main Card */}
+        <Card className="shadow-elegant border-t-4 border-nf-red">
+          <CardContent className="p-8">
+            <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+
+            {/* Navigation Buttons */}
+            {currentStep < 5 && (
+              <div className="flex gap-3 mt-8">
+                {currentStep > 0 && (
+                  <Button onClick={prevStep} variant="outline" className="flex-1">
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Zurück
+                  </Button>
+                )}
+                <Button
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  className={`bg-nf-red hover:bg-nf-red/90 text-white font-semibold ${
+                    currentStep === 0 ? "flex-1" : "flex-[2]"
+                  }`}
+                >
+                  {currentStep === 4 ? (
+                    <>
+                      Ergebnisse anzeigen
+                      <Flame className="h-4 w-4 ml-2" />
+                    </>
+                  ) : (
+                    <>
+                      Weiter
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Trust Indicators */}
+        {currentStep === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-6 text-center text-sm text-nf-gray"
+          >
+            <p>✓ Über 500 zufriedene Kunden ✓ Wissenschaftlich fundiert ✓ 100% kostenlos</p>
+          </motion.div>
+        )}
       </div>
     </section>
   );
 };
 
-export default BMICalculator;
+export default BMICalculatorFunnel;
