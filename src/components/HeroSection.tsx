@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Star, Users, TrendingUp, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 
@@ -27,38 +27,58 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/10 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* Title */}
+        {/* Title - CLEANER & BREITER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-10 sm:mb-14 md:mb-16"
+          className="text-center mb-12 sm:mb-16 md:mb-20 max-w-5xl mx-auto"
         >
-          <span className="inline-block text-nf-red text-sm md:text-base font-semibold tracking-wider uppercase mb-5">
-            ✨ DEIN WEG ZUR BESTEN VERSION
+          <span className="inline-block text-nf-red text-xs sm:text-sm md:text-base font-semibold tracking-[0.2em] uppercase mb-6 md:mb-8">
+            DEIN WEG ZUR BESTEN VERSION
           </span>
 
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.85] mb-4">
-            <span className="text-white">KÖRPER</span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red via-pink-500 to-pink-600">
+          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-bold leading-[0.9] mb-6">
+            <span className="text-white block">KÖRPER</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red via-pink-500 to-pink-600 block">
               & GEIST
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light">Ganzheitliches Online Coaching</p>
+          <p className="text-xl sm:text-2xl md:text-3xl text-white/50 font-light tracking-wide">
+            Ganzheitliches Online Coaching
+          </p>
         </motion.div>
 
         {/* Characters Container */}
-        <div className="relative max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto mb-8 sm:mb-12 md:mb-16">
+        <div className="relative max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto">
           <motion.div
             style={{ y }}
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="relative mb-8 sm:mb-10 md:mb-12"
+            className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-nf-red/20 via-transparent to-transparent blur-3xl" />
+            {/* COOLER GRADIENT EFFEKT HINTER CHARAKTEREN */}
+            <div className="absolute inset-0 -z-10">
+              {/* Hauptgradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-nf-red/30 via-pink-500/20 to-transparent blur-3xl" />
+
+              {/* Zusätzliche Glows */}
+              <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-nf-red/40 rounded-full blur-[100px] animate-pulse" />
+              <div
+                className="absolute top-1/3 right-1/4 w-72 h-72 bg-pink-500/30 rounded-full blur-[120px] animate-pulse"
+                style={{ animationDelay: "1s" }}
+              />
+              <div
+                className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-purple-500/20 rounded-full blur-[140px] animate-pulse"
+                style={{ animationDelay: "2s" }}
+              />
+
+              {/* Radiale Wellen */}
+              <div className="absolute inset-0 bg-gradient-radial from-nf-red/20 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-radial from-pink-500/20 via-transparent to-transparent opacity-40" />
+            </div>
 
             <img
               src="/assets/niklas-fabienne-hero22.png"
@@ -66,77 +86,27 @@ const HeroSection = () => {
               className="w-full h-auto relative z-10"
             />
 
-            {/* LEFT - 500+ - DEUTLICH GRÖSSER */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className="absolute left-0 sm:left-2 md:left-4 lg:left-6 top-[38%] sm:top-[40%] md:top-[42%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:px-5 sm:py-4 md:px-6 md:py-5 shadow-2xl z-20"
-            >
-              <div className="flex items-center gap-2.5 sm:gap-3">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center flex-shrink-0">
-                  <Users className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-none">500+</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/50 mt-1">Kunden</div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* RIGHT - 4.9/5 - DEUTLICH GRÖSSER */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1 }}
-              className="absolute right-0 sm:right-2 md:right-4 lg:right-6 top-[34%] sm:top-[36%] md:top-[38%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:px-5 sm:py-4 md:px-6 md:py-5 shadow-2xl z-20"
-            >
-              <div className="flex items-center gap-2.5 sm:gap-3">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                  <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white fill-white" />
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-none">4.9/5</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/50 mt-1">Rating</div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* BOTTOM - 95% - AUF HÜFTHÖHE, NICHT ZU HOCH - DEUTLICH GRÖSSER */}
+            {/* CTA Button - GROSS UND ÜBER FÜSSE */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="absolute left-1/2 -translate-x-1/2 bottom-[28%] sm:bottom-[26%] md:bottom-[24%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:px-5 sm:py-4 md:px-6 md:py-5 shadow-2xl z-20"
+              transition={{ delay: 0.8 }}
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] sm:w-[80%] md:w-[75%] z-30"
             >
-              <div className="flex items-center gap-2.5 sm:gap-3">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-none">95%</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/50 mt-1">Erfolgsrate</div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="relative">
+                {/* Glow Effekt um Button */}
+                <div className="absolute inset-0 bg-gradient-to-r from-nf-red via-pink-500 to-nf-red blur-xl opacity-50" />
 
-          {/* CTA Button - KEIN OVERLAP MEHR, UNTER DEM BILD */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4 }}
-            className="relative z-30 px-3 sm:px-4"
-          >
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                onClick={() => scrollToSection("#booking-funnel")}
-                className="w-full bg-nf-red hover:bg-nf-red/90 text-white px-8 py-6 sm:py-7 md:px-12 md:py-8 text-base sm:text-lg md:text-xl font-bold rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-nf-red/20 transition-all duration-300"
-                size="lg"
-              >
-                <Zap className="w-5 h-5 md:w-6 md:h-6 mr-2" />
-                KOSTENLOSES GESPRÄCH
-              </Button>
+                <Button
+                  onClick={() => scrollToSection("#booking-funnel")}
+                  className="relative w-full bg-gradient-to-r from-nf-red via-pink-600 to-nf-red hover:from-nf-red/90 hover:via-pink-600/90 hover:to-nf-red/90 text-white px-8 py-7 sm:py-8 md:py-10 lg:py-12 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold rounded-2xl shadow-2xl border-2 border-white/10 backdrop-blur-sm"
+                  size="lg"
+                >
+                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mr-2 sm:mr-3 animate-pulse" />
+                  KOSTENLOSES GESPRÄCH
+                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ml-2 sm:ml-3 animate-pulse" />
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
