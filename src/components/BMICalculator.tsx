@@ -484,9 +484,7 @@ const HealthCalculatorFunnel = () => {
                 animate={{ width: `${calculateProgress()}%` }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-nf-red to-nf-red/80 rounded-full shadow-lg"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 animate-shimmer" />
-              </motion.div>
+              />
             </div>
           </div>
         </motion.div>
@@ -1130,9 +1128,6 @@ const HealthCalculatorFunnel = () => {
                       {/* Decorative elements */}
                       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl" />
                       <div className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-black/10 to-transparent rounded-full blur-3xl" />
-                      
-                      {/* Animated shine effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_3s_infinite]" />
                       
                       <div className="relative z-10 text-center">
                         <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
