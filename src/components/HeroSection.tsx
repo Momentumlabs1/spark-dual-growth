@@ -27,32 +27,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent will-change-transform" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* Title - OPTIMIERT UND BESSER PLATZIERT */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-10 md:mb-14 lg:mb-16 max-w-6xl mx-auto"
-        >
-          <h1 className="text-[3rem] leading-[0.9] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-bold mb-4 sm:mb-5 md:mb-6 px-2">
-            <span className="text-white block">KÖRPER</span>
-            <span
-              className="block font-black"
-              style={{
-                color: "rgb(220, 38, 38)",
-                textShadow: "0 0 20px rgba(220, 38, 38, 0.5), 0 0 40px rgba(220, 38, 38, 0.3)",
-              }}
-            >
-              & GEIST
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/50 font-light px-2 mt-3 sm:mt-4">
-            Ganzheitliches Online Coaching
-          </p>
-        </motion.div>
-
-        {/* Characters Container - BILD ZUGESCHNITTEN */}
+        {/* Characters Container - BILD MIT TEXT DARÜBER */}
         <div className="relative max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto mb-6 sm:mb-8">
           <motion.div
             style={{ y }}
@@ -86,6 +61,73 @@ const HeroSection = () => {
                 }}
                 loading="eager"
               />
+
+              {/* ÜBERSCHRIFT ÜBER DEM BILD MIT DURCHFADE-EFFEKT */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 1.2,
+                  ease: "easeInOut",
+                }}
+                className="absolute inset-0 z-20 flex flex-col items-center justify-start pt-8 sm:pt-12 md:pt-16 lg:pt-20"
+              >
+                <motion.h1
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{
+                    opacity: [0, 1, 1, 0.85],
+                    y: [30, 0, 0, 0],
+                    scale: [0.95, 1, 1, 1],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    times: [0, 0.3, 0.7, 1],
+                    ease: "easeOut",
+                  }}
+                  className="text-[3.5rem] leading-[0.85] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-bold mb-3 sm:mb-4 px-2 text-center"
+                  style={{
+                    mixBlendMode: "screen",
+                  }}
+                >
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 1, 0.9] }}
+                    transition={{ duration: 2.5, times: [0, 0.3, 0.7, 1] }}
+                    className="text-white block drop-shadow-2xl"
+                    style={{
+                      textShadow: "0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.3)",
+                    }}
+                  >
+                    KÖRPER
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 1, 0.95] }}
+                    transition={{ duration: 2.5, times: [0, 0.35, 0.7, 1], delay: 0.2 }}
+                    className="block font-black drop-shadow-2xl"
+                    style={{
+                      color: "rgb(220, 38, 38)",
+                      textShadow:
+                        "0 0 60px rgba(220, 38, 38, 0.8), 0 0 30px rgba(220, 38, 38, 0.6), 0 0 80px rgba(0, 0, 0, 0.8)",
+                    }}
+                  >
+                    & GEIST
+                  </motion.span>
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: [0, 1, 1, 0.7], y: [20, 0, 0, 0] }}
+                  transition={{ duration: 2.5, times: [0, 0.4, 0.7, 1], delay: 0.3 }}
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-white font-light px-2 mt-2 sm:mt-3"
+                  style={{
+                    textShadow: "0 0 20px rgba(0, 0, 0, 1), 0 2px 10px rgba(0, 0, 0, 0.8)",
+                    mixBlendMode: "screen",
+                  }}
+                >
+                  Ganzheitliches Online Coaching
+                </motion.p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
