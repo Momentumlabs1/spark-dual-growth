@@ -20,23 +20,26 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={containerRef} className="relative bg-black overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-12">
+    <section
+      ref={containerRef}
+      className="relative bg-black overflow-hidden pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 md:pb-20"
+    >
       {/* Subtle glow */}
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/10 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* Title */}
+        {/* Title - BIGGER & NICER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-10 sm:mb-14 md:mb-16"
         >
-          <span className="inline-block text-nf-red text-xs font-medium tracking-wider uppercase mb-3">
+          <span className="inline-block text-nf-red text-sm md:text-base font-semibold tracking-wider uppercase mb-5">
             ✨ DEIN WEG ZUR BESTEN VERSION
           </span>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.85] mb-3">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.85] mb-4">
             <span className="text-white">KÖRPER</span>
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red via-pink-500 to-pink-600">
@@ -44,11 +47,11 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base md:text-lg text-white/60 font-light">Ganzheitliches Online Coaching</p>
+          <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light">Ganzheitliches Online Coaching</p>
         </motion.div>
 
-        {/* Characters + Floating Stats */}
-        <div className="relative max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-3xl mx-auto">
+        {/* Characters + Floating Stats - SMALLER ON DESKTOP */}
+        <div className="relative max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto">
           <motion.div
             style={{ y }}
             initial={{ opacity: 0, scale: 0.98 }}
@@ -71,15 +74,15 @@ const HeroSection = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8 }}
-              className="absolute left-0 sm:left-2 md:left-4 top-[40%] md:top-[43%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+              className="absolute left-0 sm:left-2 md:left-4 top-[40%] md:top-[43%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 md:px-4 md:py-3 shadow-2xl z-20"
             >
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-white" />
+                <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center">
+                  <Users className="w-4 h-4 md:w-5 md:h-5 text-white" />
                 </div>
                 <div>
                   <div className="text-xl md:text-2xl font-bold text-white leading-none">500+</div>
-                  <div className="text-[9px] text-white/40 mt-0.5">Kunden</div>
+                  <div className="text-[9px] md:text-[10px] text-white/40 mt-0.5">Kunden</div>
                 </div>
               </div>
             </motion.div>
@@ -89,72 +92,57 @@ const HeroSection = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1 }}
-              className="absolute right-0 sm:right-2 md:right-4 top-[36%] md:top-[40%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+              className="absolute right-0 sm:right-2 md:right-4 top-[36%] md:top-[40%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 md:px-4 md:py-3 shadow-2xl z-20"
             >
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
-                  <Star className="w-4 h-4 text-white" />
+                <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
+                  <Star className="w-4 h-4 md:w-5 md:h-5 text-white" />
                 </div>
                 <div>
                   <div className="text-xl md:text-2xl font-bold text-white leading-none">4.9/5</div>
-                  <div className="text-[9px] text-white/40 mt-0.5">Rating</div>
+                  <div className="text-[9px] md:text-[10px] text-white/40 mt-0.5">Rating</div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Floating Stats - BOTTOM CENTER */}
+            {/* Floating Stats - BOTTOM CENTER - HIGHER ON MOBILE */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}
-              className="absolute left-1/2 -translate-x-1/2 bottom-[22%] md:bottom-[25%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+              className="absolute left-1/2 -translate-x-1/2 bottom-[28%] sm:bottom-[26%] md:bottom-[25%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 md:px-4 md:py-3 shadow-2xl z-20"
             >
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-white" />
+                <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-white" />
                 </div>
                 <div>
                   <div className="text-xl md:text-2xl font-bold text-white leading-none">95%</div>
-                  <div className="text-[9px] text-white/40 mt-0.5">Erfolgsrate</div>
+                  <div className="text-[9px] md:text-[10px] text-white/40 mt-0.5">Erfolgsrate</div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* CTA Button - Overlaps feet */}
+          {/* CTA Button - BIGGER ON MOBILE, BIGGER ON DESKTOP, HIGHER ON MOBILE */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4 }}
-            className="absolute left-0 right-0 -bottom-4 sm:-bottom-6 md:-bottom-8 z-30 px-4"
+            className="absolute left-0 right-0 -bottom-8 sm:-bottom-8 md:-bottom-10 z-30 px-3 sm:px-4"
           >
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 onClick={() => scrollToSection("#booking-funnel")}
-                className="w-full bg-nf-red hover:bg-nf-red/90 text-white px-6 md:px-8 py-5 md:py-6 text-sm md:text-base font-bold rounded-xl shadow-lg"
+                className="w-full bg-nf-red hover:bg-nf-red/90 text-white px-8 py-6 sm:py-7 md:px-12 md:py-8 text-base sm:text-lg md:text-xl font-bold rounded-xl shadow-lg"
                 size="lg"
               >
-                <Zap className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                <Zap className="w-5 h-5 md:w-6 md:h-6 mr-2" />
                 KOSTENLOSES GESPRÄCH
               </Button>
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Trust Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6 }}
-          className="flex items-center justify-center gap-2 mt-12 sm:mt-16 md:mt-20 text-white/30 text-xs"
-        >
-          <div className="flex">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Star key={i} className="w-3 h-3 fill-yellow-500 text-yellow-500" />
-            ))}
-          </div>
-          <span>von 500+ Kunden</span>
-        </motion.div>
       </div>
     </section>
   );
