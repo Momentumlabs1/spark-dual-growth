@@ -1,8 +1,19 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, Users, TrendingUp, Zap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 
 const HeroSection = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -10,136 +21,159 @@ const HeroSection = () => {
     }
   };
 
-  const stats = [
-    { icon: Users, label: "Kunden", value: "500+" },
-    { icon: Star, label: "Rating", value: "4.9/5" },
-    { icon: TrendingUp, label: "Erfolgsrate", value: "95%" },
-  ];
-
   return (
-    <section className="relative bg-gradient-to-b from-nf-black via-nf-black to-nf-red/10 pt-24 pb-16 overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-nf-red/10 rounded-full blur-[120px] pointer-events-none" />
+    <section
+      ref={containerRef}
+      className="relative min-h-screen bg-black overflow-hidden flex items-center justify-center"
+    >
+      {/* Subtle red glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-nf-red/5" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-8">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block"
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-20">
+        {/* Floating Title Above Characters */}
+        <motion.div
+          style={{ y: titleY, opacity }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-8"
+        >
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-block text-nf-red text-sm font-medium tracking-wider uppercase mb-4"
           >
-            <span className="inline-flex items-center gap-2 bg-nf-red/10 border border-nf-red/20 text-nf-red px-4 py-2 rounded-full text-sm font-medium">
-              ✨ Dein Weg zur besten Version
-            </span>
+            ✨ Dein Weg zur besten Version
+          </motion.span>
+
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold leading-none">
+            <span className="text-white">KÖRPER</span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nf-red to-pink-500">& GEIST</span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl md:text-2xl text-white/60 mt-6 font-light"
+          >
+            Ganzheitliches Online Coaching
+          </motion.p>
+        </motion.div>
+
+        {/* Characters Image */}
+        <motion.div
+          style={{ y: imageY }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative max-w-5xl mx-auto mb-0"
+        >
+          {/* Subtle glow under characters */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-nf-red/10 blur-[100px]" />
+
+          <img
+            src="/assets/niklas-fabienne-hero22.png"
+            alt="Niklas & Fabienne"
+            className="relative z-10 w-full h-auto"
+          />
+
+          {/* Floating Stats - Positioned around characters */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: -30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="absolute left-8 md:left-16 top-1/4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-4 shadow-2xl"
+          >
+            <div className="flex items-center gap-3">
+              <Users className="w-6 h-6 text-nf-red flex-shrink-0" />
+              <div>
+                <div className="text-3xl font-bold text-white leading-none mb-1">500+</div>
+                <div className="text-xs text-white/50">Kunden</div>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Main Title */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{ opacity: 0, scale: 0.8, x: 30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="absolute right-8 md:right-16 top-1/3 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-4 shadow-2xl"
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-nf-white mb-4">
-              KÖRPER <span className="text-nf-red">& GEIST</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-nf-white/80 mb-2">
-              Ganzheitliches Online Coaching für deine Transformation.
-            </p>
-            <p className="text-lg text-nf-white/60">Körper. Mindset. Lifestyle.</p>
+            <div className="flex items-center gap-3">
+              <Star className="w-6 h-6 text-yellow-500 flex-shrink-0" />
+              <div>
+                <div className="text-3xl font-bold text-white leading-none mb-1">4.9/5</div>
+                <div className="text-xs text-white/50">Rating</div>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Hero Image - Niklas & Fabienne */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative max-w-2xl mx-auto"
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="absolute left-1/2 -translate-x-1/2 bottom-8 md:bottom-12 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-4 shadow-2xl"
           >
-            {/* Glow behind image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-nf-red/30 via-transparent to-transparent blur-3xl" />
-
-            <img
-              src="/assets/niklas-fabienne-hero22.png"
-              alt="Niklas und Fabienne"
-              className="relative z-10 w-full h-auto"
-            />
+            <div className="flex items-center gap-3">
+              <TrendingUp className="w-6 h-6 text-green-500 flex-shrink-0" />
+              <div>
+                <div className="text-3xl font-bold text-white leading-none mb-1">95%</div>
+                <div className="text-xs text-white/50">Erfolgsrate</div>
+              </div>
+            </div>
           </motion.div>
+        </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-3 gap-4 max-w-2xl mx-auto"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                className="bg-nf-black/50 backdrop-blur-sm border border-nf-white/10 rounded-xl p-4 hover:border-nf-red/30 transition-all"
-              >
-                <stat.icon className="w-6 h-6 text-nf-red mx-auto mb-2" />
-                <div className="text-2xl md:text-3xl font-bold text-nf-white mb-1">{stat.value}</div>
-                <div className="text-sm text-nf-white/60">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
+        {/* CTA Buttons - Overlapping bottom of image */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          className="relative -mt-20 z-30 flex flex-col sm:flex-row gap-4 justify-center px-4"
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
             <Button
               onClick={() => scrollToSection("#booking-funnel")}
-              className="bg-nf-red hover:bg-nf-red/90 text-white px-8 py-6 text-lg font-bold rounded-lg shadow-lg hover:shadow-nf-red/50 transition-all"
+              className="group relative overflow-hidden bg-nf-red hover:bg-nf-red/90 text-white px-10 py-7 text-lg font-bold rounded-xl shadow-[0_20px_60px_-15px_rgba(239,68,68,0.6)] transition-all duration-300"
               size="lg"
             >
-              <Zap className="w-5 h-5 mr-2" />
-              KOSTENLOSES GESPRÄCH
+              <span className="relative z-10 flex items-center gap-2">
+                <Zap className="w-5 h-5" />
+                KOSTENLOSES GESPRÄCH
+              </span>
             </Button>
+          </motion.div>
+
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
             <Button
               onClick={() => scrollToSection("#testimonials")}
               variant="outline"
-              className="border-2 border-nf-white/20 text-nf-white hover:bg-nf-white hover:text-nf-black px-8 py-6 text-lg font-bold rounded-lg transition-all"
+              className="bg-white/5 backdrop-blur-xl border-2 border-white/20 text-white hover:bg-white hover:text-black px-10 py-7 text-lg font-bold rounded-xl transition-all duration-300"
               size="lg"
             >
               <Award className="w-5 h-5 mr-2" />
               ERFOLGE ANSEHEN
             </Button>
           </motion.div>
+        </motion.div>
 
-          {/* Trust Line */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="flex items-center justify-center gap-6 text-nf-white/60 text-sm pt-6"
-          >
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-nf-red to-pink-600 border-2 border-nf-black"
-                  />
-                ))}
-              </div>
-              <span>500+ zufriedene Kunden</span>
-            </div>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        {/* Minimal Trust Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6 }}
+          className="flex items-center justify-center gap-2 mt-8 text-white/30 text-sm"
+        >
+          <div className="flex">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+            ))}
+          </div>
+          <span>von 500+ Kunden</span>
+        </motion.div>
       </div>
     </section>
   );
