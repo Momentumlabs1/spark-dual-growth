@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Star, Users, TrendingUp, Zap, Award } from "lucide-react";
+import { Star, Users, TrendingUp, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 
@@ -10,7 +10,7 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -19,26 +19,20 @@ const HeroSection = () => {
     }
   };
 
-  const stats = [
-    { icon: Users, value: "500+", label: "Kunden", color: "from-red-500 to-pink-600" },
-    { icon: Star, value: "4.9/5", label: "Rating", color: "from-yellow-500 to-orange-500" },
-    { icon: TrendingUp, value: "95%", label: "Erfolgsrate", color: "from-green-500 to-emerald-600" },
-  ];
-
   return (
-    <section ref={containerRef} className="relative bg-black min-h-screen flex items-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-gradient-radial from-nf-red/5 via-transparent to-transparent opacity-50" />
+    <section ref={containerRef} className="relative bg-black overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-12">
+      {/* Subtle glow */}
+      <div className="absolute inset-0 bg-gradient-radial from-nf-red/10 via-transparent to-transparent" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-12">
-        {/* Header Text */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-8 md:mb-12"
         >
-          <span className="inline-block text-nf-red text-xs font-medium tracking-wider uppercase mb-4">
+          <span className="inline-block text-nf-red text-xs font-medium tracking-wider uppercase mb-3">
             ✨ DEIN WEG ZUR BESTEN VERSION
           </span>
 
@@ -50,90 +44,109 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-white/60 font-light">Ganzheitliches Online Coaching</p>
+          <p className="text-sm sm:text-base md:text-lg text-white/60 font-light">Ganzheitliches Online Coaching</p>
         </motion.div>
 
-        {/* Main Content - Bento Grid Layout */}
-        <div className="grid md:grid-cols-12 gap-4 md:gap-6 max-w-6xl mx-auto">
-          {/* LEFT: Stats Grid */}
-          <div className="md:col-span-4 flex flex-col gap-4">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-                className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-3`}
-                >
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-white/50">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CENTER/RIGHT: Characters Image */}
+        {/* Characters + Floating Stats */}
+        <div className="relative max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-3xl mx-auto">
           <motion.div
             style={{ y }}
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="md:col-span-8"
+            className="relative"
           >
-            <div className="relative">
-              {/* Subtle glow behind */}
-              <div className="absolute inset-0 bg-gradient-to-t from-nf-red/20 via-transparent to-transparent blur-3xl" />
+            {/* Glow */}
+            <div className="absolute inset-0 bg-gradient-to-t from-nf-red/20 via-transparent to-transparent blur-3xl" />
 
-              <img
-                src="/assets/niklas-fabienne-hero22.png"
-                alt="Niklas & Fabienne"
-                className="relative z-10 w-full h-auto"
-              />
-            </div>
+            {/* Characters */}
+            <img
+              src="/assets/niklas-fabienne-hero22.png"
+              alt="Niklas & Fabienne"
+              className="w-full h-auto relative z-10"
+            />
+
+            {/* Floating Stats - LEFT */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+              className="absolute left-0 sm:left-2 md:left-4 top-[40%] md:top-[43%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center">
+                  <Users className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl md:text-2xl font-bold text-white leading-none">500+</div>
+                  <div className="text-[9px] text-white/40 mt-0.5">Kunden</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating Stats - RIGHT */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1 }}
+              className="absolute right-0 sm:right-2 md:right-4 top-[36%] md:top-[40%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
+                  <Star className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl md:text-2xl font-bold text-white leading-none">4.9/5</div>
+                  <div className="text-[9px] text-white/40 mt-0.5">Rating</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating Stats - BOTTOM CENTER */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="absolute left-1/2 -translate-x-1/2 bottom-[22%] md:bottom-[25%] bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-2.5 shadow-2xl z-20"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl md:text-2xl font-bold text-white leading-none">95%</div>
+                  <div className="text-[9px] text-white/40 mt-0.5">Erfolgsrate</div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* CTA Button - Overlaps feet */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4 }}
+            className="absolute left-0 right-0 -bottom-4 sm:-bottom-6 md:-bottom-8 z-30 px-4"
+          >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={() => scrollToSection("#booking-funnel")}
+                className="w-full bg-nf-red hover:bg-nf-red/90 text-white px-6 md:px-8 py-5 md:py-6 text-sm md:text-base font-bold rounded-xl shadow-lg"
+                size="lg"
+              >
+                <Zap className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                KOSTENLOSES GESPRÄCH
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mt-8 max-w-2xl mx-auto"
-        >
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              onClick={() => scrollToSection("#booking-funnel")}
-              className="w-full sm:w-auto bg-nf-red hover:bg-nf-red/90 text-white px-8 py-6 text-sm md:text-base font-bold rounded-xl shadow-lg"
-              size="lg"
-            >
-              <Zap className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              KOSTENLOSES GESPRÄCH
-            </Button>
-          </motion.div>
-
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              onClick={() => scrollToSection("#testimonials")}
-              variant="outline"
-              className="w-full sm:w-auto bg-white/5 border-2 border-white/20 text-white hover:bg-white hover:text-black px-8 py-6 text-sm md:text-base font-bold rounded-xl"
-              size="lg"
-            >
-              <Award className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              ERFOLGE ANSEHEN
-            </Button>
-          </motion.div>
-        </motion.div>
 
         {/* Trust Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-          className="flex items-center justify-center gap-2 mt-6 text-white/30 text-xs"
+          transition={{ delay: 1.6 }}
+          className="flex items-center justify-center gap-2 mt-12 sm:mt-16 md:mt-20 text-white/30 text-xs"
         >
           <div className="flex">
             {[1, 2, 3, 4, 5].map((i) => (
