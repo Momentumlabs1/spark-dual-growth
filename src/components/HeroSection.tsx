@@ -22,7 +22,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative bg-black overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-12 md:pb-16"
+      className="relative bg-black overflow-hidden pt-12 sm:pt-16 md:pt-12 lg:pt-16 pb-8 sm:pb-12 md:pb-10 lg:pb-12"
     >
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent will-change-transform" />
 
@@ -48,55 +48,77 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD MIT HÖHENBESCHRÄNKUNG - Hüfte knapp über Button sichtbar */}
-            <div className="relative overflow-hidden rounded-b-2xl" style={{ maxHeight: "75vh" }}>
+            {/* BILD MIT HÖHENBESCHRÄNKUNG - Desktop kleiner (55vh), Mobile optimiert (80vh) */}
+            <div className="relative overflow-hidden rounded-b-2xl h-[80vh] md:h-[55vh] lg:h-[60vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
-                className="w-full h-auto relative z-10"
-                style={{
-                  objectFit: "cover",
-                  objectPosition: "center top",
-                  maxHeight: "75vh",
-                }}
+                className="w-full h-full object-cover object-top relative z-10"
                 loading="eager"
               />
 
-              {/* ÜBERSCHRIFT ÜBER DEM BILD - TIEFER POSITIONIERT, BESSERE LESBARKEIT */}
+              {/* ÜBERSCHRIFT - Desktop horizontal, Mobile größer */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{
+                transition={{ 
                   delay: 2,
                   duration: 2,
-                  ease: "easeInOut",
+                  ease: "easeInOut"
                 }}
-                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-32 sm:pb-40 md:pb-48 px-4"
+                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-20 sm:pb-24 md:pb-20 lg:pb-24 xl:pb-28 px-4"
               >
-                <h1 className="text-[2.5rem] leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-center">
-                  <span
-                    className="text-white block"
-                    style={{
-                      textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)",
-                    }}
-                  >
-                    KÖRPER
-                  </span>
-                  <span
-                    className="block font-black"
-                    style={{
-                      color: "rgb(220, 38, 38)",
-                      textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)",
-                    }}
-                  >
-                    & GEIST
-                  </span>
+                {/* Desktop: Horizontal nebeneinander, Mobile: Größer */}
+                <h1 className="text-center">
+                  {/* Mobile: Nebeneinander mit kleinerer Schrift */}
+                  <div className="block md:hidden">
+                    <div className="flex items-center justify-center gap-2 text-[2.8rem] sm:text-[3.2rem] font-bold leading-none">
+                      <span 
+                        className="text-white"
+                        style={{
+                          textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)"
+                        }}
+                      >
+                        KÖRPER
+                      </span>
+                      <span
+                        className="font-black"
+                        style={{
+                          color: "rgb(220, 38, 38)",
+                          textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)"
+                        }}
+                      >
+                        & GEIST
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Desktop: Horizontal - KÖRPER (Niklas) | GEIST (Fabienne) */}
+                  <div className="hidden md:flex items-center justify-center gap-4 lg:gap-6 text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-none">
+                    <span 
+                      className="text-white"
+                      style={{
+                        textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)"
+                      }}
+                    >
+                      KÖRPER
+                    </span>
+                    <span
+                      className="font-black"
+                      style={{
+                        color: "rgb(220, 38, 38)",
+                        textShadow: "0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5)"
+                      }}
+                    >
+                      & GEIST
+                    </span>
+                  </div>
                 </h1>
 
-                <p
+                <p 
                   className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 font-light mt-3 sm:mt-4"
                   style={{
-                    textShadow: "0 2px 6px rgba(0, 0, 0, 0.8)",
+                    textShadow: "0 2px 6px rgba(0, 0, 0, 0.8)"
                   }}
                 >
                   Ganzheitliches Online Coaching
@@ -118,10 +140,10 @@ const HeroSection = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: "rgb(220, 38, 38)" }}
-            className="w-full max-w-md text-white px-8 py-5 sm:px-10 sm:py-6 md:px-12 md:py-7 text-base sm:text-lg md:text-xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center mb-4 sm:mb-5"
+            className="w-full max-w-md md:max-w-lg lg:max-w-xl text-white px-8 py-5 sm:px-10 sm:py-6 md:px-14 md:py-7 lg:px-16 lg:py-8 text-base sm:text-lg md:text-xl lg:text-2xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-3 mb-4 sm:mb-5"
           >
-            <Zap className="w-6 h-6 sm:w-7 sm:h-7 mr-3" />
-            KOSTENLOSES GESPRÄCH
+            <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+            <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
           </motion.button>
 
           {/* Trust Badges - BESSER POSITIONIERT UND GRÖSSERE ICONS */}
@@ -136,12 +158,7 @@ const HeroSection = () => {
 
             {/* Badge 2 - Kunden */}
             <div className="flex items-center gap-2 bg-black/70 px-3 py-1.5 sm:py-2 rounded-full border border-nf-red/40">
-              <svg
-                className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-nf-red"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-nf-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -154,12 +171,7 @@ const HeroSection = () => {
 
             {/* Badge 3 - Diskret */}
             <div className="flex items-center gap-2 bg-black/70 px-3 py-1.5 sm:py-2 rounded-full border border-nf-red/40">
-              <svg
-                className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-nf-red"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-nf-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
