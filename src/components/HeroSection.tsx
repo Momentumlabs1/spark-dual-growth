@@ -62,59 +62,56 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD - Optimierte Höhe damit Körper beim Button enden */}
-            <div className="relative overflow-hidden rounded-2xl h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh]">
+            {/* BILD - VIEL höher damit Körper beim Button enden */}
+            <div className="relative overflow-hidden rounded-2xl h-[65vh] sm:h-[70vh] md:h-[75vh] lg:h-[80vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "center 15%" }}
+                style={{ objectPosition: "center 20%" }}
                 loading="eager"
               />
 
-              {/* OVERLAY TEXT - KÖRPER & GEIST - Optimierte Position */}
+              {/* OVERLAY TEXT - KÖRPER & GEIST - HORIZONTAL auf allen Geräten */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 2, duration: 2, ease: "easeInOut" }}
                 className="absolute inset-0 flex flex-col items-center justify-center px-4"
               >
-                {/* Text Container mit besserer Positionierung */}
-                <div className="flex flex-col items-center gap-2 sm:gap-3">
-                  {/* Horizontal angeordnet auf allen Bildschirmgrößen */}
-                  <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-5">
-                    <h1 className="text-[2.8rem] sm:text-[3.5rem] md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none tracking-tight">
-                      <span
-                        className="text-white"
-                        style={{
-                          textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
-                        }}
-                      >
-                        KÖRPER
-                      </span>
-                    </h1>
-                    <h1 className="text-[2.8rem] sm:text-[3.5rem] md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none tracking-tight">
-                      <span
-                        style={{
-                          color: "rgb(220, 38, 38)",
-                          textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
-                        }}
-                      >
-                        & GEIST
-                      </span>
-                    </h1>
-                  </div>
-
-                  {/* Untertitel mit besserem Shadow */}
-                  <p
-                    className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 font-light mt-2 sm:mt-3"
-                    style={{
-                      textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
-                    }}
-                  >
-                    Ganzheitliches Online Coaching
-                  </p>
+                {/* IMMER horizontal, auch auf Mobile */}
+                <div className="flex items-baseline justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
+                  <h1 className="text-[2.2rem] sm:text-[3rem] md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none">
+                    <span
+                      className="text-white"
+                      style={{
+                        textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
+                      }}
+                    >
+                      KÖRPER
+                    </span>
+                  </h1>
+                  <h1 className="text-[2.2rem] sm:text-[3rem] md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none">
+                    <span
+                      style={{
+                        color: "rgb(220, 38, 38)",
+                        textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
+                      }}
+                    >
+                      & GEIST
+                    </span>
+                  </h1>
                 </div>
+
+                {/* Untertitel */}
+                <p
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-light"
+                  style={{
+                    textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
+                  }}
+                >
+                  Ganzheitliches Online Coaching
+                </p>
               </motion.div>
             </div>
           </motion.div>
@@ -132,10 +129,10 @@ const HeroSection = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             style={{ backgroundColor: "rgb(220, 38, 38)" }}
-            className="w-full max-w-md md:max-w-lg lg:max-w-xl text-white px-8 py-5 sm:px-10 sm:py-6 md:px-14 md:py-7 text-base sm:text-lg md:text-xl lg:text-2xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-3 mb-6"
+            className="w-[95%] max-w-md md:max-w-lg lg:max-w-xl text-white px-6 py-5 sm:px-10 sm:py-6 md:px-14 md:py-7 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 sm:gap-3 mb-6"
           >
-            <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
-            <span>KOSTENLOSES GESPRÄCH</span>
+            <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 flex-shrink-0" />
+            <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
           </motion.button>
 
           {/* Trust Badges - Optimierte Größen */}
