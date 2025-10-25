@@ -48,8 +48,8 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD MIT HÖHENBESCHRÄNKUNG - Desktop kleiner (55vh), Mobile optimiert (80vh) */}
-            <div className="relative overflow-hidden rounded-b-2xl h-[80vh] md:h-[55vh] lg:h-[60vh]">
+            {/* BILD MIT HÖHENBESCHRÄNKUNG - Desktop kleiner (55vh), Mobile auch kleiner (55vh) */}
+            <div className="relative overflow-hidden rounded-b-2xl h-[55vh] md:h-[55vh] lg:h-[60vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
@@ -66,13 +66,13 @@ const HeroSection = () => {
                   duration: 2,
                   ease: "easeInOut"
                 }}
-                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-20 sm:pb-24 md:pb-20 lg:pb-24 xl:pb-28 px-4"
+                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-16 sm:pb-20 md:pb-20 lg:pb-24 xl:pb-28 px-4"
               >
                 {/* Desktop: Horizontal nebeneinander, Mobile: Größer */}
                 <h1 className="text-center">
-                  {/* Mobile: Nebeneinander mit kleinerer Schrift */}
+                  {/* Mobile: Nebeneinander mit passender Schrift */}
                   <div className="block md:hidden">
-                    <div className="flex items-center justify-center gap-2 text-[2.8rem] sm:text-[3.2rem] font-bold leading-none">
+                    <div className="flex items-center justify-center gap-2 text-[2.2rem] sm:text-[2.6rem] font-bold leading-none">
                       <span 
                         className="text-white"
                         style={{
