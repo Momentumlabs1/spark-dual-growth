@@ -288,9 +288,9 @@ const BMICalculatorFunnel = () => {
             className="space-y-6"
           >
             <div className="text-center mb-8">
-              <Target className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Willkommen zum Gesundheits-Check!</h3>
-              <p className="text-nf-gray">
+              <Target className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Willkommen zum Gesundheits-Check!</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 In nur <span className="font-semibold text-nf-red">2 Minuten</span> erfährst du deinen BMI und
                 personalisierten Kalorienbedarf
               </p>
@@ -308,17 +308,17 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setGoal(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
+                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       goal === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-semibold text-nf-black">{option.label}</div>
-                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                    <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
+                    <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
                     {goal === option.value && (
                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
                       </motion.div>
                     )}
                   </motion.button>
@@ -339,16 +339,16 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <Users className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Über dich</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <Users className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Über dich</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Wir passen die <span className="font-semibold text-nf-red">Berechnung</span> auf dich an
               </p>
             </div>
             <div className="space-y-3">
-              <Label className="text-lg font-semibold">Geschlecht</Label>
-              <div className="grid grid-cols-2 gap-4">
+              <Label className="text-base md:text-lg font-semibold">Geschlecht</Label>
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {[
                   { value: "male", label: "👨 Männlich" },
                   { value: "female", label: "👩 Weiblich" },
@@ -358,16 +358,16 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setGender(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-6 rounded-lg border-2 text-center transition-all duration-200 relative ${
+                    className={`p-4 md:p-6 rounded-lg border-2 text-center transition-all duration-200 relative ${
                       gender === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="text-xl font-semibold">{option.label}</div>
+                    <div className="text-lg md:text-xl font-semibold">{option.label}</div>
                     {gender === option.value && (
                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
                       </motion.div>
                     )}
                   </motion.button>
@@ -388,15 +388,15 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <CheckCircle2 className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie alt bist du?</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <CheckCircle2 className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Wie alt bist du?</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Das Alter beeinflusst deinen <span className="font-semibold text-nf-red">Kalorienbedarf</span>
               </p>
             </div>
             <div className="space-y-3">
-              <Label htmlFor="age" className="text-lg font-semibold">
+              <Label htmlFor="age" className="text-base md:text-lg font-semibold">
                 Alter (Jahre)
               </Label>
               <Input
@@ -405,7 +405,7 @@ const BMICalculatorFunnel = () => {
                 placeholder="30"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                className="text-2xl h-16 text-center"
+                className="text-xl md:text-2xl h-14 md:h-16 text-center"
                 autoFocus
               />
             </div>
@@ -423,16 +423,16 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <TrendingUp className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Deine Körpermaße</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <TrendingUp className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Deine Körpermaße</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Damit berechnen wir deinen <span className="font-semibold text-nf-red">BMI</span>
               </p>
             </div>
-            <div className="space-y-5">
+            <div className="space-y-4 md:space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="height" className="text-lg font-semibold">
+                <Label htmlFor="height" className="text-base md:text-lg font-semibold">
                   Körpergröße (cm)
                 </Label>
                 <Input
@@ -441,12 +441,12 @@ const BMICalculatorFunnel = () => {
                   placeholder="175"
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
-                  className="text-2xl h-16 text-center"
+                  className="text-xl md:text-2xl h-14 md:h-16 text-center"
                   autoFocus
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weight" className="text-lg font-semibold">
+                <Label htmlFor="weight" className="text-base md:text-lg font-semibold">
                   Gewicht (kg)
                 </Label>
                 <Input
@@ -455,7 +455,7 @@ const BMICalculatorFunnel = () => {
                   placeholder="70"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="text-2xl h-16 text-center"
+                  className="text-xl md:text-2xl h-14 md:h-16 text-center"
                 />
               </div>
             </div>
@@ -473,15 +473,15 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <Flame className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie aktiv bist du?</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <Flame className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Wie aktiv bist du?</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Damit berechnen wir deinen täglichen <span className="font-semibold text-nf-red">Kalorienbedarf</span>
               </p>
             </div>
             <div className="space-y-3">
-              <Label className="text-lg font-semibold">Aktivitätslevel</Label>
+              <Label className="text-base md:text-lg font-semibold">Aktivitätslevel</Label>
               <div className="grid gap-3">
                 {[
                   { value: "sedentary", label: "🪑 Wenig Bewegung", desc: "Bürojob, wenig Sport" },
@@ -495,17 +495,17 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setActivityLevel(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
+                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       activityLevel === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-semibold text-nf-black">{option.label}</div>
-                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                    <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
+                    <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
                     {activityLevel === option.value && (
                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
                       </motion.div>
                     )}
                   </motion.button>
@@ -526,15 +526,15 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <Moon className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie ist dein Schlaf?</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <Moon className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Wie ist dein Schlaf?</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Schlaf beeinflusst deinen <span className="font-semibold text-nf-red">Stoffwechsel massiv</span>
               </p>
             </div>
             <div className="space-y-3">
-              <Label className="text-lg font-semibold">Durchschnittliche Schlafdauer</Label>
+              <Label className="text-base md:text-lg font-semibold">Durchschnittliche Schlafdauer</Label>
               <div className="grid gap-3">
                 {[
                   { value: "less-than-6", label: "😴 Weniger als 6h", desc: "Zu wenig Schlaf" },
@@ -547,17 +547,17 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setSleepHours(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
+                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       sleepHours === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-semibold text-nf-black">{option.label}</div>
-                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                    <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
+                    <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
                     {sleepHours === option.value && (
                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
                       </motion.div>
                     )}
                   </motion.button>
@@ -578,16 +578,16 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <Brain className="h-16 w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-nf-black mb-2">Wie gestresst bist du?</h3>
-              <p className="text-nf-gray">
+            <div className="text-center mb-6 md:mb-8">
+              <Brain className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Wie gestresst bist du?</h3>
+              <p className="text-sm md:text-base text-nf-gray">
                 Stress erhöht <span className="font-semibold text-nf-red">Cortisol</span> und beeinflusst deine{" "}
                 <span className="font-semibold text-nf-red">Ergebnisse</span>
               </p>
             </div>
             <div className="space-y-3">
-              <Label className="text-lg font-semibold">Aktuelles Stresslevel</Label>
+              <Label className="text-base md:text-lg font-semibold">Aktuelles Stresslevel</Label>
               <div className="grid gap-3">
                 {[
                   { value: "low", label: "🧘 Niedrig", desc: "Entspannt, gut im Griff" },
@@ -600,17 +600,17 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setStressLevel(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
+                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       stressLevel === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-semibold text-nf-black">{option.label}</div>
-                    <div className="text-sm text-nf-gray">{option.desc}</div>
+                    <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
+                    <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
                     {stressLevel === option.value && (
                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
                       </motion.div>
                     )}
                   </motion.button>
@@ -633,10 +633,10 @@ const BMICalculatorFunnel = () => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
-            <div className="text-center mb-8">
-              <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
-              <h3 className="text-3xl font-bold text-nf-black mb-2">Deine Ergebnisse sind bereit! 🎉</h3>
-              <p className="text-nf-gray">Hier ist deine persönliche Analyse</p>
+            <div className="text-center mb-6 md:mb-8">
+              <CheckCircle2 className="h-12 w-12 md:h-16 md:w-16 text-green-500 mx-auto mb-3 md:mb-4" />
+              <h3 className="text-2xl md:text-3xl font-bold text-nf-black mb-2">Deine Ergebnisse sind bereit! 🎉</h3>
+              <p className="text-sm md:text-base text-nf-gray">Hier ist deine persönliche Analyse</p>
             </div>
 
             {/* BMI Card */}
@@ -650,12 +650,15 @@ const BMICalculatorFunnel = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
-                    <div className="text-5xl font-bold text-nf-black mb-3">{bmi}</div>
-                    <Badge variant="secondary" className={`text-lg px-4 py-2 ${getBMICategory(bmi).bgColor}`}>
+                    <div className="text-4xl md:text-5xl font-bold text-nf-black mb-3">{bmi}</div>
+                    <Badge
+                      variant="secondary"
+                      className={`text-base md:text-lg px-3 md:px-4 py-1 md:py-2 ${getBMICategory(bmi).bgColor}`}
+                    >
                       {getBMICategory(bmi).category}
                     </Badge>
                   </div>
-                  <div className="h-32">
+                  <div className="h-28 md:h-32">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
@@ -675,7 +678,7 @@ const BMICalculatorFunnel = () => {
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
-                  <p className="text-center text-nf-gray">{getBMIAdvice(bmi)}</p>
+                  <p className="text-center text-sm md:text-base text-nf-gray">{getBMIAdvice(bmi)}</p>
                 </CardContent>
               </Card>
             )}
@@ -690,34 +693,34 @@ const BMICalculatorFunnel = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-5">
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-4 bg-nf-light rounded-lg">
-                      <div className="text-3xl font-bold text-nf-black">{bmr}</div>
-                      <div className="text-sm text-nf-gray mt-1">Grundumsatz (BMR)</div>
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 text-center">
+                    <div className="p-3 md:p-4 bg-nf-light rounded-lg">
+                      <div className="text-2xl md:text-3xl font-bold text-nf-black">{bmr}</div>
+                      <div className="text-xs md:text-sm text-nf-gray mt-1">Grundumsatz (BMR)</div>
                     </div>
-                    <div className="p-4 bg-nf-red/10 rounded-lg">
-                      <div className="text-3xl font-bold text-nf-red">{tdee}</div>
-                      <div className="text-sm text-nf-gray mt-1">Tagesbedarf (TDEE)</div>
+                    <div className="p-3 md:p-4 bg-nf-red/10 rounded-lg">
+                      <div className="text-2xl md:text-3xl font-bold text-nf-red">{tdee}</div>
+                      <div className="text-xs md:text-sm text-nf-gray mt-1">Tagesbedarf (TDEE)</div>
                     </div>
                   </div>
 
                   {goal && (
-                    <div className="p-4 bg-green-50 rounded-lg border-2 border-green-200">
+                    <div className="p-3 md:p-4 bg-green-50 rounded-lg border-2 border-green-200">
                       <div className="text-center">
-                        <div className="text-sm text-nf-gray mb-1">
+                        <div className="text-xs md:text-sm text-nf-gray mb-1">
                           {goal === "lose" && "Zum Abnehmen empfohlen:"}
                           {goal === "maintain" && "Zum Gewicht halten:"}
                           {goal === "gain" && "Zum Zunehmen empfohlen:"}
                         </div>
-                        <div className="text-4xl font-bold text-nf-black">
+                        <div className="text-3xl md:text-4xl font-bold text-nf-black">
                           {getCalorieGoal(tdee, goal)}
-                          <span className="text-lg ml-1">kcal</span>
+                          <span className="text-base md:text-lg ml-1">kcal</span>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  <div className="h-40">
+                  <div className="h-32 md:h-40">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={calorieChartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
@@ -738,7 +741,7 @@ const BMICalculatorFunnel = () => {
             {/* Lifestyle Insights */}
             {insights.length > 0 && (
               <div className="space-y-3">
-                <h4 className="font-semibold text-nf-black text-lg">📊 Deine Lifestyle-Analyse</h4>
+                <h4 className="font-semibold text-nf-black text-base md:text-lg">📊 Deine Lifestyle-Analyse</h4>
                 {insights.map((insight, index) => (
                   <Alert
                     key={index}
@@ -764,10 +767,12 @@ const BMICalculatorFunnel = () => {
               </div>
             )}
 
-            {/* CTA Section - KOMPAKT */}
-            <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-5 rounded-lg text-white">
-              <h4 className="text-xl font-bold mb-2">🎯 Bereit, deine Ziele zu erreichen?</h4>
-              <p className="mb-3 opacity-90 text-sm">Sichere dir jetzt dein kostenloses Beratungsgespräch!</p>
+            {/* CTA Section - KOMPAKT & RESPONSIVE */}
+            <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-4 md:p-5 rounded-lg text-white">
+              <h4 className="text-lg md:text-xl font-bold mb-2">🎯 Bereit, deine Ziele zu erreichen?</h4>
+              <p className="mb-3 opacity-90 text-xs md:text-sm">
+                Sichere dir jetzt dein kostenloses Beratungsgespräch!
+              </p>
               <Button
                 onClick={() => {
                   // ✅ WEITERLEITUNG ZUM BOOKING:
@@ -784,7 +789,7 @@ const BMICalculatorFunnel = () => {
                   // Option 4 - Komponente im gleichen Projekt anzeigen:
                   // setShowBooking(true);
                 }}
-                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base"
+                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-4 md:py-5 text-sm md:text-base"
                 size="lg"
               >
                 Jetzt Termin buchen →
@@ -799,16 +804,16 @@ const BMICalculatorFunnel = () => {
   };
 
   return (
-    <section id="bmi-rechner" className="py-20 bg-nf-light">
+    <section id="bmi-rechner" className="py-12 md:py-20 bg-nf-light">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Progress Bar - Only show after first step */}
         {currentStep >= 1 && currentStep < 7 && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 md:mb-8">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-nf-gray">
+              <span className="text-xs md:text-sm text-nf-gray">
                 Schritt {currentStep + 1} von {totalSteps}
               </span>
-              <span className="text-sm font-semibold text-nf-red">
+              <span className="text-xs md:text-sm font-semibold text-nf-red">
                 {Math.round(((currentStep + 1) / totalSteps) * 100)}% komplett
               </span>
             </div>
@@ -818,14 +823,14 @@ const BMICalculatorFunnel = () => {
 
         {/* Main Card */}
         <Card className="shadow-elegant border-t-4 border-nf-red">
-          <CardContent className="p-8">
+          <CardContent className="p-6 md:p-8">
             <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
             {/* Navigation Buttons */}
             {currentStep < 7 && (
-              <div className="flex gap-3 mt-8">
+              <div className="flex gap-2 md:gap-3 mt-6 md:mt-8">
                 {currentStep > 0 && (
-                  <Button onClick={prevStep} variant="outline" className="flex-1">
+                  <Button onClick={prevStep} variant="outline" className="flex-1 text-sm md:text-base">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Zurück
                   </Button>
@@ -833,7 +838,7 @@ const BMICalculatorFunnel = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceed()}
-                  className={`bg-nf-red hover:bg-nf-red/90 text-white font-semibold ${
+                  className={`bg-nf-red hover:bg-nf-red/90 text-white font-semibold text-sm md:text-base ${
                     currentStep === 0 ? "flex-1" : "flex-[2]"
                   }`}
                 >
@@ -860,7 +865,7 @@ const BMICalculatorFunnel = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-6 text-center text-sm text-nf-gray"
+            className="mt-4 md:mt-6 text-center text-xs md:text-sm text-nf-gray"
           >
             <p>✓ Über 500 zufriedene Kunden ✓ Wissenschaftlich fundiert ✓ 100% kostenlos</p>
           </motion.div>
