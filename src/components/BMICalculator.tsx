@@ -32,7 +32,14 @@ import {
   Tooltip,
 } from "recharts";
 
+// 📍 ROUTING SETUP:
+// Für React Router: import { useNavigate } from 'react-router-dom';
+// Für Next.js: import { useRouter } from 'next/router'; oder import { useRouter } from 'next/navigation';
+
 const BMICalculatorFunnel = () => {
+  // Für React Router: const navigate = useNavigate();
+  // Für Next.js: const router = useRouter();
+
   const [currentStep, setCurrentStep] = useState(0);
   const [height, setHeight] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
@@ -301,7 +308,7 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setGoal(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
+                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       goal === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
@@ -309,6 +316,11 @@ const BMICalculatorFunnel = () => {
                   >
                     <div className="font-semibold text-nf-black">{option.label}</div>
                     <div className="text-sm text-nf-gray">{option.desc}</div>
+                    {goal === option.value && (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                      </motion.div>
+                    )}
                   </motion.button>
                 ))}
               </div>
@@ -346,13 +358,18 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setGender(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-6 rounded-lg border-2 text-center transition-all duration-200 ${
+                    className={`p-6 rounded-lg border-2 text-center transition-all duration-200 relative ${
                       gender === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
                     }`}
                   >
                     <div className="text-xl font-semibold">{option.label}</div>
+                    {gender === option.value && (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                      </motion.div>
+                    )}
                   </motion.button>
                 ))}
               </div>
@@ -478,7 +495,7 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setActivityLevel(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
+                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       activityLevel === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
@@ -486,6 +503,11 @@ const BMICalculatorFunnel = () => {
                   >
                     <div className="font-semibold text-nf-black">{option.label}</div>
                     <div className="text-sm text-nf-gray">{option.desc}</div>
+                    {activityLevel === option.value && (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                      </motion.div>
+                    )}
                   </motion.button>
                 ))}
               </div>
@@ -525,7 +547,7 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setSleepHours(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
+                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       sleepHours === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
@@ -533,6 +555,11 @@ const BMICalculatorFunnel = () => {
                   >
                     <div className="font-semibold text-nf-black">{option.label}</div>
                     <div className="text-sm text-nf-gray">{option.desc}</div>
+                    {sleepHours === option.value && (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                      </motion.div>
+                    )}
                   </motion.button>
                 ))}
               </div>
@@ -573,7 +600,7 @@ const BMICalculatorFunnel = () => {
                     onClick={() => setStressLevel(option.value)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
+                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
                       stressLevel === option.value
                         ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
                         : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
@@ -581,6 +608,11 @@ const BMICalculatorFunnel = () => {
                   >
                     <div className="font-semibold text-nf-black">{option.label}</div>
                     <div className="text-sm text-nf-gray">{option.desc}</div>
+                    {stressLevel === option.value && (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                        <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                      </motion.div>
+                    )}
                   </motion.button>
                 ))}
               </div>
@@ -732,23 +764,31 @@ const BMICalculatorFunnel = () => {
               </div>
             )}
 
-            {/* CTA Section */}
-            <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-6 rounded-lg text-white">
-              <h4 className="text-2xl font-bold mb-2">🎯 Bereit, deine Ziele zu erreichen?</h4>
-              <p className="mb-4 opacity-90">
-                Unsere Experten erstellen einen maßgeschneiderten Plan basierend auf deiner kompletten Analyse - 100%
-                kostenlos und unverbindlich!
-              </p>
+            {/* CTA Section - KOMPAKT */}
+            <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-5 rounded-lg text-white">
+              <h4 className="text-xl font-bold mb-2">🎯 Bereit, deine Ziele zu erreichen?</h4>
+              <p className="mb-3 opacity-90 text-sm">Sichere dir jetzt dein kostenloses Beratungsgespräch!</p>
               <Button
-                onClick={scrollToContact}
-                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-6 text-lg"
+                onClick={() => {
+                  // ✅ WEITERLEITUNG ZUM BOOKING:
+
+                  // Option 1 - Standard HTML (funktioniert immer):
+                  window.location.href = "/booking";
+
+                  // Option 2 - React Router:
+                  // navigate('/booking');
+
+                  // Option 3 - Next.js App Router:
+                  // router.push('/booking');
+
+                  // Option 4 - Komponente im gleichen Projekt anzeigen:
+                  // setShowBooking(true);
+                }}
+                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base"
                 size="lg"
               >
-                Jetzt kostenloses Beratungsgespräch sichern →
+                Jetzt Termin buchen →
               </Button>
-              <p className="text-xs text-center mt-3 opacity-75">
-                ✓ Individuelle Ernährungsberatung ✓ Persönlicher Trainingsplan ✓ Lifestyle-Coaching
-              </p>
             </div>
           </motion.div>
         );
