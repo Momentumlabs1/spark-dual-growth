@@ -48,12 +48,12 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD MIT HÖHENBESCHRÄNKUNG - Mobile KLEIN (35vh), Desktop (55vh) */}
+            {/* BILD MIT HÖHENBESCHRÄNKUNG - Köpfe vollständig sichtbar */}
             <div className="relative overflow-hidden rounded-b-2xl h-[35vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
-                className="w-full h-full object-cover object-top relative z-10"
+                className="w-full h-full object-cover object-center relative z-10"
                 loading="eager"
               />
 
@@ -66,13 +66,13 @@ const HeroSection = () => {
                   duration: 2,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-8 sm:pb-12 md:pb-20 lg:pb-24 xl:pb-28 px-4"
+                className="absolute inset-0 z-20 flex flex-col items-center justify-end pb-10 sm:pb-14 md:pb-20 lg:pb-24 xl:pb-28 px-4"
               >
                 {/* Desktop: Horizontal nebeneinander, Mobile: Größer */}
                 <h1 className="text-center">
-                  {/* Mobile: Kompakt */}
+                  {/* Mobile: GRÖSSER */}
                   <div className="block md:hidden">
-                    <div className="flex items-center justify-center gap-1.5 text-[1.75rem] sm:text-[2rem] font-bold leading-none">
+                    <div className="flex items-center justify-center gap-2 text-[2.5rem] sm:text-[2.8rem] font-bold leading-none">
                       <span
                         className="text-white"
                         style={{
@@ -116,7 +116,7 @@ const HeroSection = () => {
                 </h1>
 
                 <p
-                  className="text-xs sm:text-sm md:text-lg lg:text-xl text-white/80 font-light mt-2 sm:mt-3"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 font-light mt-2 sm:mt-3"
                   style={{
                     textShadow: "0 2px 6px rgba(0, 0, 0, 0.8)",
                   }}
