@@ -63,7 +63,7 @@ const HeroSection = () => {
             </div>
 
             {/* BILD - Richtige Höhe damit Körper beim Button enden */}
-            <div className="relative overflow-hidden rounded-2xl h-[48vh] sm:h-[52vh] md:h-[58vh] lg:h-[62vh]">
+            <div className="relative overflow-hidden rounded-2xl h-[40vh] sm:h-[44vh] md:h-[50vh] lg:h-[55vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
