@@ -251,19 +251,20 @@ const BMICalculatorFunnel = () => {
     }
   };
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+  // ✅ VERBESSERTE ANIMATIONEN - Nur sanftes Fade, kein störender Slide-Effekt!
+  const fadeVariants = {
+    enter: {
       opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
+      scale: 0.98,
     },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 300 : -300,
+    center: {
+      opacity: 1,
+      scale: 1,
+    },
+    exit: {
       opacity: 0,
-    }),
+      scale: 0.98,
+    },
   };
 
   const renderStep = () => {
@@ -272,12 +273,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step0"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -320,12 +320,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step1"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -365,12 +364,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step2"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -401,12 +399,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step3"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -452,12 +449,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step4"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -501,12 +497,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step5"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -549,12 +544,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step6"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
@@ -600,12 +594,11 @@ const BMICalculatorFunnel = () => {
         return (
           <motion.div
             key="step7"
-            custom={1}
-            variants={slideVariants}
+            variants={fadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="space-y-6"
           >
             <div className="text-center mb-8">
