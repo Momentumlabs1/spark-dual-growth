@@ -92,7 +92,7 @@ const HeroSection = () => {
               </motion.div>
 
               {/* BILD - Charaktere komplett sichtbar, skaliert */}
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-black/50 to-black">
+              <div className="relative rounded-2xl overflow-hidden">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
