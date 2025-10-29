@@ -50,13 +50,12 @@ const HeroSection = () => {
 
             {/* BILD CONTAINER - GLEICHE BREITE WIE BUTTON */}
             <div className="relative w-full">
-              {/* BILD - kleiner auf Mobile */}
+              {/* BILD - kleiner auf Mobile mit angepasster Position */}
               <div className="relative rounded-2xl overflow-hidden h-[45vh] sm:h-[50vh] md:h-[56vh] lg:h-[60vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "center 20%" }}
+                  className="w-full h-full object-cover object-[center_35%] sm:object-[center_20%]"
                   loading="eager"
                 />
 
