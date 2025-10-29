@@ -27,7 +27,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* ========== BILD MIT BUTTON DRÜBER ========== */}
+        {/* ========== HERO CONTAINER ========== */}
         <div className="relative mx-auto mb-6 sm:mb-8">
           <motion.div
             style={{ y }}
@@ -48,25 +48,18 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD Container - Charaktere in Button-Breite, kommen raus */}
-            <div className="relative overflow-hidden rounded-2xl h-[50vh] sm:h-[54vh] md:h-[58vh] lg:h-[62vh] w-[88%] sm:w-[85%] max-w-md md:max-w-lg mx-auto">
-              <img
-                src="/assets/niklas-fabienne-hero22.png"
-                alt="Niklas & Fabienne"
-                className="w-full h-full object-cover"
-                style={{ objectPosition: "center 20%" }}
-                loading="eager"
-              />
-
-              {/* TEXT OVERLAY - KÖRPER & GEIST - Über den Köpfen */}
+            {/* CONTENT Container - alles zentriert */}
+            <div className="relative w-[88%] sm:w-[85%] max-w-md md:max-w-lg mx-auto">
+              
+              {/* TEXT - KÖRPER & GEIST - über dem Bild */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
-                className="absolute top-4 sm:top-6 md:top-8 lg:top-10 left-0 right-0 flex flex-col items-center justify-center px-4"
+                className="relative z-10 text-center mb-4 sm:mb-6"
               >
-                <div className="flex items-baseline justify-center gap-2 sm:gap-3 md:gap-4 mb-1 sm:mb-2">
-                  <h1 className="text-[2.2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
+                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none">
                     <span
                       className="text-white"
                       style={{
@@ -76,7 +69,7 @@ const HeroSection = () => {
                       KÖRPER
                     </span>
                   </h1>
-                  <h1 className="text-[2.2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none">
                     <span
                       style={{
                         color: "rgb(220, 38, 38)",
@@ -98,24 +91,34 @@ const HeroSection = () => {
                 </p>
               </motion.div>
 
-              {/* BUTTON - ABSOLUT über dem Bild - Charaktere "kommen raus" */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="absolute bottom-4 sm:bottom-5 md:bottom-6 left-0 right-0 flex justify-center px-4 z-20"
-              >
-                <motion.button
-                  onClick={() => scrollToSection("#booking-funnel")}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                  className="w-[88%] sm:w-[85%] max-w-md md:max-w-lg text-white px-5 py-4 sm:px-8 sm:py-5 md:px-12 md:py-6 text-sm sm:text-base md:text-lg lg:text-xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 sm:gap-3"
+              {/* BILD - Charaktere komplett sichtbar, skaliert */}
+              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-black/50 to-black">
+                <img
+                  src="/assets/niklas-fabienne-hero22.png"
+                  alt="Niklas & Fabienne"
+                  className="w-full h-auto object-contain"
+                  loading="eager"
+                />
+                
+                {/* Button über dem unteren Teil des Bildes */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="absolute bottom-0 left-0 right-0 pb-6 sm:pb-8"
                 >
-                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-                </motion.button>
-              </motion.div>
+                  <motion.button
+                    onClick={() => scrollToSection("#booking-funnel")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                    className="w-full text-white px-5 py-4 sm:px-8 sm:py-5 md:px-12 md:py-6 text-sm sm:text-base md:text-lg lg:text-xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 sm:gap-3"
+                  >
+                    <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 flex-shrink-0" />
+                    <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+                  </motion.button>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>
