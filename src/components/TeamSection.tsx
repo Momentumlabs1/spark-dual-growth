@@ -6,13 +6,14 @@ const TeamSection = () => {
   const teamMembers = [
     {
       name: "Niklas",
-      role: "Training & Muskelaufbau",
+      role: "Apfel & Hantel",
       image: "/images/niklas.jpg", // Passe diesen Pfad an dein hochgeladenes Bild an
       specialties: [
-        "Krafttraining & Hypertrophie",
-        "Bewegungsoptimierung",
-        "Körperkomposition",
-        "Trainingsperiodisierung",
+        "Ernährungsanalyse & zielgerechte Optimierung",
+        "Individuelle Trainingsplanung (Muskelaufbau & Leistungssteigerung)",
+        "Stoffwechsel- und Energieoptimierung",
+        "Optimierung der Körperkomposition (Fettabbau & Muskelzuwachs)",
+        "Bewegungs- & Technikcoaching",
       ],
       icon: Dumbbell,
       color: "from-nf-black to-nf-gray-600",
@@ -20,9 +21,17 @@ const TeamSection = () => {
     },
     {
       name: "Fabienne",
-      role: "Ernährung & Lifestyle",
+      role: "Hirn|Herz & Apfel",
       image: "/images/fabienne.jpg", // Passe diesen Pfad an dein hochgeladenes Bild an
-      specialties: ["Individuelle Ernährungspläne", "Stoffwechseloptimierung", "Lifestyle-Coaching", "Nachhaltigkeit"],
+      specialties: [
+        "Mental Coaching & Begleitung bei Veränderungsprozessen",
+        "Female Balance & ganzheitliches Wohlbefinden",
+        "Individuelle Ernährungspläne (zielorientiert & alltagstauglich)",
+        "Nachhaltige Gewohnheitsbildung",
+        "Stress- & Emotionsmanagement für mehr Gelassenheit im Alltag",
+        "Achtsamkeit & Mindset-Arbeit für langfristigen Erfolg",
+        "Unterstützung beim Aufbau neuer Routinen",
+      ],
       icon: Apple,
       color: "from-nf-red to-nf-red/80",
       gradient: "from-rose-900/40 via-rose-900/20 to-transparent",
@@ -60,8 +69,8 @@ const TeamSection = () => {
             >
               <Card className="overflow-hidden shadow-medium hover:shadow-large transition-smooth border-0">
                 <div className="relative">
-                  {/* Echtes Bild mit Fade-Effekt */}
-                  <div className="aspect-[4/5] relative overflow-hidden bg-nf-gray-100">
+                  {/* Echtes Bild mit Fade-Effekt - KEIN HINTERGRUND für freigestellte Bilder */}
+                  <div className="aspect-[4/5] relative overflow-hidden bg-transparent">
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover object-center" />
                     {/* Farblicher Fade-Effekt über dem Bild */}
                     <div className={`absolute inset-0 bg-gradient-to-t ${member.gradient}`}></div>
