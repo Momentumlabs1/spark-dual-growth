@@ -7,7 +7,7 @@ const TeamSection = () => {
     {
       name: "Niklas",
       role: "Apfel & Hantel",
-      image: "/assets/NIKLAS TEAM.png", // Korrigierter Pfad
+      image: "/assets/niklas-team.png",
       specialties: [
         "Ernährungsanalyse & zielgerechte Optimierung",
         "Individuelle Trainingsplanung (Muskelaufbau & Leistungssteigerung)",
@@ -17,12 +17,11 @@ const TeamSection = () => {
       ],
       icon: Dumbbell,
       color: "from-nf-black to-nf-gray-600",
-      gradient: "from-gray-900/40 via-gray-900/20 to-transparent",
     },
     {
       name: "Fabienne",
       role: "Hirn|Herz & Apfel",
-      image: "/assets/FABIENNE-TEAM.png", // Korrigierter Pfad
+      image: "/assets/fabienne-team.png",
       specialties: [
         "Mental Coaching & Begleitung bei Veränderungsprozessen",
         "Female Balance & ganzheitliches Wohlbefinden",
@@ -34,7 +33,6 @@ const TeamSection = () => {
       ],
       icon: Apple,
       color: "from-nf-red to-nf-red/80",
-      gradient: "from-rose-900/40 via-rose-900/20 to-transparent",
     },
   ];
 
@@ -56,7 +54,6 @@ const TeamSection = () => {
           </p>
         </motion.div>
 
-        {/* WICHTIG: grid-cols-2 statt md:grid-cols-2 sorgt dafür, dass die Bilder auch auf mobilen Geräten nebeneinander sind */}
         <div className="grid grid-cols-2 gap-4 lg:gap-12">
           {teamMembers.map((member, index) => (
             <motion.div
@@ -69,14 +66,10 @@ const TeamSection = () => {
             >
               <Card className="overflow-hidden shadow-medium hover:shadow-large transition-smooth border-0">
                 <div className="relative">
-                  {/* Echtes Bild mit Fade-Effekt - KEIN HINTERGRUND für freigestellte Bilder */}
                   <div className="aspect-[4/5] relative overflow-hidden bg-transparent">
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover object-center" />
-                    {/* Farblicher Fade-Effekt über dem Bild */}
-                    <div className={`absolute inset-0 bg-gradient-to-t ${member.gradient}`}></div>
                   </div>
 
-                  {/* Content Overlay bei Hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-nf-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-smooth flex items-end">
                     <div className="p-4 lg:p-6 text-nf-white">
                       <h3 className="text-lg lg:text-2xl font-bold mb-1 lg:mb-2">{member.name}</h3>
@@ -105,7 +98,6 @@ const TeamSection = () => {
           ))}
         </div>
 
-        {/* Team Philosophy */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
