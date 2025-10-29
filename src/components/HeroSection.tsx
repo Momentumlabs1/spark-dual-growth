@@ -48,25 +48,25 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD Container - Höher für bessere Positionierung */}
-            <div className="relative overflow-hidden rounded-2xl h-[58vh] sm:h-[62vh] md:h-[68vh] lg:h-[75vh]">
+            {/* BILD Container - Charaktere kommen aus Button raus */}
+            <div className="relative overflow-hidden rounded-2xl h-[50vh] sm:h-[54vh] md:h-[58vh] lg:h-[62vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "center 55%" }}
+                style={{ objectPosition: "center 18%" }}
                 loading="eager"
               />
 
-              {/* TEXT OVERLAY - KÖRPER & GEIST - Weiter oben positioniert */}
+              {/* TEXT OVERLAY - KÖRPER & GEIST - Über den Köpfen */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
-                className="absolute top-8 sm:top-12 md:top-16 lg:top-20 left-0 right-0 flex flex-col items-center justify-center px-4"
+                className="absolute top-4 sm:top-6 md:top-8 lg:top-10 left-0 right-0 flex flex-col items-center justify-center px-4"
               >
-                <div className="flex items-baseline justify-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-3">
-                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none">
+                <div className="flex items-baseline justify-center gap-2 sm:gap-3 md:gap-4 mb-1 sm:mb-2">
+                  <h1 className="text-[2.2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
                     <span
                       className="text-white"
                       style={{
@@ -76,7 +76,7 @@ const HeroSection = () => {
                       KÖRPER
                     </span>
                   </h1>
-                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none">
+                  <h1 className="text-[2.2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
                     <span
                       style={{
                         color: "rgb(220, 38, 38)",
@@ -89,7 +89,7 @@ const HeroSection = () => {
                 </div>
 
                 <p
-                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 font-light"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-light"
                   style={{
                     textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
                   }}
@@ -98,12 +98,12 @@ const HeroSection = () => {
                 </p>
               </motion.div>
 
-              {/* BUTTON - ABSOLUT über dem Bild - Charaktere enden hier */}
+              {/* BUTTON - ABSOLUT über dem Bild - Charaktere "kommen raus" */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="absolute bottom-5 sm:bottom-6 md:bottom-8 left-0 right-0 flex justify-center px-4"
+                className="absolute bottom-4 sm:bottom-5 md:bottom-6 left-0 right-0 flex justify-center px-4 z-20"
               >
                 <motion.button
                   onClick={() => scrollToSection("#booking-funnel")}
