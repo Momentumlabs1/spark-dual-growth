@@ -51,15 +51,15 @@ const HeroSection = () => {
             {/* CONTENT Container - alles zentriert */}
             <div className="relative w-[88%] sm:w-[85%] max-w-md md:max-w-lg mx-auto">
               
-              {/* TEXT - KÖRPER & GEIST - über dem Bild */}
+              {/* TEXT - KÖRPER & GEIST - RESPONSIVE */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
                 className="relative z-10 text-center mb-4 sm:mb-6"
               >
-                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 mb-1.5 sm:mb-2">
+                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
                     <span
                       className="text-white"
                       style={{
@@ -69,7 +69,7 @@ const HeroSection = () => {
                       KÖRPER
                     </span>
                   </h1>
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-none">
+                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
                     <span
                       style={{
                         color: "rgb(220, 38, 38)",
@@ -82,7 +82,7 @@ const HeroSection = () => {
                 </div>
 
                 <p
-                  className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-light"
+                  className="text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
                   style={{
                     textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
                   }}
@@ -91,12 +91,13 @@ const HeroSection = () => {
                 </p>
               </motion.div>
 
-              {/* BILD - Charaktere komplett sichtbar, skaliert */}
-              <div className="relative rounded-2xl overflow-hidden">
+              {/* BILD - NUR OBERKÖRPER, KEINE BEINE */}
+              <div className="relative rounded-2xl overflow-hidden h-[55vh] sm:h-[58vh] md:h-[60vh] lg:h-[62vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
-                  className="w-full h-auto object-contain"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: "center 15%" }}
                   loading="eager"
                 />
                 
