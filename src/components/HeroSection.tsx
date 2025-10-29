@@ -50,57 +50,60 @@ const HeroSection = () => {
 
             {/* BILD CONTAINER - GLEICHE BREITE WIE BUTTON */}
             <div className="relative w-full">
-              {/* BILD - kleiner auf Mobile mit korrigierter Position */}
-              <div className="relative rounded-2xl overflow-hidden h-[40vh] sm:h-[48vh] md:h-[56vh] lg:h-[60vh]">
+              {/* BILD - object-contain auf Mobile, object-cover auf Desktop */}
+              <div className="relative rounded-2xl overflow-hidden h-[32vh] sm:h-[42vh] md:h-[54vh] lg:h-[60vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
-                  className="w-full h-full object-cover object-top sm:object-[center_20%]"
+                  className="w-full h-full object-contain md:object-cover object-top md:object-[center_20%] pointer-events-none select-none"
                   loading="eager"
                 />
 
-                {/* TEXT - ZWISCHEN Köpfen und Button als Overlay */}
+                {/* TEXT - EIN H1 mit Spans für richtige Zentrierung */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
                   className="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center px-4"
                 >
-                  <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 mb-1 sm:mb-1.5 md:mb-2">
-                    <h1 className="text-[2rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
-                      <span
-                        className="text-white"
-                        style={{
-                          textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
-                        }}
-                      >
+                  <div className="text-center">
+                    <h1 className="font-black tracking-tight leading-none text-[1.6rem] sm:text-3xl md:text-5xl lg:text-6xl">
+                      <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
                         KÖRPER
                       </span>
-                    </h1>
-                    <h1 className="text-[2rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
                       <span
+                        className="text-[.9em] font-black"
                         style={{
                           color: "rgb(220, 38, 38)",
-                          textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
+                          textShadow: "0 4px 20px rgba(0,0,0,.95)",
                         }}
                       >
-                        & GEIST
+                        {" "}
+                        &{" "}
+                      </span>
+                      <span
+                        className="font-black"
+                        style={{
+                          color: "rgb(220, 38, 38)",
+                          textShadow: "0 4px 20px rgba(0,0,0,.95)",
+                        }}
+                      >
+                        GEIST
                       </span>
                     </h1>
+                    <p
+                      className="mt-2 text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
+                      style={{
+                        textShadow: "0 2px 12px rgba(0,0,0,.95)",
+                      }}
+                    >
+                      Ganzheitliches Online Coaching
+                    </p>
                   </div>
-
-                  <p
-                    className="text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
-                    style={{
-                      textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
-                    }}
-                  >
-                    Ganzheitliches Online Coaching
-                  </p>
                 </motion.div>
               </div>
 
-              {/* BUTTON - unterhalb des Bildes, nicht mehr overlay */}
+              {/* BUTTON - unterhalb des Bildes */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
