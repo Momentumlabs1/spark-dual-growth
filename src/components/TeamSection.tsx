@@ -94,8 +94,6 @@ const TeamSection = () => {
                     <h3 className="text-lg lg:text-xl font-bold text-nf-black">{member.name}</h3>
                   </div>
 
-                  <p className="text-nf-red font-semibold mb-2 text-base lg:text-lg">{member.role}</p>
-
                   {/* Mini-Beschreibung */}
                   <p className="text-sm lg:text-base text-nf-gray-600 mb-4 font-medium">{member.miniDescription}</p>
 
