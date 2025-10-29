@@ -92,12 +92,12 @@ const HeroSection = () => {
               </motion.div>
 
               {/* BILD - NUR OBERKÖRPER, KEINE BEINE */}
-              <div className="relative rounded-2xl overflow-hidden h-[55vh] sm:h-[58vh] md:h-[60vh] lg:h-[62vh]">
+              <div className="relative rounded-2xl overflow-hidden h-[50vh] sm:h-[52vh] md:h-[54vh] lg:h-[56vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: "center 15%" }}
+                  style={{ objectPosition: "center top" }}
                   loading="eager"
                 />
                 
