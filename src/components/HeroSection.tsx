@@ -28,7 +28,7 @@ const HeroSection = () => {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
         {/* ========== BILD MIT BUTTON DRÜBER ========== */}
-        <div className="relative max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto mb-6 sm:mb-8">
+        <div className="relative mx-auto mb-6 sm:mb-8">
           <motion.div
             style={{ y }}
             initial={{ opacity: 0 }}
@@ -48,13 +48,13 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD Container - Charaktere kommen aus Button raus */}
-            <div className="relative overflow-hidden rounded-2xl h-[50vh] sm:h-[54vh] md:h-[58vh] lg:h-[62vh]">
+            {/* BILD Container - Charaktere in Button-Breite, kommen raus */}
+            <div className="relative overflow-hidden rounded-2xl h-[50vh] sm:h-[54vh] md:h-[58vh] lg:h-[62vh] w-[88%] sm:w-[85%] max-w-md md:max-w-lg mx-auto">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "center 18%" }}
+                style={{ objectPosition: "center 20%" }}
                 loading="eager"
               />
 
