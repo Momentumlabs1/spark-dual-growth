@@ -6,7 +6,7 @@ const TeamSection = () => {
   const teamMembers = [
     {
       name: "Niklas",
-      role: "🍎 & 💪 Apfel & Hantel",
+      role: "🍎 & 💪",
       image: "/assets/niklas-team.png",
       specialties: [
         "Ernährungsanalyse & zielgerechte Optimierung",
@@ -21,7 +21,7 @@ const TeamSection = () => {
     },
     {
       name: "Fabienne",
-      role: "🧠❤️ & 🍎 Hirn|Herz & Apfel",
+      role: "🧠❤️ & 🍎",
       image: "/assets/fabienne-team.png",
       specialties: [
         "Mental Coaching & Begleitung bei Veränderungsprozessen",
@@ -54,7 +54,7 @@ const TeamSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
