@@ -6,10 +6,8 @@ import BMICalculator from '@/components/BMICalculator';
 import TestimonialSection from '@/components/TestimonialSection';
 import BookingFunnel from '@/components/BookingFunnel';
 import Footer from '@/components/Footer';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-nf-white">
+  return <div className="min-h-screen bg-nf-white">
       {/* Navigation */}
       <Navigation />
       
@@ -29,12 +27,10 @@ const Index = () => {
       <TestimonialSection />
       
       {/* Booking Funnel */}
-      <BookingFunnel />
+      
       
       {/* Footer */}
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;

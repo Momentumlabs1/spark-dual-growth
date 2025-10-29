@@ -1,17 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Calculator,
-  TrendingUp,
-  Target,
-  Users,
-  Flame,
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Moon,
-  Brain,
-} from "lucide-react";
+import { Calculator, TrendingUp, Target, Users, Flame, ArrowRight, ArrowLeft, CheckCircle2, Moon, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,18 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 
 // 📍 ROUTING SETUP:
 // Für React Router: import { useNavigate } from 'react-router-dom';
@@ -52,14 +30,11 @@ const BMICalculatorFunnel = () => {
   const [bmi, setBMI] = useState<number | null>(null);
   const [bmr, setBMR] = useState<number | null>(null);
   const [tdee, setTDEE] = useState<number | null>(null);
-
   const totalSteps = 8;
-
   const calculateMetrics = () => {
     const h = parseFloat(height);
     const w = parseFloat(weight);
     const a = parseFloat(age);
-
     if (!h || !w || !a || h <= 0 || w <= 0 || a <= 0 || !gender || !activityLevel) return;
 
     // Calculate BMI
@@ -82,9 +57,8 @@ const BMICalculatorFunnel = () => {
       light: 1.375,
       moderate: 1.55,
       active: 1.725,
-      "very-active": 1.9,
+      "very-active": 1.9
     };
-
     let tdeeValue = bmrValue * activityMultipliers[activityLevel as keyof typeof activityMultipliers];
 
     // Adjust TDEE based on sleep and stress
@@ -97,24 +71,36 @@ const BMICalculatorFunnel = () => {
     if (stressLevel === "high" || stressLevel === "very-high") {
       tdeeValue *= 1.03; // 3% increase
     }
-
     setTDEE(Math.round(tdeeValue));
   };
-
   const getBMICategory = (bmiValue: number) => {
-    if (bmiValue < 18.5) return { category: "Untergewicht", color: "hsl(var(--chart-1))", bgColor: "bg-blue-50" };
-    if (bmiValue < 25) return { category: "Normalgewicht", color: "hsl(var(--chart-2))", bgColor: "bg-green-50" };
-    if (bmiValue < 30) return { category: "Übergewicht", color: "hsl(var(--chart-3))", bgColor: "bg-yellow-50" };
-    return { category: "Adipositas", color: "hsl(var(--chart-4))", bgColor: "bg-red-50" };
+    if (bmiValue < 18.5) return {
+      category: "Untergewicht",
+      color: "hsl(var(--chart-1))",
+      bgColor: "bg-blue-50"
+    };
+    if (bmiValue < 25) return {
+      category: "Normalgewicht",
+      color: "hsl(var(--chart-2))",
+      bgColor: "bg-green-50"
+    };
+    if (bmiValue < 30) return {
+      category: "Übergewicht",
+      color: "hsl(var(--chart-3))",
+      bgColor: "bg-yellow-50"
+    };
+    return {
+      category: "Adipositas",
+      color: "hsl(var(--chart-4))",
+      bgColor: "bg-red-50"
+    };
   };
-
   const getBMIAdvice = (bmiValue: number) => {
     if (bmiValue < 18.5) return "Wir helfen dir, auf gesunde Weise zuzunehmen.";
     if (bmiValue < 25) return "Wir helfen dir, dein Gewicht zu halten.";
     if (bmiValue < 30) return "Wir helfen dir, nachhaltig abzunehmen.";
     return "Wir begleiten dich professionell auf deinem Weg.";
   };
-
   const getCalorieGoal = (tdeeValue: number, goalType: string) => {
     // Adjust deficit/surplus based on stress and sleep
     let deficitMultiplier = 500;
@@ -124,7 +110,6 @@ const BMICalculatorFunnel = () => {
     if (sleepHours === "less-than-6" || stressLevel === "high" || stressLevel === "very-high") {
       deficitMultiplier = 350; // Smaller deficit for better adherence
     }
-
     switch (goalType) {
       case "lose":
         return tdeeValue - deficitMultiplier;
@@ -136,7 +121,6 @@ const BMICalculatorFunnel = () => {
         return tdeeValue;
     }
   };
-
   const getLifestyleInsights = () => {
     const insights = [];
 
@@ -146,22 +130,21 @@ const BMICalculatorFunnel = () => {
         type: "warning",
         icon: "😴",
         title: "Schlafmangel erkannt",
-        description:
-          "Weniger als 6 Stunden Schlaf erhöhen Hunger-Hormone und erschweren das Abnehmen um bis zu 20%. Wir zeigen dir, wie du deinen Schlaf optimierst.",
+        description: "Weniger als 6 Stunden Schlaf erhöhen Hunger-Hormone und erschweren das Abnehmen um bis zu 20%. Wir zeigen dir, wie du deinen Schlaf optimierst."
       });
     } else if (sleepHours === "6-7") {
       insights.push({
         type: "info",
         icon: "😊",
         title: "Schlaf könnte besser sein",
-        description: "7-8 Stunden sind optimal für maximale Ergebnisse. Kleine Anpassungen können große Wirkung haben.",
+        description: "7-8 Stunden sind optimal für maximale Ergebnisse. Kleine Anpassungen können große Wirkung haben."
       });
     } else if (sleepHours === "7-8" || sleepHours === "more-than-8") {
       insights.push({
         type: "success",
         icon: "✨",
         title: "Optimaler Schlaf",
-        description: "Super! Dein Schlaf unterstützt deinen Stoffwechsel optimal.",
+        description: "Super! Dein Schlaf unterstützt deinen Stoffwechsel optimal."
       });
     }
 
@@ -171,22 +154,21 @@ const BMICalculatorFunnel = () => {
         type: "warning",
         icon: "🔥",
         title: "Hohes Stresslevel",
-        description:
-          "Chronischer Stress erhöht Cortisol und führt zu mehr Bauchfett. Stressmanagement ist ein wichtiger Teil deines Plans.",
+        description: "Chronischer Stress erhöht Cortisol und führt zu mehr Bauchfett. Stressmanagement ist ein wichtiger Teil deines Plans."
       });
     } else if (stressLevel === "high") {
       insights.push({
         type: "info",
         icon: "⚡",
         title: "Erhöhter Stress",
-        description: "Stress beeinflusst deine Ergebnisse. Wir integrieren Entspannungsstrategien in deinen Plan.",
+        description: "Stress beeinflusst deine Ergebnisse. Wir integrieren Entspannungsstrategien in deinen Plan."
       });
     } else if (stressLevel === "low") {
       insights.push({
         type: "success",
         icon: "🧘",
         title: "Ausgeglichen",
-        description: "Perfekt! Dein niedriges Stresslevel ist eine solide Basis für schnelle Fortschritte.",
+        description: "Perfekt! Dein niedriges Stresslevel ist eine solide Basis für schnelle Fortschritte."
       });
     }
 
@@ -196,47 +178,51 @@ const BMICalculatorFunnel = () => {
         type: "warning",
         icon: "⚠️",
         title: "Doppelbelastung",
-        description:
-          "Die Kombination aus Schlafmangel und Stress macht Abnehmen besonders schwer. Ein ganzheitlicher Ansatz ist essentiell!",
+        description: "Die Kombination aus Schlafmangel und Stress macht Abnehmen besonders schwer. Ein ganzheitlicher Ansatz ist essentiell!"
       });
     }
-
     return insights;
   };
-
-  const bmiChartData = bmi
-    ? [
-        { name: "Dein BMI", value: bmi, fill: getBMICategory(bmi).color },
-        { name: "Rest", value: Math.max(0, 35 - bmi), fill: "hsl(var(--muted))" },
-      ]
-    : [];
-
-  const calorieChartData = tdee
-    ? [
-        { name: "Abnehmen", value: getCalorieGoal(tdee, "lose"), fill: "hsl(var(--chart-1))" },
-        { name: "Halten", value: tdee, fill: "hsl(var(--chart-2))" },
-        { name: "Zunehmen", value: getCalorieGoal(tdee, "gain"), fill: "hsl(var(--chart-3))" },
-      ]
-    : [];
-
+  const bmiChartData = bmi ? [{
+    name: "Dein BMI",
+    value: bmi,
+    fill: getBMICategory(bmi).color
+  }, {
+    name: "Rest",
+    value: Math.max(0, 35 - bmi),
+    fill: "hsl(var(--muted))"
+  }] : [];
+  const calorieChartData = tdee ? [{
+    name: "Abnehmen",
+    value: getCalorieGoal(tdee, "lose"),
+    fill: "hsl(var(--chart-1))"
+  }, {
+    name: "Halten",
+    value: tdee,
+    fill: "hsl(var(--chart-2))"
+  }, {
+    name: "Zunehmen",
+    value: getCalorieGoal(tdee, "gain"),
+    fill: "hsl(var(--chart-3))"
+  }] : [];
   const scrollToContact = () => {
     const element = document.querySelector("#kontakt");
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     }
   };
-
   const nextStep = () => {
     if (currentStep === 6) {
       calculateMetrics();
     }
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   };
-
   const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
+    setCurrentStep(prev => Math.max(prev - 1, 0));
   };
-
   const canProceed = () => {
     switch (currentStep) {
       case 0:
@@ -262,33 +248,25 @@ const BMICalculatorFunnel = () => {
   const fadeVariants = {
     enter: {
       opacity: 0,
-      scale: 0.98,
+      scale: 0.98
     },
     center: {
       opacity: 1,
-      scale: 1,
+      scale: 1
     },
     exit: {
       opacity: 0,
-      scale: 0.98,
-    },
+      scale: 0.98
+    }
   };
-
   const renderStep = () => {
     const insights = getLifestyleInsights();
-
     switch (currentStep) {
       case 0:
-        return (
-          <motion.div
-            key="step0"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step0" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-8">
               <Target className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Willkommen zum Gesundheits-Check!</h3>
@@ -300,47 +278,41 @@ const BMICalculatorFunnel = () => {
             <div className="space-y-3">
               <Label className="text-lg font-semibold">Was ist dein Hauptziel?</Label>
               <div className="grid gap-3">
-                {[
-                  { value: "lose", label: "🔥 Abnehmen", desc: "Gewicht verlieren" },
-                  { value: "maintain", label: "⚖️ Gewicht halten", desc: "Aktuelle Form beibehalten" },
-                  { value: "gain", label: "💪 Zunehmen", desc: "Muskeln aufbauen" },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setGoal(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
-                      goal === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
+                {[{
+                value: "lose",
+                label: "🔥 Abnehmen",
+                desc: "Gewicht verlieren"
+              }, {
+                value: "maintain",
+                label: "⚖️ Gewicht halten",
+                desc: "Aktuelle Form beibehalten"
+              }, {
+                value: "gain",
+                label: "💪 Zunehmen",
+                desc: "Muskeln aufbauen"
+              }].map(option => <motion.button key={option.value} onClick={() => setGoal(option.value)} whileHover={{
+                scale: 1.02
+              }} whileTap={{
+                scale: 0.98
+              }} className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${goal === option.value ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20" : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"}`}>
                     <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
                     <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
-                    {goal === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                    {goal === option.value && <motion.div initial={{
+                  scale: 0
+                }} animate={{
+                  scale: 1
+                }} className="absolute top-2 right-2">
                         <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                      </motion.div>}
+                  </motion.button>)}
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 1:
-        return (
-          <motion.div
-            key="step1"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step1" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <Users className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Über dich</h3>
@@ -351,48 +323,39 @@ const BMICalculatorFunnel = () => {
             <div className="space-y-3">
               <Label className="text-base md:text-lg font-semibold">Geschlecht</Label>
               <div className="grid grid-cols-2 gap-3 md:gap-4">
-                {[
-                  { value: "male", emoji: "👨", label: "Männlich" },
-                  { value: "female", emoji: "👩", label: "Weiblich" },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setGender(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-4 md:p-6 rounded-lg border-2 text-center transition-all duration-200 relative ${
-                      gender === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
+                {[{
+                value: "male",
+                emoji: "👨",
+                label: "Männlich"
+              }, {
+                value: "female",
+                emoji: "👩",
+                label: "Weiblich"
+              }].map(option => <motion.button key={option.value} onClick={() => setGender(option.value)} whileHover={{
+                scale: 1.02
+              }} whileTap={{
+                scale: 0.98
+              }} className={`p-4 md:p-6 rounded-lg border-2 text-center transition-all duration-200 relative ${gender === option.value ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20" : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"}`}>
                     <div className="text-lg md:text-xl font-semibold flex items-center justify-center gap-2">
                       <span>{option.emoji}</span>
                       <span>{option.label}</span>
                     </div>
-                    {gender === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                    {gender === option.value && <motion.div initial={{
+                  scale: 0
+                }} animate={{
+                  scale: 1
+                }} className="absolute top-2 right-2">
                         <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                      </motion.div>}
+                  </motion.button>)}
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 2:
-        return (
-          <motion.div
-            key="step2"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step2" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <CheckCircle2 className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Wie alt bist du?</h3>
@@ -402,31 +365,14 @@ const BMICalculatorFunnel = () => {
               <Label htmlFor="age" className="text-base md:text-lg font-semibold">
                 Alter (Jahre)
               </Label>
-              <Input
-                id="age"
-                type="number"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                placeholder="z.B. 30"
-                className="text-lg p-5 md:p-6 border-2"
-                min="1"
-                max="120"
-              />
+              <Input id="age" type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="z.B. 30" className="text-lg p-5 md:p-6 border-2" min="1" max="120" />
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 3:
-        return (
-          <motion.div
-            key="step3"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step3" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <TrendingUp className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Deine Körperdaten</h3>
@@ -437,47 +383,21 @@ const BMICalculatorFunnel = () => {
                 <Label htmlFor="height" className="text-base md:text-lg font-semibold">
                   Größe (cm)
                 </Label>
-                <Input
-                  id="height"
-                  type="number"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  placeholder="z.B. 175"
-                  className="text-lg p-5 md:p-6 border-2 mt-2"
-                  min="1"
-                  max="300"
-                />
+                <Input id="height" type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="z.B. 175" className="text-lg p-5 md:p-6 border-2 mt-2" min="1" max="300" />
               </div>
               <div>
                 <Label htmlFor="weight" className="text-base md:text-lg font-semibold">
                   Gewicht (kg)
                 </Label>
-                <Input
-                  id="weight"
-                  type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  placeholder="z.B. 75"
-                  className="text-lg p-5 md:p-6 border-2 mt-2"
-                  min="1"
-                  max="500"
-                />
+                <Input id="weight" type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="z.B. 75" className="text-lg p-5 md:p-6 border-2 mt-2" min="1" max="500" />
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 4:
-        return (
-          <motion.div
-            key="step4"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step4" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <Flame className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Dein Aktivitätslevel</h3>
@@ -486,69 +406,49 @@ const BMICalculatorFunnel = () => {
             <div className="space-y-3">
               <Label className="text-base md:text-lg font-semibold">Aktivität</Label>
               <div className="grid gap-3">
-                {[
-                  {
-                    value: "sedentary",
-                    label: "🪑 Sitzend",
-                    desc: "Wenig bis keine Bewegung (Bürojob)",
-                  },
-                  {
-                    value: "light",
-                    label: "🚶 Leicht aktiv",
-                    desc: "Leichte Aktivität 1-3x/Woche",
-                  },
-                  {
-                    value: "moderate",
-                    label: "🏃 Mäßig aktiv",
-                    desc: "Moderate Aktivität 3-5x/Woche",
-                  },
-                  {
-                    value: "active",
-                    label: "💪 Aktiv",
-                    desc: "Intensive Aktivität 6-7x/Woche",
-                  },
-                  {
-                    value: "very-active",
-                    label: "🔥 Sehr aktiv",
-                    desc: "Tägliches intensives Training",
-                  },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setActivityLevel(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
-                      activityLevel === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
+                {[{
+                value: "sedentary",
+                label: "🪑 Sitzend",
+                desc: "Wenig bis keine Bewegung (Bürojob)"
+              }, {
+                value: "light",
+                label: "🚶 Leicht aktiv",
+                desc: "Leichte Aktivität 1-3x/Woche"
+              }, {
+                value: "moderate",
+                label: "🏃 Mäßig aktiv",
+                desc: "Moderate Aktivität 3-5x/Woche"
+              }, {
+                value: "active",
+                label: "💪 Aktiv",
+                desc: "Intensive Aktivität 6-7x/Woche"
+              }, {
+                value: "very-active",
+                label: "🔥 Sehr aktiv",
+                desc: "Tägliches intensives Training"
+              }].map(option => <motion.button key={option.value} onClick={() => setActivityLevel(option.value)} whileHover={{
+                scale: 1.02
+              }} whileTap={{
+                scale: 0.98
+              }} className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${activityLevel === option.value ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20" : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"}`}>
                     <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
                     <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
-                    {activityLevel === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                    {activityLevel === option.value && <motion.div initial={{
+                  scale: 0
+                }} animate={{
+                  scale: 1
+                }} className="absolute top-2 right-2">
                         <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                      </motion.div>}
+                  </motion.button>)}
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 5:
-        return (
-          <motion.div
-            key="step5"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step5" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <Moon className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Deine Schlafqualität</h3>
@@ -559,64 +459,45 @@ const BMICalculatorFunnel = () => {
             <div className="space-y-3">
               <Label className="text-base md:text-lg font-semibold">Durchschnittliche Schlafdauer</Label>
               <div className="grid gap-3">
-                {[
-                  {
-                    value: "less-than-6",
-                    label: "😴 Weniger als 6h",
-                    desc: "Schlafmangel kann Fortschritte behindern",
-                  },
-                  {
-                    value: "6-7",
-                    label: "😊 6-7 Stunden",
-                    desc: "Gut, aber könnte besser sein",
-                  },
-                  {
-                    value: "7-8",
-                    label: "✨ 7-8 Stunden",
-                    desc: "Optimal für Regeneration",
-                  },
-                  {
-                    value: "more-than-8",
-                    label: "😌 Mehr als 8h",
-                    desc: "Sehr gut für Erholung",
-                  },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setSleepHours(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
-                      sleepHours === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
+                {[{
+                value: "less-than-6",
+                label: "😴 Weniger als 6h",
+                desc: "Schlafmangel kann Fortschritte behindern"
+              }, {
+                value: "6-7",
+                label: "😊 6-7 Stunden",
+                desc: "Gut, aber könnte besser sein"
+              }, {
+                value: "7-8",
+                label: "✨ 7-8 Stunden",
+                desc: "Optimal für Regeneration"
+              }, {
+                value: "more-than-8",
+                label: "😌 Mehr als 8h",
+                desc: "Sehr gut für Erholung"
+              }].map(option => <motion.button key={option.value} onClick={() => setSleepHours(option.value)} whileHover={{
+                scale: 1.02
+              }} whileTap={{
+                scale: 0.98
+              }} className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${sleepHours === option.value ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20" : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"}`}>
                     <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
                     <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
-                    {sleepHours === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                    {sleepHours === option.value && <motion.div initial={{
+                  scale: 0
+                }} animate={{
+                  scale: 1
+                }} className="absolute top-2 right-2">
                         <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                      </motion.div>}
+                  </motion.button>)}
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 6:
-        return (
-          <motion.div
-            key="step6"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
-          >
+        return <motion.div key="step6" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-6">
             <div className="text-center mb-6 md:mb-8">
               <Brain className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Dein Stresslevel</h3>
@@ -627,64 +508,45 @@ const BMICalculatorFunnel = () => {
             <div className="space-y-3">
               <Label className="text-base md:text-lg font-semibold">Wie gestresst fühlst du dich?</Label>
               <div className="grid gap-3">
-                {[
-                  {
-                    value: "low",
-                    label: "🧘 Niedrig",
-                    desc: "Ich bin meistens entspannt",
-                  },
-                  {
-                    value: "moderate",
-                    label: "😌 Moderat",
-                    desc: "Manchmal gestresst, aber okay",
-                  },
-                  {
-                    value: "high",
-                    label: "⚡ Hoch",
-                    desc: "Oft unter Druck",
-                  },
-                  {
-                    value: "very-high",
-                    label: "🔥 Sehr hoch",
-                    desc: "Chronisch gestresst",
-                  },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setStressLevel(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
-                      stressLevel === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
+                {[{
+                value: "low",
+                label: "🧘 Niedrig",
+                desc: "Ich bin meistens entspannt"
+              }, {
+                value: "moderate",
+                label: "😌 Moderat",
+                desc: "Manchmal gestresst, aber okay"
+              }, {
+                value: "high",
+                label: "⚡ Hoch",
+                desc: "Oft unter Druck"
+              }, {
+                value: "very-high",
+                label: "🔥 Sehr hoch",
+                desc: "Chronisch gestresst"
+              }].map(option => <motion.button key={option.value} onClick={() => setStressLevel(option.value)} whileHover={{
+                scale: 1.02
+              }} whileTap={{
+                scale: 0.98
+              }} className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${stressLevel === option.value ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20" : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"}`}>
                     <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
                     <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
-                    {stressLevel === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
+                    {stressLevel === option.value && <motion.div initial={{
+                  scale: 0
+                }} animate={{
+                  scale: 1
+                }} className="absolute top-2 right-2">
                         <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                      </motion.div>}
+                  </motion.button>)}
               </div>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       case 7:
-        return (
-          <motion.div
-            key="step7"
-            variants={fadeVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-4"
-          >
+        return <motion.div key="step7" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{
+          duration: 0.2,
+          ease: "easeInOut"
+        }} className="space-y-4">
             {/* ✅ KOMPAKTER HEADER */}
             <div className="text-center mb-4">
               <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-1">🎉 Deine Ergebnisse sind bereit!</h3>
@@ -692,8 +554,7 @@ const BMICalculatorFunnel = () => {
             </div>
 
             {/* ✅ KOMPAKTER BMI-CARD */}
-            {bmi && (
-              <Card className="shadow-md border-2 border-nf-red/20">
+            {bmi && <Card className="shadow-md border-2 border-nf-red/20">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="h-5 w-5 text-nf-red" />
@@ -710,19 +571,8 @@ const BMICalculatorFunnel = () => {
                   <div className="h-28 mb-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
-                        <Pie
-                          data={bmiChartData}
-                          cx="50%"
-                          cy="50%"
-                          startAngle={180}
-                          endAngle={0}
-                          innerRadius={40}
-                          outerRadius={55}
-                          dataKey="value"
-                        >
-                          {bmiChartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.fill} />
-                          ))}
+                        <Pie data={bmiChartData} cx="50%" cy="50%" startAngle={180} endAngle={0} innerRadius={40} outerRadius={55} dataKey="value">
+                          {bmiChartData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.fill} />)}
                         </Pie>
                       </PieChart>
                     </ResponsiveContainer>
@@ -730,12 +580,10 @@ const BMICalculatorFunnel = () => {
 
                   <p className="text-center text-xs text-nf-gray">{getBMIAdvice(bmi)}</p>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
             {/* ✅ KOMPAKTER KALORIEN-CARD */}
-            {tdee && bmr && (
-              <Card className="shadow-md border-2 border-nf-red/20">
+            {tdee && bmr && <Card className="shadow-md border-2 border-nf-red/20">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Flame className="h-5 w-5 text-nf-red" />
@@ -755,8 +603,7 @@ const BMICalculatorFunnel = () => {
                   </div>
 
                   {/* Empfehlung */}
-                  {goal && (
-                    <div className="p-3 bg-green-50 rounded-lg border border-green-200 text-center">
+                  {goal && <div className="p-3 bg-green-50 rounded-lg border border-green-200 text-center">
                       <div className="text-xs text-nf-gray mb-1">
                         {goal === "lose" && "Zum Abnehmen empfohlen:"}
                         {goal === "maintain" && "Zum Gewicht halten:"}
@@ -766,27 +613,14 @@ const BMICalculatorFunnel = () => {
                         {getCalorieGoal(tdee, goal)}
                         <span className="text-base ml-1">kcal</span>
                       </div>
-                    </div>
-                  )}
+                    </div>}
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
             {/* ✅ KOMPAKTE LIFESTYLE INSIGHTS */}
-            {insights.length > 0 && (
-              <div className="space-y-2">
+            {insights.length > 0 && <div className="space-y-2">
                 <h4 className="font-semibold text-sm">📊 Lifestyle-Analyse</h4>
-                {insights.slice(0, 2).map((insight, index) => (
-                  <Alert
-                    key={index}
-                    className={`border ${
-                      insight.type === "warning"
-                        ? "bg-orange-50 border-orange-200"
-                        : insight.type === "success"
-                          ? "bg-green-50 border-green-200"
-                          : "bg-blue-50 border-blue-200"
-                    } p-3`}
-                  >
+                {insights.slice(0, 2).map((insight, index) => <Alert key={index} className={`border ${insight.type === "warning" ? "bg-orange-50 border-orange-200" : insight.type === "success" ? "bg-green-50 border-green-200" : "bg-blue-50 border-blue-200"} p-3`}>
                     <AlertDescription>
                       <div className="flex gap-2 items-start">
                         <div className="text-xl">{insight.icon}</div>
@@ -796,102 +630,61 @@ const BMICalculatorFunnel = () => {
                         </div>
                       </div>
                     </AlertDescription>
-                  </Alert>
-                ))}
-              </div>
-            )}
+                  </Alert>)}
+              </div>}
 
             {/* ✅ KOMPAKTER CTA */}
             <div className="bg-gradient-to-br from-nf-red to-nf-red/80 p-4 rounded-lg text-white">
               <h4 className="text-base font-bold mb-1">🎯 Bereit für den nächsten Schritt?</h4>
               <p className="mb-3 text-xs opacity-90">Sichere dir jetzt dein kostenloses Beratungsgespräch!</p>
-              <Button
-                onClick={() => {
-                  window.location.href = "/booking";
-                }}
-                className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-3 text-sm"
-              >
+              <Button onClick={() => {
+              window.location.href = "/booking";
+            }} className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-3 text-sm">
                 Jetzt Termin buchen →
               </Button>
             </div>
-          </motion.div>
-        );
-
+          </motion.div>;
       default:
         return null;
     }
   };
-
-  return (
-    <section id="bmi-rechner" className="py-12 md:py-20 bg-nf-light">
+  return <section id="bmi-rechner" className="py-12 md:py-20 bg-nf-light">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Progress Bar - Only show after first step */}
-        {currentStep >= 1 && currentStep < 7 && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 md:mb-8">
+        {currentStep >= 1 && currentStep < 7 && <motion.div initial={{
+        opacity: 0,
+        y: -20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} className="mb-6 md:mb-8">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs md:text-sm text-nf-gray">
                 Schritt {currentStep + 1} von {totalSteps}
               </span>
               <span className="text-xs md:text-sm font-semibold text-nf-red">
-                {Math.round(((currentStep + 1) / totalSteps) * 100)}% komplett
+                {Math.round((currentStep + 1) / totalSteps * 100)}% komplett
               </span>
             </div>
-            <Progress value={((currentStep + 1) / totalSteps) * 100} className="h-2" />
-          </motion.div>
-        )}
+            <Progress value={(currentStep + 1) / totalSteps * 100} className="h-2" />
+          </motion.div>}
 
         {/* Main Card */}
         <Card className="shadow-elegant border-t-4 border-nf-red">
-          <CardContent className="p-6 md:p-8">
-            <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
-
-            {/* Navigation Buttons */}
-            {currentStep < 7 && (
-              <div className="flex gap-2 md:gap-3 mt-6 md:mt-8">
-                {currentStep > 0 && (
-                  <Button onClick={prevStep} variant="outline" className="flex-1 text-sm md:text-base">
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Zurück
-                  </Button>
-                )}
-                <Button
-                  onClick={nextStep}
-                  disabled={!canProceed()}
-                  className={`bg-nf-red hover:bg-nf-red/90 text-white font-semibold text-sm md:text-base ${
-                    currentStep === 0 ? "flex-1" : "flex-[2]"
-                  }`}
-                >
-                  {currentStep === 6 ? (
-                    <>
-                      Ergebnisse anzeigen
-                      <Flame className="h-4 w-4 ml-2" />
-                    </>
-                  ) : (
-                    <>
-                      Weiter
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </CardContent>
+          
         </Card>
 
         {/* Trust Indicators */}
-        {currentStep === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-4 md:mt-6 text-center text-xs md:text-sm text-nf-gray"
-          >
+        {currentStep === 0 && <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        delay: 0.5
+      }} className="mt-4 md:mt-6 text-center text-xs md:text-sm text-nf-gray">
             <p>✓ Über 500 zufriedene Kunden ✓ Wissenschaftlich fundiert ✓ 100% kostenlos</p>
-          </motion.div>
-        )}
+          </motion.div>}
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default BMICalculatorFunnel;
