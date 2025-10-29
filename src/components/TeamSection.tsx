@@ -7,7 +7,7 @@ const TeamSection = () => {
     {
       name: "Niklas",
       role: "Apfel & Hantel",
-      image: "/images/niklas.jpg", // Passe diesen Pfad an dein hochgeladenes Bild an
+      image: "/assets/NIKLAS TEAM.png", // Korrigierter Pfad
       specialties: [
         "Ernährungsanalyse & zielgerechte Optimierung",
         "Individuelle Trainingsplanung (Muskelaufbau & Leistungssteigerung)",
@@ -22,7 +22,7 @@ const TeamSection = () => {
     {
       name: "Fabienne",
       role: "Hirn|Herz & Apfel",
-      image: "/images/fabienne.jpg", // Passe diesen Pfad an dein hochgeladenes Bild an
+      image: "/assets/FABIENNE-TEAM.png", // Korrigierter Pfad
       specialties: [
         "Mental Coaching & Begleitung bei Veränderungsprozessen",
         "Female Balance & ganzheitliches Wohlbefinden",
