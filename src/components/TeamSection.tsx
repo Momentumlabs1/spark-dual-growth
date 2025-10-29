@@ -6,7 +6,7 @@ const TeamSection = () => {
   const teamMembers = [
     {
       name: "Niklas",
-      role: "Apfel & Hantel",
+      role: "🍎 & 💪 Apfel & Hantel",
       image: "/assets/niklas-team.png",
       specialties: [
         "Ernährungsanalyse & zielgerechte Optimierung",
@@ -14,13 +14,15 @@ const TeamSection = () => {
         "Stoffwechsel- und Energieoptimierung",
         "Optimierung der Körperkomposition (Fettabbau & Muskelzuwachs)",
         "Bewegungs- & Technikcoaching",
+        "Trainingsperiodisierung & Progression",
+        "Leistungsdiagnostik & -steigerung",
       ],
       icon: Dumbbell,
       color: "from-nf-black to-nf-gray-600",
     },
     {
       name: "Fabienne",
-      role: "Hirn|Herz & Apfel",
+      role: "🧠❤️ & 🍎 Hirn|Herz & Apfel",
       image: "/assets/fabienne-team.png",
       specialties: [
         "Mental Coaching & Begleitung bei Veränderungsprozessen",
@@ -64,10 +66,12 @@ const TeamSection = () => {
               viewport={{ once: true }}
               className="group"
             >
-              <Card className="overflow-hidden shadow-medium hover:shadow-large transition-smooth border-0">
+              <Card className="overflow-hidden shadow-medium hover:shadow-large transition-smooth border border-nf-gray-200">
                 <div className="relative">
-                  <div className="aspect-[4/5] relative overflow-hidden bg-transparent">
+                  <div className="aspect-[3/4] relative overflow-hidden bg-transparent">
                     <img src={member.image} alt={member.name} className="w-full h-full object-cover object-center" />
+                    {/* Dezenter dunkler Overlay für bessere Lesbarkeit */}
+                    <div className="absolute inset-0 bg-black/10"></div>
                   </div>
 
                   <div className="absolute inset-0 bg-gradient-to-t from-nf-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-smooth flex items-end">
@@ -84,7 +88,7 @@ const TeamSection = () => {
                     <h3 className="text-base lg:text-xl font-bold text-nf-black">{member.name}</h3>
                   </div>
                   <p className="text-nf-red font-semibold mb-3 lg:mb-4 text-sm lg:text-base">{member.role}</p>
-                  <ul className="space-y-1.5 lg:space-y-2">
+                  <ul className="space-y-1.5 lg:space-y-2 min-h-[280px] lg:min-h-[320px]">
                     {member.specialties.map((specialty, idx) => (
                       <li key={idx} className="flex items-start text-nf-gray-600 text-xs lg:text-base">
                         <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-nf-red rounded-full mr-2 lg:mr-3 flex-shrink-0 mt-1.5 lg:mt-2"></div>
