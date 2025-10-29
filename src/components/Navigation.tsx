@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { label: 'Coaching', href: '#coaching' },
-    { label: 'Gesundheits-Rechner', href: '#bmi-rechner' },
-    { label: 'Team', href: '#team' },
-    { label: 'Kontakt', href: '#kontakt' },
+    { label: "Coaching", href: "#coaching" },
+    { label: "Gesundheits-Rechner", href: "#bmi-rechner" },
+    { label: "Team", href: "#team" },
+    { label: "Kontakt", href: "#kontakt" },
   ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsOpen(false);
   };
@@ -26,9 +26,9 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-nf-black tracking-tight">
-              NF COACHING
-            </h1>
+            <a href="#" className="flex items-center">
+              <img src="/assets/main-logo.png" alt="NF Coaching Logo" className="h-12 w-auto" />
+            </a>
           </div>
 
           {/* Desktop Navigation */}
@@ -44,8 +44,8 @@ const Navigation = () => {
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-nf-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </button>
               ))}
-              <Button 
-                onClick={() => scrollToSection('#kontakt')}
+              <Button
+                onClick={() => scrollToSection("#kontakt")}
                 variant="default"
                 className="bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 py-2 ml-4"
               >
@@ -69,9 +69,11 @@ const Navigation = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${
-        isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-      } overflow-hidden bg-nf-white border-t border-nf-gray-200`}>
+      <div
+        className={`md:hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+        } overflow-hidden bg-nf-white border-t border-nf-gray-200`}
+      >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navItems.map((item) => (
             <button
@@ -83,8 +85,8 @@ const Navigation = () => {
             </button>
           ))}
           <div className="pt-2">
-            <Button 
-              onClick={() => scrollToSection('#kontakt')}
+            <Button
+              onClick={() => scrollToSection("#kontakt")}
               variant="default"
               className="bg-nf-red hover:bg-nf-red/90 text-nf-white w-full"
             >
