@@ -21,28 +21,12 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative bg-black overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-12 md:pb-16"
+      className="relative bg-black overflow-hidden pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 md:pb-16"
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* ========== ÜBERSCHRIFT OBEN ========== */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-10 md:mb-12"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">DEINE</h2>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3">
-            TRANSFORMATION
-          </h2>
-          <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black" style={{ color: "rgb(220, 38, 38)" }}>
-            BEGINNT BALD
-          </p>
-        </motion.div>
-
         {/* ========== BILD MIT BUTTON DRÜBER ========== */}
         <div className="relative max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto mb-6 sm:mb-8">
           <motion.div
@@ -64,39 +48,39 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD Container */}
-            <div className="relative overflow-hidden rounded-2xl h-[52vh] sm:h-[56vh] md:h-[62vh] lg:h-[68vh]">
+            {/* BILD Container - Höher für bessere Positionierung */}
+            <div className="relative overflow-hidden rounded-2xl h-[58vh] sm:h-[62vh] md:h-[68vh] lg:h-[75vh]">
               <img
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "center 22%" }}
+                style={{ objectPosition: "center 55%" }}
                 loading="eager"
               />
 
-              {/* TEXT OVERLAY - KÖRPER & GEIST */}
+              {/* TEXT OVERLAY - KÖRPER & GEIST - Weiter oben positioniert */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 2, ease: "easeInOut" }}
-                className="absolute inset-0 flex flex-col items-center justify-center px-4"
+                transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
+                className="absolute top-8 sm:top-12 md:top-16 lg:top-20 left-0 right-0 flex flex-col items-center justify-center px-4"
               >
                 <div className="flex items-baseline justify-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-3">
-                  <h1 className="text-[2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
+                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none">
                     <span
                       className="text-white"
                       style={{
-                        textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
+                        textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
                       }}
                     >
                       KÖRPER
                     </span>
                   </h1>
-                  <h1 className="text-[2rem] sm:text-[2.8rem] md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
+                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-6xl lg:text-7xl xl:text-8xl font-black leading-none">
                     <span
                       style={{
                         color: "rgb(220, 38, 38)",
-                        textShadow: "0 4px 16px rgba(0, 0, 0, 0.95)",
+                        textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
                       }}
                     >
                       & GEIST
@@ -105,7 +89,7 @@ const HeroSection = () => {
                 </div>
 
                 <p
-                  className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-light"
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 font-light"
                   style={{
                     textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
                   }}
@@ -114,7 +98,7 @@ const HeroSection = () => {
                 </p>
               </motion.div>
 
-              {/* BUTTON - ABSOLUT über dem Bild */}
+              {/* BUTTON - ABSOLUT über dem Bild - Charaktere enden hier */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
