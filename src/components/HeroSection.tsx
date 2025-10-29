@@ -50,12 +50,12 @@ const HeroSection = () => {
 
             {/* BILD CONTAINER - GLEICHE BREITE WIE BUTTON */}
             <div className="relative w-full">
-              {/* BILD - kleiner auf Mobile mit angepasster Position */}
-              <div className="relative rounded-2xl overflow-hidden h-[45vh] sm:h-[50vh] md:h-[56vh] lg:h-[60vh]">
+              {/* BILD - kleiner auf Mobile mit korrigierter Position */}
+              <div className="relative rounded-2xl overflow-hidden h-[40vh] sm:h-[48vh] md:h-[56vh] lg:h-[60vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
-                  className="w-full h-full object-cover object-[center_35%] sm:object-[center_20%]"
+                  className="w-full h-full object-cover object-top sm:object-[center_20%]"
                   loading="eager"
                 />
 
@@ -98,26 +98,26 @@ const HeroSection = () => {
                     Ganzheitliches Online Coaching
                   </p>
                 </motion.div>
-
-                {/* BUTTON - absolut am unteren Rand */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  className="absolute bottom-4 sm:bottom-5 md:bottom-6 left-0 right-0 px-3 sm:px-4"
-                >
-                  <motion.button
-                    onClick={() => scrollToSection("#booking-funnel")}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                    className="w-full text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2"
-                  >
-                    <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
-                    <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-                  </motion.button>
-                </motion.div>
               </div>
+
+              {/* BUTTON - unterhalb des Bildes, nicht mehr overlay */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                className="mt-3 sm:mt-4 md:mt-5"
+              >
+                <motion.button
+                  onClick={() => scrollToSection("#booking-funnel")}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                  className="w-full text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2"
+                >
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+                  <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+                </motion.button>
+              </motion.div>
             </div>
           </motion.div>
         </div>
