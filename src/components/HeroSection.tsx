@@ -48,57 +48,57 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* TEXT - über dem Bild */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
-              className="relative z-10 text-center mb-3 sm:mb-4 md:mb-6"
-            >
-              <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 mb-1 sm:mb-1.5 md:mb-2">
-                <h1 className="text-[1.75rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
-                  <span
-                    className="text-white"
-                    style={{
-                      textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
-                    }}
-                  >
-                    KÖRPER
-                  </span>
-                </h1>
-                <h1 className="text-[1.75rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
-                  <span
-                    style={{
-                      color: "rgb(220, 38, 38)",
-                      textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
-                    }}
-                  >
-                    & GEIST
-                  </span>
-                </h1>
-              </div>
-
-              <p
-                className="text-[0.7rem] sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
-                style={{
-                  textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
-                }}
-              >
-                Ganzheitliches Online Coaching
-              </p>
-            </motion.div>
-
             {/* BILD CONTAINER - GLEICHE BREITE WIE BUTTON */}
             <div className="relative w-full">
-              {/* BILD - nur Oberkörper sichtbar */}
-              <div className="relative rounded-2xl overflow-hidden h-[50vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh]">
+              {/* BILD - kleiner auf Mobile */}
+              <div className="relative rounded-2xl overflow-hidden h-[45vh] sm:h-[50vh] md:h-[56vh] lg:h-[60vh]">
                 <img
                   src="/assets/niklas-fabienne-hero22.png"
                   alt="Niklas & Fabienne"
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: "center 22%" }}
+                  style={{ objectPosition: "center 20%" }}
                   loading="eager"
                 />
+
+                {/* TEXT - ZWISCHEN Köpfen und Button als Overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
+                  className="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center px-4"
+                >
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 mb-1 sm:mb-1.5 md:mb-2">
+                    <h1 className="text-[2rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-none">
+                      <span
+                        className="text-white"
+                        style={{
+                          textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
+                        }}
+                      >
+                        KÖRPER
+                      </span>
+                    </h1>
+                    <h1 className="text-[2rem] sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none">
+                      <span
+                        style={{
+                          color: "rgb(220, 38, 38)",
+                          textShadow: "0 4px 20px rgba(0, 0, 0, 0.95)",
+                        }}
+                      >
+                        & GEIST
+                      </span>
+                    </h1>
+                  </div>
+
+                  <p
+                    className="text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
+                    style={{
+                      textShadow: "0 2px 12px rgba(0, 0, 0, 0.95)",
+                    }}
+                  >
+                    Ganzheitliches Online Coaching
+                  </p>
+                </motion.div>
 
                 {/* BUTTON - absolut am unteren Rand */}
                 <motion.div
