@@ -38,11 +38,16 @@ const CoachingSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-        }
+        entries.forEach((entry) => {
+          // Animation wird getriggert wenn Element sichtbar ist
+          // und reversed wenn Element nicht mehr sichtbar ist
+          setIsVisible(entry.isIntersecting);
+        });
       },
-      { threshold: 0.1 },
+      {
+        threshold: 0.2, // 20% des Elements muss sichtbar sein
+        rootMargin: "-50px", // Etwas Offset für besseres Timing
+      },
     );
 
     if (sectionRef.current) {
