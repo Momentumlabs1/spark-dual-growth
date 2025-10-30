@@ -21,7 +21,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative bg-black overflow-hidden pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-20 md:pb-24"
+      className="relative bg-black overflow-hidden pt-36 sm:pt-40 md:pt-44 lg:pt-48 pb-16 sm:pb-20 md:pb-24"
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent" />
@@ -43,7 +43,7 @@ const HeroSection = () => {
             </div>
 
             {/* BILD CONTAINER - PARALLAX NUR AUF IMG */}
-            <div className="relative rounded-2xl overflow-hidden h-[52vh] sm:h-[58vh] md:h-[60vh] lg:h-[64vh]">
+            <div className="relative rounded-2xl overflow-hidden h-[62vh] sm:h-[66vh] md:h-[68vh] lg:h-[70vh]">
               <motion.img
                 style={{ y }}
                 initial={{ opacity: 0 }}
@@ -101,7 +101,7 @@ const HeroSection = () => {
             </div>
 
             {/* BUTTON + BADGES - KEIN PARALLAX, RELATIVE POSITIONING */}
-            <div className="relative mt-6 sm:mt-7 md:mt-8 space-y-4 sm:space-y-5">
+            <div className="relative mt-2 sm:mt-3 md:mt-4 space-y-4 sm:space-y-5">
               {/* BUTTON */}
               <motion.button
                 onClick={() => scrollToSection("#booking-funnel")}
