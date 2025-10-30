@@ -42,78 +42,80 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* ÜBERSCHRIFT - ÜBER DEM BILD */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-center mb-6 sm:mb-8 md:mb-10"
-            >
-              <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
-                <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
-                  KÖRPER
-                </span>
-                <span
-                  className="text-[.9em] font-black"
-                  style={{
-                    color: "rgb(220, 38, 38)",
-                    textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                  }}
-                >
-                  {" "}
-                  &{" "}
-                </span>
-                <span
-                  className="font-black"
-                  style={{
-                    color: "rgb(220, 38, 38)",
-                    textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                  }}
-                >
-                  GEIST
-                </span>
-              </h1>
-              <p
-                className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-medium"
-                style={{
-                  textShadow: "0 2px 12px rgba(0,0,0,.95)",
-                }}
-              >
-                Deine Fitness-Transformation mit ganzheitlichem Online Coaching
-              </p>
-            </motion.div>
-
-            {/* BILD CONTAINER - NUR DAS BILD UND DER BUTTON */}
-            <div className="relative rounded-2xl overflow-hidden h-[62vh] sm:h-[66vh] md:h-[68vh] lg:h-[70vh]">
-              {/* Das Bild mit Parallax */}
-              <motion.img
-                style={{ y }}
+            {/* HAUPT-CONTAINER: Button als Basis, Bild darüber */}
+            <div className="relative">
+              {/* DAS BILD - wächst aus dem Button heraus */}
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                src="/assets/niklas-fabienne-hero22.png"
-                alt="Niklas & Fabienne"
-                className="w-full h-full object-contain md:object-cover object-top md:object-[center_20%] pointer-events-none select-none"
-                loading="eager"
-                fetchPriority="high"
-              />
+                className="relative mb-[-3rem] sm:mb-[-4rem] md:mb-[-5rem] z-10"
+              >
+                <motion.img
+                  style={{ y }}
+                  src="/assets/niklas-fabienne-hero22.png"
+                  alt="Niklas & Fabienne"
+                  className="w-full h-auto max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] object-contain object-bottom pointer-events-none select-none"
+                  loading="eager"
+                  fetchPriority="high"
+                />
 
-              {/* BUTTON - ÜBERLAPPT DIE FÜSSE/BEINE IM BILD */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
-                <motion.button
-                  onClick={() => scrollToSection("#booking-funnel")}
+                {/* TEXT ÜBER DEN OBERKÖRPERN */}
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                  className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 translate-y-1/3 sm:translate-y-1/4"
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="absolute top-[8%] sm:top-[10%] md:top-[12%] left-0 right-0 text-center px-4 z-20"
                 >
-                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
-                  <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-                </motion.button>
-              </div>
+                  <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
+                    <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
+                      KÖRPER
+                    </span>
+                    <span
+                      className="text-[.9em] font-black"
+                      style={{
+                        color: "rgb(220, 38, 38)",
+                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
+                      }}
+                    >
+                      {" "}
+                      &{" "}
+                    </span>
+                    <span
+                      className="font-black"
+                      style={{
+                        color: "rgb(220, 38, 38)",
+                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
+                      }}
+                    >
+                      GEIST
+                    </span>
+                  </h1>
+                  <p
+                    className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-medium"
+                    style={{
+                      textShadow: "0 2px 12px rgba(0,0,0,.95)",
+                    }}
+                  >
+                    Deine Fitness-Transformation mit ganzheitlichem Online Coaching
+                  </p>
+                </motion.div>
+              </motion.div>
+
+              {/* DER BUTTON - BASIS, wo die Füße verschwinden */}
+              <motion.button
+                onClick={() => scrollToSection("#booking-funnel")}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                className="relative z-20 w-full text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2"
+              >
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+              </motion.button>
             </div>
 
             {/* TRUST BADGES - UNTER DEM BUTTON */}
