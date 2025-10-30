@@ -42,8 +42,50 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD CONTAINER - PARALLAX NUR AUF IMG */}
+            {/* ÜBERSCHRIFT - ÜBER DEM BILD */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-center mb-6 sm:mb-8 md:mb-10"
+            >
+              <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
+                <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
+                  KÖRPER
+                </span>
+                <span
+                  className="text-[.9em] font-black"
+                  style={{
+                    color: "rgb(220, 38, 38)",
+                    textShadow: "0 4px 20px rgba(0,0,0,.95)",
+                  }}
+                >
+                  {" "}
+                  &{" "}
+                </span>
+                <span
+                  className="font-black"
+                  style={{
+                    color: "rgb(220, 38, 38)",
+                    textShadow: "0 4px 20px rgba(0,0,0,.95)",
+                  }}
+                >
+                  GEIST
+                </span>
+              </h1>
+              <p
+                className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-medium"
+                style={{
+                  textShadow: "0 2px 12px rgba(0,0,0,.95)",
+                }}
+              >
+                Deine Fitness-Transformation mit ganzheitlichem Online Coaching
+              </p>
+            </motion.div>
+
+            {/* BILD CONTAINER - NUR DAS BILD UND DER BUTTON */}
             <div className="relative rounded-2xl overflow-hidden h-[62vh] sm:h-[66vh] md:h-[68vh] lg:h-[70vh]">
+              {/* Das Bild mit Parallax */}
               <motion.img
                 style={{ y }}
                 initial={{ opacity: 0 }}
@@ -56,50 +98,7 @@ const HeroSection = () => {
                 fetchPriority="high"
               />
 
-              {/* TEXT IM BILD */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
-                className="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center px-4"
-              >
-                <div className="text-center">
-                  <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
-                    <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
-                      KÖRPER
-                    </span>
-                    <span
-                      className="text-[.9em] font-black"
-                      style={{
-                        color: "rgb(220, 38, 38)",
-                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                      }}
-                    >
-                      {" "}
-                      &{" "}
-                    </span>
-                    <span
-                      className="font-black"
-                      style={{
-                        color: "rgb(220, 38, 38)",
-                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                      }}
-                    >
-                      GEIST
-                    </span>
-                  </h1>
-                  <p
-                    className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-medium"
-                    style={{
-                      textShadow: "0 2px 12px rgba(0,0,0,.95)",
-                    }}
-                  >
-                    Deine Fitness-Transformation mit ganzheitlichem Online Coaching
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* BUTTON INS BILD – ÜBERLAPPT DIE BEINE */}
+              {/* BUTTON - ÜBERLAPPT DIE FÜSSE/BEINE IM BILD */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
                 <motion.button
                   onClick={() => scrollToSection("#booking-funnel")}
@@ -172,9 +171,9 @@ const HeroSection = () => {
                 <span className="font-bold text-gray-900 whitespace-nowrap">Vertraulich & Sicher</span>
               </div>
             </motion.div>
-            </div>
           </div>
         </div>
+      </div>
     </section>
   );
 };
