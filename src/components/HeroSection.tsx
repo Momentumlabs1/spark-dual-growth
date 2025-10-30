@@ -98,24 +98,23 @@ const HeroSection = () => {
                   </p>
                 </div>
               </motion.div>
-            </div>
 
-            {/* BUTTON + BADGES - KEIN PARALLAX, RELATIVE POSITIONING */}
-            {/* BUTTON OVERLAP */}
-            <div className="relative -mt-12 sm:-mt-14 md:-mt-16 lg:-mt-20 z-20">
-              <motion.button
-                onClick={() => scrollToSection("#booking-funnel")}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                className="relative w-full text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2"
-              >
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-              </motion.button>
+              {/* BUTTON INS BILD – ÜBERLAPPT DIE BEINE */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
+                <motion.button
+                  onClick={() => scrollToSection("#booking-funnel")}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                  className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 translate-y-1/3 sm:translate-y-1/4"
+                >
+                  <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+                  <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+                </motion.button>
+              </div>
             </div>
 
             {/* TRUST BADGES - UNTER DEM BUTTON */}
@@ -123,7 +122,7 @@ const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9, duration: 0.6 }}
-              className="relative z-10 mt-4 sm:mt-5 md:mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 md:gap-3.5 text-white text-[0.7rem] sm:text-xs md:text-sm"
+              className="relative z-10 mt-10 sm:mt-12 md:mt-14 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 md:gap-3.5 text-white text-[0.7rem] sm:text-xs md:text-sm"
             >
               {/* 4.9★ Bewertung - WEISS */}
               <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
