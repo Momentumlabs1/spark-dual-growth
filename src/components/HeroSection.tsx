@@ -21,7 +21,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative bg-black overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24"
+      className="relative bg-black overflow-hidden pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-20 md:pb-24"
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent" />
@@ -42,15 +42,13 @@ const HeroSection = () => {
               />
             </div>
 
-            {/* BILD MIT PARALLAX */}
-            <motion.div
-              style={{ y }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative rounded-2xl overflow-hidden h-[46vh] sm:h-[52vh] md:h-[56vh] lg:h-[62vh]"
-            >
-              <img
+            {/* BILD CONTAINER - PARALLAX NUR AUF IMG */}
+            <div className="relative rounded-2xl overflow-hidden h-[52vh] sm:h-[58vh] md:h-[60vh] lg:h-[64vh]">
+              <motion.img
+                style={{ y }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 src="/assets/niklas-fabienne-hero22.png"
                 alt="Niklas & Fabienne"
                 className="w-full h-full object-contain md:object-cover object-top md:object-[center_20%] pointer-events-none select-none"
@@ -66,7 +64,7 @@ const HeroSection = () => {
                 className="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center px-4"
               >
                 <div className="text-center">
-                  <h1 className="font-black tracking-tight leading-none text-[1.6rem] sm:text-3xl md:text-5xl lg:text-6xl">
+                  <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
                     <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
                       KÖRPER
                     </span>
@@ -91,7 +89,7 @@ const HeroSection = () => {
                     </span>
                   </h1>
                   <p
-                    className="mt-2 text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-light"
+                    className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-light"
                     style={{
                       textShadow: "0 2px 12px rgba(0,0,0,.95)",
                     }}
@@ -100,10 +98,10 @@ const HeroSection = () => {
                   </p>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* BUTTON + BADGES - KEIN PARALLAX, RELATIVE POSITIONING */}
-            <div className="relative mt-5 sm:mt-6 md:mt-7 space-y-4 sm:space-y-5">
+            <div className="relative mt-6 sm:mt-7 md:mt-8 space-y-4 sm:space-y-5">
               {/* BUTTON */}
               <motion.button
                 onClick={() => scrollToSection("#booking-funnel")}
