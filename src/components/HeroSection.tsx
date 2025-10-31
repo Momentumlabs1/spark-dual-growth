@@ -1,183 +1,344 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Zap } from "lucide-react";
-import { useRef } from "react";
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Körper & Geist Coaching</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const HeroSection = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+        }
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e5e5e5;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
 
-  return (
-    <section
-      ref={containerRef}
-      className="relative bg-black overflow-hidden pt-44 sm:pt-48 md:pt-52 lg:pt-56 pb-16 sm:pb-20 md:pb-24"
-    >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-nf-red/8 via-transparent to-transparent" />
+        .hero-section {
+            background: linear-gradient(to bottom, #1a0000 0%, #2d0a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 60px;
+        }
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4">
-        {/* HERO CONTAINER */}
-        <div className="relative mx-auto w-[88%] sm:w-[85%] max-w-md md:max-w-lg">
-          <div className="relative">
-            {/* Red Gradient Glow */}
-            <div className="absolute inset-0 -z-10">
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-nf-red/30 via-nf-red/10 to-transparent"
-                style={{ filter: "blur(80px)" }}
-              />
-              <div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-2/3 bg-nf-red/20"
-                style={{ filter: "blur(100px)" }}
-              />
-            </div>
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
 
-            {/* HAUPT-CONTAINER: Button als Basis, Bild darüber */}
-            <div className="relative">
-              {/* DAS BILD - wächst aus dem Button heraus */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative mb-[-3rem] sm:mb-[-4rem] md:mb-[-5rem] z-10"
-              >
-                <motion.img
-                  style={{ y }}
-                  src="/assets/niklas-fabienne-hero22.png"
-                  alt="Niklas & Fabienne"
-                  className="w-full h-auto max-h-[65vh] sm:max-h-[70vh] md:max-h-[75vh] object-contain object-bottom pointer-events-none select-none"
-                  loading="eager"
-                  fetchPriority="high"
-                />
+        .hero-image-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 600px;
+            z-index: 1;
+        }
 
-                {/* TEXT ÜBER DEN OBERKÖRPERN */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="absolute top-[8%] sm:top-[10%] md:top-[12%] left-0 right-0 text-center px-4 z-20"
-                >
-                  <h1 className="font-black tracking-tight leading-none text-[1.8rem] sm:text-3xl md:text-5xl lg:text-6xl">
-                    <span className="text-white" style={{ textShadow: "0 4px 20px rgba(0,0,0,.95)" }}>
-                      KÖRPER
-                    </span>
-                    <span
-                      className="text-[.9em] font-black"
-                      style={{
-                        color: "rgb(220, 38, 38)",
-                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                      }}
-                    >
-                      {" "}
-                      &{" "}
-                    </span>
-                    <span
-                      className="font-black"
-                      style={{
-                        color: "rgb(220, 38, 38)",
-                        textShadow: "0 4px 20px rgba(0,0,0,.95)",
-                      }}
-                    >
-                      GEIST
-                    </span>
-                  </h1>
-                  <p
-                    className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-white/95 font-medium"
-                    style={{
-                      textShadow: "0 2px 12px rgba(0,0,0,.95)",
-                    }}
-                  >
-                    Deine Fitness-Transformation mit ganzheitlichem Online Coaching
-                  </p>
-                </motion.div>
-              </motion.div>
+        .hero-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-              {/* DER BUTTON - BASIS, wo die Füße verschwinden */}
-              <motion.button
-                onClick={() => scrollToSection("#booking-funnel")}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                className="relative z-20 w-full text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2"
-              >
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
-                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-              </motion.button>
-            </div>
+        .hero-text {
+            position: relative;
+            z-index: 10;
+            margin-top: -80px;
+        }
 
-            {/* TRUST BADGES - UNTER DEM BUTTON */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="relative z-10 mt-10 sm:mt-12 md:mt-14 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 md:gap-3.5 text-white text-[0.7rem] sm:text-xs md:text-sm"
-            >
-              {/* 4.9★ Bewertung - WEISS */}
-              <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-nf-red flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                <span className="font-bold text-gray-900 whitespace-nowrap">4.9★ Bewertung</span>
-              </div>
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
 
-              {/* 500+ Erfolgsgeschichten - WEISS */}
-              <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-nf-red flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-                <span className="font-bold text-gray-900 whitespace-nowrap">500+ Erfolgsgeschichten</span>
-              </div>
+        .hero-title .white {
+            color: white;
+        }
 
-              {/* Vertraulich & Sicher - WEISS */}
-              <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-sm px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-nf-red flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-                <span className="font-bold text-gray-900 whitespace-nowrap">Vertraulich & Sicher</span>
-              </div>
-            </motion.div>
-          </div>
+        .hero-title .red {
+            color: #e74c3c;
+        }
+
+        .hero-subtitle {
+            color: white;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 300px;
+            line-height: 1.4;
+        }
+
+        .cta-button {
+            background: #e74c3c;
+            color: white;
+            padding: 20px 50px;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 60px;
+        }
+
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .lightning {
+            font-size: 24px;
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .trust-badge.clickable {
+            cursor: pointer;
+        }
+
+        .trust-badge.red {
+            background: #e74c3c;
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .trust-badge.red:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        .trust-badge.red:active {
+            transform: scale(0.98);
+            animation: click-bounce 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+            }
+        }
+
+        @keyframes click-bounce {
+            0%, 100% {
+                transform: scale(0.98);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+        }
+
+        .star {
+            color: #e74c3c;
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        .testimonials-section {
+            padding: 80px 20px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .testimonials-section h2 {
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-card .stars {
+            color: #e74c3c;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card .name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+                margin-bottom: 200px;
+            }
+
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .trust-badge {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            COACHING
         </div>
-      </div>
-    </section>
-  );
-};
+    </nav>
 
-export default HeroSection;
+    <section class="hero-section">
+        <div class="hero-image-container">
+            <!-- Hier würde normalerweise das Bild der beiden Personen eingefügt werden -->
+            <div style="width: 100%; height: 600px; background: transparent;"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="white">KÖRPER </span><span class="red">& GEIST</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Deine Fitness-Transformation mit<br>
+                    ganzheitlichem Online Coaching
+                </p>
+
+                <a href="#consultation" class="cta-button">
+                    <span class="lightning">⚡</span>
+                    KOSTENLOSES GESPRÄCH
+                </a>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span class="star">★</span>
+                        4.9★ Bewertung
+                    </div>
+                    <a href="#testimonials" class="trust-badge red clickable">
+                        <span class="icon">⚡</span>
+                        Unzählige Erfolgsgeschichten
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <h2>Erfolgsgeschichten unserer Kunden</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Dank dem ganzheitlichen Coaching habe ich nicht nur 15kg abgenommen, sondern auch meine innere Balance gefunden. Beste Entscheidung meines Lebens!"</p>
+                <p class="name">- Sarah M.</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Nach nur 3 Monaten fühle ich mich fitter als je zuvor. Das Team geht wirklich auf individuelle Bedürfnisse ein und motiviert kontinuierlich."</p>
+                <p class="name">- Michael K.</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Als vielbeschäftigte Mutter hatte ich Bedenken, ob ich es schaffe. Aber das flexible Online-Coaching hat perfekt in meinen Alltag gepasst!"</p>
+                <p class="name">- Julia R.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll für die Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
