@@ -10,7 +10,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-24 sm:pt-28 md:pt-32 pb-0">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Hero Image Container with Text and Button Overlay */}
@@ -36,7 +36,7 @@ const HeroSection = () => {
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="text-white">KÖRPER </span>
-                <span className="text-[#e74c3c]">& GEIST</span>
+                <span className="text-[#ff4444]">& GEIST</span>
               </h1>
               <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl mt-2 sm:mt-3 font-light">
                 Deine Fitness-Transformation mit
