@@ -10,7 +10,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Hero Image Container with Text and Button Overlay */}
@@ -18,7 +18,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mb-6 sm:mb-8 overflow-hidden rounded-2xl"
+            className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl mb-6 sm:mb-8 overflow-hidden rounded-2xl"
           >
             <motion.img
               src="/assets/niklas-fabienne-hero22.png"
@@ -34,11 +34,11 @@ const HeroSection = () => {
               transition={{ duration: 0.8 }}
               className="absolute top-[40%] left-0 right-0 text-center px-4 z-10"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="text-white">KÖRPER </span>
                 <span className="text-[#e74c3c]">& GEIST</span>
               </h1>
-              <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl mt-2 sm:mt-3 font-light">
+              <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl mt-2 sm:mt-3 font-light">
                 Deine Fitness-Transformation mit
                 <br />
                 ganzheitlichem Online Coaching
@@ -55,9 +55,9 @@ const HeroSection = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8"
+                className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] text-white px-5 py-4 sm:px-7 sm:py-5 md:px-12 md:py-6 text-sm sm:text-base md:text-lg lg:text-xl font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8"
               >
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 flex-shrink-0" />
                 <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
               </motion.button>
             </div>
