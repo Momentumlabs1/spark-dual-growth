@@ -1,248 +1,91 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Körper & Geist Coaching</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import { motion } from "framer-motion";
+import { Star, Zap, CheckCircle } from "lucide-react";
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            overflow-x: hidden;
-        }
+const HeroSection = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.querySelector(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
-        .navbar {
-            background: white;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e5e5e5;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
+  return (
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center">
+          {/* Title Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-6 sm:mb-8 md:mb-10 relative z-10"
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <span className="text-white">KÖRPER </span>
+              <span className="text-[#e74c3c]">& GEIST</span>
+            </h1>
+            <p className="text-white text-lg sm:text-xl md:text-2xl mt-4 sm:mt-6 font-light">
+              Deine Fitness-Transformation mit
+              <br className="hidden sm:block" />
+              ganzheitlichem Online Coaching
+            </p>
+          </motion.div>
 
-        .navbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            font-size: 18px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .hero-section {
-            background: linear-gradient(to bottom, #1a0000 0%, #2d0a0a 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding-top: 60px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-image-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            max-width: 600px;
-            z-index: 1;
-        }
-
-        .hero-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .hero-text {
-            position: relative;
-            z-index: 10;
-            margin-top: 150px;
-        }
-
-        .hero-title {
-            font-size: 64px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero-title .white {
-            color: white;
-        }
-
-        .hero-title .red {
-            color: #e74c3c;
-        }
-
-        .hero-subtitle {
-            color: white;
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 300px;
-            line-height: 1.4;
-        }
-
-        .cta-button {
-            background: #e74c3c;
-            color: white;
-            padding: 20px 50px;
-            font-size: 20px;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-bottom: 60px;
-        }
-
-        .cta-button:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        .lightning {
-            font-size: 24px;
-        }
-
-        .trust-badges {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .trust-badge {
-            background: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 18px;
-            font-weight: 500;
-            color: #333;
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-
-        .trust-badge.clickable {
-            cursor: pointer;
-        }
-
-        .trust-badge.red {
-            background: #e74c3c;
-            color: white;
-            text-decoration: none;
-        }
-
-        .trust-badge.red:hover {
-            background: #c0392b;
-            transform: scale(1.02);
-        }
-
-        .trust-badge.red:active {
-            transform: scale(0.98);
-        }
-
-        .star {
-            color: #e74c3c;
-        }
-
-        .icon {
-            font-size: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 42px;
-            }
-
-            .hero-subtitle {
-                font-size: 18px;
-                margin-bottom: 200px;
-            }
-
-            .trust-badges {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .trust-badge {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-content">
-            COACHING
-        </div>
-    </nav>
-
-    <section class="hero-section">
-        <div class="hero-image-container">
-            <!-- Hier würde normalerweise das Bild der beiden Personen eingefügt werden -->
-            <div style="width: 100%; height: 600px; background: transparent;"></div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="white">KÖRPER </span><span class="red">& GEIST</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Deine Fitness-Transformation mit<br>
-                    ganzheitlichem Online Coaching
-                </p>
-
-                <a href="#consultation" class="cta-button">
-                    <span class="lightning">⚡</span>
-                    KOSTENLOSES GESPRÄCH
-                </a>
-
-                <div class="trust-badges">
-                    <div class="trust-badge">
-                        <span class="star">★</span>
-                        4.9★ Bewertung
-                    </div>
-                    <a href="#testimonials" class="trust-badge red clickable">
-                        Unzählige Erfolgsgeschichten
-                    </a>
-                    <!-- Link anpassen: Hier den Link zu deinen existierenden Testimonials einfügen -->
-                </div>
+          {/* Hero Image Container with Button Overlay */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mb-6 sm:mb-8 overflow-hidden rounded-2xl"
+          >
+            <motion.img
+              src="/assets/niklas-fabienne-hero22.png"
+              alt="Niklas und Fabienne - Körper & Geist Coaching"
+              className="w-full h-full object-cover object-[center_20%] pointer-events-none select-none"
+              loading="eager"
+            />
+            
+            {/* Button Overlay - overlaps bottom of image */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
+              <motion.button
+                onClick={() => scrollToSection("#booking-funnel")}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] text-white px-4 py-3.5 sm:px-6 sm:py-4 md:px-10 md:py-5 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8"
+              >
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+              </motion.button>
             </div>
-        </div>
-    </section>
+          </motion.div>
 
-    <script>
-        // No additional scripts needed
-    </script>
-</body>
-</html>
+          {/* Trust Badges */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="relative z-10 mt-6 sm:mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-2xl"
+          >
+            <div className="bg-white text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-full flex items-center gap-2 shadow-lg">
+              <Star className="w-5 h-5 text-[#e74c3c] fill-[#e74c3c]" />
+              <span className="font-semibold text-sm sm:text-base">4.9★ Bewertung</span>
+            </div>
+            <button
+              onClick={() => scrollToSection("#testimonials")}
+              className="bg-[#e74c3c] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full flex items-center gap-2 shadow-lg hover:bg-[#c0392b] transition-all duration-200 hover:scale-105 active:scale-95 animate-pulse"
+            >
+              <CheckCircle className="w-5 h-5" />
+              <span className="font-semibold text-sm sm:text-base">Unzählige Erfolgsgeschichten</span>
+            </button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
