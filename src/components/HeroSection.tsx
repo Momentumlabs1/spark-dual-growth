@@ -32,7 +32,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="absolute top-[15%] left-0 right-0 text-center px-4 z-10"
+              className="absolute top-[40%] left-0 right-0 text-center px-4 z-10"
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="text-white">KÖRPER </span>
