@@ -10,10 +10,9 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-20 sm:pt-24 pb-12 sm:pb-16 md:pb-20">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
-          
           {/* Hero Image Container with Text and Button Overlay */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -21,12 +20,19 @@ const HeroSection = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mb-6 sm:mb-8 overflow-hidden rounded-2xl"
           >
-            {/* Title Section - OVER THE IMAGE */}
+            <motion.img
+              src="/assets/niklas-fabienne-hero22.png"
+              alt="Niklas und Fabienne - Körper & Geist Coaching"
+              className="w-full h-full object-cover object-center pointer-events-none select-none"
+              loading="eager"
+            />
+
+            {/* Title Overlay - positioned on their bodies */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="absolute top-4 sm:top-6 left-0 right-0 text-center z-10 px-4"
+              className="absolute top-[15%] left-0 right-0 text-center px-4 z-10"
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="text-white">KÖRPER </span>
@@ -34,18 +40,11 @@ const HeroSection = () => {
               </h1>
               <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl mt-2 sm:mt-3 font-light">
                 Deine Fitness-Transformation mit
-                <br className="hidden sm:block" />
+                <br />
                 ganzheitlichem Online Coaching
               </p>
             </motion.div>
 
-            <motion.img
-              src="/assets/niklas-fabienne-hero22.png"
-              alt="Niklas und Fabienne - Körper & Geist Coaching"
-              className="w-full h-full object-cover object-[center_20%] pointer-events-none select-none"
-              loading="eager"
-            />
-            
             {/* Button Overlay - overlaps bottom of image */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
@@ -64,23 +63,23 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Trust Badges - ALWAYS SIDE BY SIDE */}
+          {/* Trust Badges */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
-            className="relative z-10 mt-2 flex flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-2xl"
+            className="relative z-10 mt-6 sm:mt-8 md:mt-10 flex flex-row gap-2 sm:gap-3 md:gap-4 items-center justify-center w-full max-w-2xl"
           >
-            <div className="bg-white text-gray-800 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full flex items-center gap-2 shadow-lg">
-              <Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#e74c3c] fill-[#e74c3c]" />
+            <div className="bg-white text-gray-800 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg">
+              <Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#e74c3c] fill-[#e74c3c] flex-shrink-0" />
               <span className="font-semibold text-xs sm:text-sm md:text-base whitespace-nowrap">4.9★ Bewertung</span>
             </div>
             <button
               onClick={() => scrollToSection("#testimonials")}
-              className="bg-[#e74c3c] text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full flex items-center gap-2 shadow-lg hover:bg-[#c0392b] transition-all duration-200 hover:scale-105 active:scale-95"
+              className="bg-[#e74c3c] text-white px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg hover:bg-[#c0392b] transition-all duration-200 hover:scale-105 active:scale-95"
             >
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="font-semibold text-xs sm:text-sm md:text-base whitespace-nowrap">Unzählige Erfolgsgeschichten</span>
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className="font-semibold text-xs sm:text-sm md:text-base whitespace-nowrap">Erfolgsgeschichten</span>
             </button>
           </motion.div>
         </div>
