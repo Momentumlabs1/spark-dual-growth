@@ -18,7 +18,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl mb-6 sm:mb-8 overflow-hidden rounded-2xl"
+            className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl mb-0 overflow-hidden rounded-2xl"
           >
             <motion.img
               src="/assets/niklas-fabienne-hero22.png"
@@ -68,7 +68,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
-            className="relative z-10 mt-6 sm:mt-8 md:mt-10 flex flex-row gap-2 sm:gap-3 md:gap-4 items-center justify-center w-full max-w-2xl"
+            className="relative z-10 mt-4 flex flex-row gap-2 sm:gap-3 md:gap-4 items-center justify-center w-full max-w-2xl"
           >
             <div className="bg-white text-gray-800 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg">
               <Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#e74c3c] fill-[#e74c3c] flex-shrink-0" />
