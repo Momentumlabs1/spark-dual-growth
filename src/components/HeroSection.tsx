@@ -10,7 +10,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-48 sm:pt-52 md:pt-56 lg:pt-60 pb-12 sm:pb-16 md:pb-20">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-40 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Title Section */}
@@ -41,7 +41,7 @@ const HeroSection = () => {
             <motion.img
               src="/assets/niklas-fabienne-hero22.png"
               alt="Niklas und Fabienne - Körper & Geist Coaching"
-              className="w-full h-full object-cover object-[center_20%] pointer-events-none select-none"
+              className="w-full h-full object-cover object-[center_35%] pointer-events-none select-none"
               loading="eager"
             />
 
@@ -68,7 +68,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
-            className="relative z-10 mt-6 sm:mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-2xl"
+            className="relative z-10 mt-6 sm:mt-8 md:mt-10 flex flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-2xl flex-wrap"
           >
             <div className="bg-white text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-full flex items-center gap-2 shadow-lg">
               <Star className="w-5 h-5 text-[#e74c3c] fill-[#e74c3c]" />
