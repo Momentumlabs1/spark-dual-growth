@@ -18,7 +18,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-lg xl:max-w-xl mb-0 overflow-hidden rounded-2xl"
+            className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mb-0 overflow-hidden rounded-2xl"
           >
             <motion.img
               src="/assets/niklas-fabienne-hero22.png"
