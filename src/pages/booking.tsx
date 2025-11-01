@@ -180,12 +180,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
 
       console.log('✅ Booking created:', data);
 
-      setMeetLink(data.meetLink);
       setEventLink(data.eventLink);
       setShowSuccess(true);
 
       toast.success('Termin erfolgreich gebucht! 🎉', {
-        description: 'Füge den Termin über den Link zu deinem Kalender hinzu.',
+        description: 'Der Coach wird dich zum vereinbarten Zeitpunkt telefonisch kontaktieren.',
       });
 
     } catch (error: any) {
@@ -217,7 +216,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
               Termin erfolgreich gebucht! 🎉
             </h1>
             <p className="text-lg text-nf-gray">
-              Füge den Termin jetzt über die Links unten zu deinem Kalender hinzu
+              Der Coach wird dich zum vereinbarten Zeitpunkt telefonisch kontaktieren
             </p>
           </motion.div>
 
@@ -271,7 +270,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-green-600" />
-                    Deine Links
+                    Dein Termin
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -282,25 +281,10 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         size="lg"
                       >
-                        📅 Termin zum Kalender hinzufügen
+                        📅 Termin im Kalender anzeigen
                       </Button>
                       <p className="text-xs text-gray-600 mt-2 text-center">
-                        Klicke hier, um den Termin in deinen Kalender einzutragen
-                      </p>
-                    </div>
-                  )}
-                  {meetLink && (
-                    <div>
-                      <Button
-                        onClick={() => window.open(meetLink, '_blank')}
-                        variant="outline"
-                        className="w-full border-green-600 text-green-600 hover:bg-green-50"
-                        size="lg"
-                      >
-                        📹 Google Meet Link öffnen
-                      </Button>
-                      <p className="text-xs text-gray-600 mt-2 text-center">
-                        Speichere diesen Link für das Meeting
+                        Füge den Termin zu deinem Kalender hinzu
                       </p>
                     </div>
                   )}
@@ -329,15 +313,15 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-bold">2.</span>
-                        <span>Speichere den Google Meet Link (grüner Button)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="font-bold">3.</span>
                         <span>Du erhältst eine Kalender-Erinnerung vor dem Termin</span>
                       </li>
                       <li className="flex items-start gap-2">
+                        <span className="font-bold">3.</span>
+                        <span>Dein Coach wird dich zum vereinbarten Zeitpunkt telefonisch kontaktieren</span>
+                      </li>
+                      <li className="flex items-start gap-2">
                         <span className="font-bold">4.</span>
-                        <span>Zum Termin klicke auf den Meet-Link und wir besprechen deine Ziele</span>
+                        <span>Halte deine Telefonnummer bereit und wir besprechen deine Ziele</span>
                       </li>
                     </ol>
                   </div>

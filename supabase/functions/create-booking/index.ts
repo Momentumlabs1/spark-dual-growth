@@ -266,14 +266,6 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
         dateTime: endDateTime.toISOString(),
         timeZone: 'Europe/Vienna',
       },
-      conferenceData: {
-        createRequest: {
-          requestId: `${Date.now()}-${Math.random().toString(36).substring(7)}`,
-          conferenceSolutionKey: {
-            type: 'hangoutsMeet'
-          }
-        }
-      },
       reminders: {
         useDefault: false,
         overrides: [
@@ -285,17 +277,13 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
 
     const response = await calendar.events.insert({
       calendarId: GOOGLE_CALENDAR_ID,
-      conferenceDataVersion: 1,
-      sendUpdates: 'none', // Don't send updates (no attendees)
+      sendUpdates: 'none',
       requestBody: event,
     });
 
     console.log('✅ Event created:', response.data.id);
 
-    const meetLink = response.data.conferenceData?.entryPoints?.[0]?.uri || '';
     const eventLink = response.data.htmlLink || '';
-
-    console.log('✅ Meet Link:', meetLink);
     console.log('✅ Event Link:', eventLink);
 
     return new Response(
@@ -303,8 +291,7 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
         success: true,
         eventId: response.data.id,
         eventLink: eventLink,
-        meetLink: meetLink,
-        message: 'Termin erfolgreich erstellt! Du erhältst eine Bestätigungs-Email.',
+        message: 'Termin erfolgreich erstellt! Der Coach wird dich zum vereinbarten Zeitpunkt telefonisch kontaktieren.',
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
