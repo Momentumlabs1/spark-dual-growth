@@ -305,88 +305,107 @@ const testimonials: Testimonial[] = [
 const TestimonialSection = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
-  const [allImagesPreloaded, setAllImagesPreloaded] = useState(false);
+  const [currentImagesLoaded, setCurrentImagesLoaded] = useState(false);
 
-  // Preload ALL images on component mount
+  // Aggressive preload ALL images on component mount (background)
   useEffect(() => {
     const allImages: string[] = [];
     testimonials.forEach((t) => {
       allImages.push(...t.images.before, ...t.images.after);
     });
 
+    // Preload with high priority using link preload
     allImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = src;
+      document.head.appendChild(link);
     });
   }, []);
 
-  // Preload all images when modal opens
+  // Quick load only current view images when modal opens or view changes
   useEffect(() => {
     if (selectedTestimonial) {
-      setAllImagesPreloaded(false);
-      const imagesToPreload = [...selectedTestimonial.images.before, ...selectedTestimonial.images.after];
+      setCurrentImagesLoaded(false);
+
+      // Load only the current view's images (2 images: before + after)
+      const currentImages = [
+        selectedTestimonial.images.before[currentImageIndex],
+        selectedTestimonial.images.after[currentImageIndex],
+      ];
 
       let loadedCount = 0;
-      const totalImages = imagesToPreload.length;
+      const totalImages = currentImages.length;
 
-      imagesToPreload.forEach((src) => {
+      currentImages.forEach((src) => {
         const img = new Image();
         img.src = src;
         img.onload = () => {
           loadedCount++;
           if (loadedCount === totalImages) {
-            setAllImagesPreloaded(true);
+            setCurrentImagesLoaded(true);
+            // Preload other views in background
+            preloadOtherViews();
           }
         };
         img.onerror = () => {
           loadedCount++;
           if (loadedCount === totalImages) {
-            setAllImagesPreloaded(true);
+            setCurrentImagesLoaded(true);
+            preloadOtherViews();
           }
         };
       });
 
-      // Timeout fallback
-      setTimeout(() => setAllImagesPreloaded(true), 3000);
-    }
-  }, [selectedTestimonial]);
+      // Quick timeout fallback - show after 800ms max
+      const timeout = setTimeout(() => {
+        setCurrentImagesLoaded(true);
+      }, 800);
 
-  // Track loading for current image pair
-  useEffect(() => {
-    if (selectedTestimonial && allImagesPreloaded) {
-      setImagesLoaded({ [currentImageIndex]: true });
+      return () => clearTimeout(timeout);
     }
-  }, [currentImageIndex, selectedTestimonial, allImagesPreloaded]);
+  }, [selectedTestimonial, currentImageIndex]);
+
+  // Preload other views in background
+  const preloadOtherViews = () => {
+    if (!selectedTestimonial) return;
+
+    const otherImages = [
+      ...selectedTestimonial.images.before.filter((_, i) => i !== currentImageIndex),
+      ...selectedTestimonial.images.after.filter((_, i) => i !== currentImageIndex),
+    ];
+
+    otherImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  };
 
   const handleCardClick = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
     setCurrentImageIndex(0);
-    setImagesLoaded({});
   };
 
   const closeModal = () => {
     setSelectedTestimonial(null);
-    setImagesLoaded({});
-    setAllImagesPreloaded(false);
+    setCurrentImagesLoaded(false);
   };
 
   const nextImage = () => {
-    if (selectedTestimonial && allImagesPreloaded) {
+    if (selectedTestimonial) {
       setCurrentImageIndex((prev) => (prev + 1) % 3);
     }
   };
 
   const prevImage = () => {
-    if (selectedTestimonial && allImagesPreloaded) {
+    if (selectedTestimonial) {
       setCurrentImageIndex((prev) => (prev - 1 + 3) % 3);
     }
   };
 
   const handleImageIndexChange = (index: number) => {
-    if (allImagesPreloaded) {
-      setCurrentImageIndex(index);
-    }
+    setCurrentImageIndex(index);
   };
 
   const GenericAvatar = () => (
@@ -555,282 +574,277 @@ const TestimonialSection = () => {
                     </span>
                   </div>
 
-                  {/* Loading State */}
-                  {!allImagesPreloaded && (
-                    <div className="flex flex-col items-center justify-center py-20">
+                  {/* Loading State - Much Smaller */}
+                  {!currentImagesLoaded && (
+                    <div className="flex items-center justify-center py-8">
                       <Loader2
-                        className={`h-12 w-12 animate-spin mb-4 ${
+                        className={`h-8 w-8 animate-spin ${
                           selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                         }`}
                       />
-                      <p className="text-gray-600">Bilder werden geladen...</p>
                     </div>
                   )}
 
-                  {/* Content - Only show when images are loaded */}
-                  {allImagesPreloaded && (
-                    <>
-                      {/* CONTEXT SECTION - Mobile Optimized */}
-                      <div className="mb-4">
-                        <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg p-3 border border-gray-200">
-                          <div className="flex justify-between items-center gap-2">
-                            {/* Start */}
-                            <div className="flex-1 text-center">
-                              <div className="text-xs text-gray-500 mb-1">📍 Start</div>
-                              <div className="text-xl md:text-2xl font-bold text-gray-900">
-                                {selectedTestimonial.weightLoss.startWeight} kg
-                              </div>
-                            </div>
-
-                            {/* Arrow */}
-                            <div className="text-2xl">→</div>
-
-                            {/* Ziel */}
-                            <div
-                              className={`flex-1 text-center px-2 py-1 rounded-lg ${
-                                selectedTestimonial.goal === "muscleGain" ? "bg-blue-50" : "bg-red-50"
-                              }`}
-                            >
-                              <div className="text-xs text-gray-500 mb-1">🎯</div>
-                              <div
-                                className={`text-sm md:text-base font-bold ${
-                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
-                                }`}
-                              >
-                                {selectedTestimonial.goal === "muscleGain" ? "Aufbau" : "Abnehmen"}
-                              </div>
-                            </div>
-
-                            {/* Arrow */}
-                            <div className="text-2xl">→</div>
-
-                            {/* Ergebnis */}
-                            <div className="flex-1 text-center">
-                              <div className="text-xs text-gray-500 mb-1">✨ Jetzt</div>
-                              <div
-                                className={`text-xl md:text-2xl font-bold ${
-                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
-                                }`}
-                              >
-                                {selectedTestimonial.weightLoss.endWeight} kg
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Quote with Star Rating */}
-                      <div className="mb-4">
-                        <div className="flex justify-center gap-0.5 mb-2">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                        <div className="bg-gray-50 rounded-lg p-4 md:p-6">
-                          <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center">
-                            "{selectedTestimonial.fullQuote}"
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* View Selector & Images */}
-                      <div className="mb-4 md:mb-8">
-                        {/* View Selector with Navigation */}
-                        <div className="flex justify-center items-center gap-3 mb-4 md:mb-6">
-                          <button
-                            onClick={prevImage}
-                            className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
-                          >
-                            <ChevronLeft className="h-5 w-5" />
-                          </button>
-
-                          <div className="flex gap-2">
-                            {VIEW_LABELS.map((label, index) => (
-                              <button
-                                key={index}
-                                onClick={() => handleImageIndexChange(index)}
-                                className={`px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all ${
-                                  currentImageIndex === index
-                                    ? selectedTestimonial.goal === "muscleGain"
-                                      ? "bg-blue-600 text-white shadow-lg"
-                                      : "bg-red-600 text-white shadow-lg"
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                                }`}
-                              >
-                                {label}
-                              </button>
-                            ))}
-                          </div>
-
-                          <button
-                            onClick={nextImage}
-                            className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
-                          >
-                            <ChevronRight className="h-5 w-5" />
-                          </button>
-                        </div>
-
-                        {/* Side-by-Side Images - Always 2 columns */}
-                        <div className="grid grid-cols-2 gap-3 md:gap-6">
-                          {/* VORHER */}
-                          <div className="space-y-2">
-                            <p className="text-center text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wider">
-                              Vorher
-                            </p>
-                            <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
-                              <img
-                                src={selectedTestimonial.images.before[currentImageIndex]}
-                                alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                  console.error(
-                                    "Failed to load image:",
-                                    selectedTestimonial.images.before[currentImageIndex],
-                                  );
-                                  e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
-                                }}
-                              />
+                  {/* Content - Show immediately with opacity transition */}
+                  <div
+                    className={`transition-opacity duration-300 ${currentImagesLoaded ? "opacity-100" : "opacity-0"}`}
+                  >
+                    {/* CONTEXT SECTION - Mobile Optimized */}
+                    <div className="mb-4">
+                      <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg p-3 border border-gray-200">
+                        <div className="flex justify-between items-center gap-2">
+                          {/* Start */}
+                          <div className="flex-1 text-center">
+                            <div className="text-xs text-gray-500 mb-1">📍 Start</div>
+                            <div className="text-xl md:text-2xl font-bold text-gray-900">
+                              {selectedTestimonial.weightLoss.startWeight} kg
                             </div>
                           </div>
 
-                          {/* NACHHER */}
-                          <div className="space-y-2">
-                            <p
-                              className={`text-center text-xs md:text-sm font-bold uppercase tracking-wider ${
-                                selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
-                              }`}
-                            >
-                              Nachher
-                            </p>
-                            <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
-                              <img
-                                src={selectedTestimonial.images.after[currentImageIndex]}
-                                alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                          {/* Arrow */}
+                          <div className="text-2xl">→</div>
 
-                      {/* Chart & Stats - NOW BELOW IMAGES */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mb-4 md:mb-8">
-                        {/* Chart */}
-                        <div className="space-y-2 md:space-y-4">
-                          <div className="flex items-center justify-center gap-2 md:gap-3 mb-2">
-                            <h4 className="text-lg md:text-2xl font-bold text-gray-900">Gewichtsverlauf</h4>
-                            <span
-                              className={`px-2 py-0.5 md:px-4 md:py-1 rounded-full text-xs md:text-sm font-semibold ${
-                                selectedTestimonial.goal === "muscleGain"
-                                  ? "bg-blue-100 text-blue-700"
-                                  : "bg-red-100 text-red-700"
-                              }`}
-                            >
-                              {selectedTestimonial.goal === "muscleGain" ? "💪 Aufbau" : "🔥 Abnehmen"}
-                            </span>
-                          </div>
-                          <div className="bg-gray-50 rounded-lg md:rounded-xl p-3 md:p-6">
-                            <ResponsiveContainer width="100%" height={250}>
-                              <LineChart data={selectedTestimonial.weightLoss.chartData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                                <XAxis
-                                  dataKey="week"
-                                  label={{ value: "Wochen", position: "bottom" }}
-                                  stroke="#6b7280"
-                                />
-                                <YAxis
-                                  domain={[
-                                    (dataMin: number) => Math.floor(dataMin - 5),
-                                    (dataMax: number) => Math.ceil(dataMax + 5),
-                                  ]}
-                                  label={{ value: "Gewicht (kg)", angle: -90, position: "left" }}
-                                  stroke="#6b7280"
-                                />
-                                <Tooltip
-                                  contentStyle={{
-                                    backgroundColor: "#1f2937",
-                                    border: "none",
-                                    borderRadius: "8px",
-                                    color: "#fff",
-                                  }}
-                                  formatter={(value: any) => [`${value} kg`, "Gewicht"]}
-                                  labelFormatter={(label) => `Woche ${label}`}
-                                />
-                                <defs>
-                                  <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                                    <stop
-                                      offset="5%"
-                                      stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
-                                      stopOpacity={0.3}
-                                    />
-                                    <stop
-                                      offset="95%"
-                                      stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
-                                      stopOpacity={0}
-                                    />
-                                  </linearGradient>
-                                </defs>
-                                <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
-                                <Line
-                                  type="monotone"
-                                  dataKey="weight"
-                                  stroke={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
-                                  strokeWidth={3}
-                                  dot={{
-                                    fill: selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626",
-                                    r: 6,
-                                  }}
-                                  activeDot={{ r: 8 }}
-                                />
-                              </LineChart>
-                            </ResponsiveContainer>
-                          </div>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="space-y-3 md:space-y-4">
+                          {/* Ziel */}
                           <div
-                            className={`rounded-lg md:rounded-xl p-4 md:p-8 text-center ${
-                              selectedTestimonial.goal === "muscleGain"
-                                ? "bg-gradient-to-br from-blue-50 to-blue-100/50"
-                                : "bg-gradient-to-br from-red-50 to-red-100/50"
+                            className={`flex-1 text-center px-2 py-1 rounded-lg ${
+                              selectedTestimonial.goal === "muscleGain" ? "bg-blue-50" : "bg-red-50"
                             }`}
                           >
+                            <div className="text-xs text-gray-500 mb-1">🎯</div>
                             <div
-                              className={`text-4xl md:text-6xl font-bold mb-1 md:mb-2 ${
+                              className={`text-sm md:text-base font-bold ${
                                 selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
                               }`}
                             >
-                              {selectedTestimonial.goal === "muscleGain" ? "+" : "-"}
-                              {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg
-                            </div>
-                            <div className="text-base md:text-xl text-gray-600 font-medium">
-                              in {selectedTestimonial.weightLoss.weeks} Wochen
+                              {selectedTestimonial.goal === "muscleGain" ? "Aufbau" : "Abnehmen"}
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-3 md:gap-4">
-                            <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
-                              <div className="text-xl md:text-2xl font-bold text-gray-900 mb-1">
-                                {selectedTestimonial.weightLoss.startWeight} kg
-                              </div>
-                              <div className="text-xs md:text-sm text-gray-600">Startgewicht</div>
-                            </div>
-                            <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
-                              <div
-                                className={`text-xl md:text-2xl font-bold mb-1 ${
-                                  selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
-                                }`}
-                              >
-                                {selectedTestimonial.weightLoss.endWeight} kg
-                              </div>
-                              <div className="text-xs md:text-sm text-gray-600">Aktuell</div>
+                          {/* Arrow */}
+                          <div className="text-2xl">→</div>
+
+                          {/* Ergebnis */}
+                          <div className="flex-1 text-center">
+                            <div className="text-xs text-gray-500 mb-1">✨ Jetzt</div>
+                            <div
+                              className={`text-xl md:text-2xl font-bold ${
+                                selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                              }`}
+                            >
+                              {selectedTestimonial.weightLoss.endWeight} kg
                             </div>
                           </div>
                         </div>
                       </div>
-                    </>
-                  )}
+                    </div>
+
+                    {/* Quote with Star Rating */}
+                    <div className="mb-4">
+                      <div className="flex justify-center gap-0.5 mb-2">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-4 md:p-6">
+                        <p className="text-sm md:text-base text-gray-700 italic leading-relaxed text-center">
+                          "{selectedTestimonial.fullQuote}"
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* View Selector & Images */}
+                    <div className="mb-4 md:mb-8">
+                      {/* View Selector with Navigation */}
+                      <div className="flex justify-center items-center gap-3 mb-4 md:mb-6">
+                        <button
+                          onClick={prevImage}
+                          className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+
+                        <div className="flex gap-2">
+                          {VIEW_LABELS.map((label, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleImageIndexChange(index)}
+                              className={`px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all ${
+                                currentImageIndex === index
+                                  ? selectedTestimonial.goal === "muscleGain"
+                                    ? "bg-blue-600 text-white shadow-lg"
+                                    : "bg-red-600 text-white shadow-lg"
+                                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={nextImage}
+                          className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors"
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </button>
+                      </div>
+
+                      {/* Side-by-Side Images - Always 2 columns */}
+                      <div className="grid grid-cols-2 gap-3 md:gap-6">
+                        {/* VORHER */}
+                        <div className="space-y-2">
+                          <p className="text-center text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wider">
+                            Vorher
+                          </p>
+                          <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
+                            <img
+                              src={selectedTestimonial.images.before[currentImageIndex]}
+                              alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                console.error(
+                                  "Failed to load image:",
+                                  selectedTestimonial.images.before[currentImageIndex],
+                                );
+                                e.currentTarget.src = selectedTestimonial.images.after[currentImageIndex];
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* NACHHER */}
+                        <div className="space-y-2">
+                          <p
+                            className={`text-center text-xs md:text-sm font-bold uppercase tracking-wider ${
+                              selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                            }`}
+                          >
+                            Nachher
+                          </p>
+                          <div className="relative aspect-[3/4] rounded-lg md:rounded-xl overflow-hidden shadow-xl bg-gray-100">
+                            <img
+                              src={selectedTestimonial.images.after[currentImageIndex]}
+                              alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Chart & Stats - NOW BELOW IMAGES */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mb-4 md:mb-8">
+                      {/* Chart */}
+                      <div className="space-y-2 md:space-y-4">
+                        <div className="flex items-center justify-center gap-2 md:gap-3 mb-2">
+                          <h4 className="text-lg md:text-2xl font-bold text-gray-900">Gewichtsverlauf</h4>
+                          <span
+                            className={`px-2 py-0.5 md:px-4 md:py-1 rounded-full text-xs md:text-sm font-semibold ${
+                              selectedTestimonial.goal === "muscleGain"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {selectedTestimonial.goal === "muscleGain" ? "💪 Aufbau" : "🔥 Abnehmen"}
+                          </span>
+                        </div>
+                        <div className="bg-gray-50 rounded-lg md:rounded-xl p-3 md:p-6">
+                          <ResponsiveContainer width="100%" height={250}>
+                            <LineChart data={selectedTestimonial.weightLoss.chartData}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                              <XAxis dataKey="week" label={{ value: "Wochen", position: "bottom" }} stroke="#6b7280" />
+                              <YAxis
+                                domain={[
+                                  (dataMin: number) => Math.floor(dataMin - 5),
+                                  (dataMax: number) => Math.ceil(dataMax + 5),
+                                ]}
+                                label={{ value: "Gewicht (kg)", angle: -90, position: "left" }}
+                                stroke="#6b7280"
+                              />
+                              <Tooltip
+                                contentStyle={{
+                                  backgroundColor: "#1f2937",
+                                  border: "none",
+                                  borderRadius: "8px",
+                                  color: "#fff",
+                                }}
+                                formatter={(value: any) => [`${value} kg`, "Gewicht"]}
+                                labelFormatter={(label) => `Woche ${label}`}
+                              />
+                              <defs>
+                                <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
+                                  <stop
+                                    offset="5%"
+                                    stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
+                                    stopOpacity={0.3}
+                                  />
+                                  <stop
+                                    offset="95%"
+                                    stopColor={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
+                                    stopOpacity={0}
+                                  />
+                                </linearGradient>
+                              </defs>
+                              <Area type="monotone" dataKey="weight" stroke="none" fill="url(#colorWeight)" />
+                              <Line
+                                type="monotone"
+                                dataKey="weight"
+                                stroke={selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626"}
+                                strokeWidth={3}
+                                dot={{
+                                  fill: selectedTestimonial.goal === "muscleGain" ? "#2563EB" : "#DC2626",
+                                  r: 6,
+                                }}
+                                activeDot={{ r: 8 }}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="space-y-3 md:space-y-4">
+                        <div
+                          className={`rounded-lg md:rounded-xl p-4 md:p-8 text-center ${
+                            selectedTestimonial.goal === "muscleGain"
+                              ? "bg-gradient-to-br from-blue-50 to-blue-100/50"
+                              : "bg-gradient-to-br from-red-50 to-red-100/50"
+                          }`}
+                        >
+                          <div
+                            className={`text-4xl md:text-6xl font-bold mb-1 md:mb-2 ${
+                              selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                            }`}
+                          >
+                            {selectedTestimonial.goal === "muscleGain" ? "+" : "-"}
+                            {Math.abs(selectedTestimonial.weightLoss.totalLoss)} kg
+                          </div>
+                          <div className="text-base md:text-xl text-gray-600 font-medium">
+                            in {selectedTestimonial.weightLoss.weeks} Wochen
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 md:gap-4">
+                          <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
+                            <div className="text-xl md:text-2xl font-bold text-gray-900 mb-1">
+                              {selectedTestimonial.weightLoss.startWeight} kg
+                            </div>
+                            <div className="text-xs md:text-sm text-gray-600">Startgewicht</div>
+                          </div>
+                          <div className="bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-3 md:p-4 text-center">
+                            <div
+                              className={`text-xl md:text-2xl font-bold mb-1 ${
+                                selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
+                              }`}
+                            >
+                              {selectedTestimonial.weightLoss.endWeight} kg
+                            </div>
+                            <div className="text-xs md:text-sm text-gray-600">Aktuell</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </DialogContent>
