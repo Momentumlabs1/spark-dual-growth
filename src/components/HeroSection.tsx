@@ -11,27 +11,32 @@ const HeroSection = () => {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-24 sm:pt-28 md:pt-32 lg:pt-16 xl:pt-20 pb-8 sm:pb-10 lg:pb-8 xl:pb-10">
+      {/* Preload hint - add to head */}
+      <link rel="preload" as="image" href="/assets/niklas-fabienne-hero22.png" fetchpriority="high" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Hero Image Container with Text and Button Overlay */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-[448px] xl:max-w-[512px] mb-0 overflow-hidden rounded-2xl"
           >
-            <motion.img
+            <img
               src="/assets/niklas-fabienne-hero22.png"
               alt="Niklas und Fabienne - Körper & Geist Coaching"
               className="w-full h-full object-cover object-center pointer-events-none select-none"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
 
             {/* Title Overlay - positioned on their bodies */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               className="absolute top-[40%] lg:top-[38%] xl:top-[40%] left-0 right-0 text-center px-4 z-10"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-bold leading-tight">
@@ -49,9 +54,9 @@ const HeroSection = () => {
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
                 onClick={() => scrollToSection("#booking-funnel")}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.15 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ backgroundColor: "rgb(220, 38, 38)" }}
@@ -65,9 +70,9 @@ const HeroSection = () => {
 
           {/* Trust Badges */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             className="relative z-10 mt-4 lg:mt-2 xl:mt-3 flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-2 items-center justify-center w-full max-w-2xl"
           >
             <div className="bg-white text-gray-800 px-4 sm:px-6 md:px-8 lg:px-5 py-2.5 sm:py-3 md:py-4 lg:py-2.5 rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg">
