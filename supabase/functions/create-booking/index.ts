@@ -253,6 +253,8 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
     // 🎫 Create Google Calendar Event with Meet Link
     console.log('🔄 Creating calendar event...');
     
+    // Note: We don't add attendees because Service Accounts need Domain-Wide Delegation
+    // to invite attendees. Instead, users will get the calendar link to add themselves.
     const event = {
       summary: `🏋️ Coaching: ${firstName} ${lastName}`,
       description: description,
@@ -264,9 +266,6 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
         dateTime: endDateTime.toISOString(),
         timeZone: 'Europe/Vienna',
       },
-      attendees: [
-        { email: email },
-      ],
       conferenceData: {
         createRequest: {
           requestId: `${Date.now()}-${Math.random().toString(36).substring(7)}`,
@@ -287,7 +286,7 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
     const response = await calendar.events.insert({
       calendarId: GOOGLE_CALENDAR_ID,
       conferenceDataVersion: 1,
-      sendUpdates: 'all', // Send email notifications to attendees
+      sendUpdates: 'none', // Don't send updates (no attendees)
       requestBody: event,
     });
 

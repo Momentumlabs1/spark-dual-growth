@@ -185,7 +185,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       setShowSuccess(true);
 
       toast.success('Termin erfolgreich gebucht! 🎉', {
-        description: 'Du erhältst eine Bestätigungs-Email mit allen Details.',
+        description: 'Füge den Termin über den Link zu deinem Kalender hinzu.',
       });
 
     } catch (error: any) {
@@ -217,7 +217,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
               Termin erfolgreich gebucht! 🎉
             </h1>
             <p className="text-lg text-nf-gray">
-              Du erhältst gleich eine Bestätigungs-Email mit allen Details
+              Füge den Termin jetzt über die Links unten zu deinem Kalender hinzu
             </p>
           </motion.div>
 
@@ -275,30 +275,33 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {meetLink && (
-                    <div>
-                      <Button
-                        onClick={() => window.open(meetLink, '_blank')}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white"
-                        size="lg"
-                      >
-                        📹 Google Meet öffnen
-                      </Button>
-                      <p className="text-xs text-gray-600 mt-2 text-center">
-                        Dieser Link ist auch in deiner Email
-                      </p>
-                    </div>
-                  )}
                   {eventLink && (
                     <div>
                       <Button
                         onClick={() => window.open(eventLink, '_blank')}
-                        variant="outline"
-                        className="w-full"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         size="lg"
                       >
-                        📅 Im Calendar ansehen
+                        📅 Termin zum Kalender hinzufügen
                       </Button>
+                      <p className="text-xs text-gray-600 mt-2 text-center">
+                        Klicke hier, um den Termin in deinen Kalender einzutragen
+                      </p>
+                    </div>
+                  )}
+                  {meetLink && (
+                    <div>
+                      <Button
+                        onClick={() => window.open(meetLink, '_blank')}
+                        variant="outline"
+                        className="w-full border-green-600 text-green-600 hover:bg-green-50"
+                        size="lg"
+                      >
+                        📹 Google Meet Link öffnen
+                      </Button>
+                      <p className="text-xs text-gray-600 mt-2 text-center">
+                        Speichere diesen Link für das Meeting
+                      </p>
                     </div>
                   )}
                 </CardContent>
@@ -322,19 +325,19 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                     <ol className="space-y-2 text-sm text-blue-800">
                       <li className="flex items-start gap-2">
                         <span className="font-bold">1.</span>
-                        <span>Du erhältst eine Email-Bestätigung mit dem Google Meet Link</span>
+                        <span>Füge den Termin über den blauen Button zu deinem Kalender hinzu</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-bold">2.</span>
-                        <span>24h vor dem Termin erhältst du eine Erinnerung</span>
+                        <span>Speichere den Google Meet Link (grüner Button)</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-bold">3.</span>
-                        <span>Zum Termin einfach auf den Meet-Link klicken</span>
+                        <span>Du erhältst eine Kalender-Erinnerung vor dem Termin</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-bold">4.</span>
-                        <span>Wir besprechen deine Ziele und erstellen deinen Plan</span>
+                        <span>Zum Termin klicke auf den Meet-Link und wir besprechen deine Ziele</span>
                       </li>
                     </ol>
                   </div>
