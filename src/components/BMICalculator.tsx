@@ -849,7 +849,31 @@ const BMICalculatorFunnel = () => {
                   </div>
                 </div>
                 <Button
-                  onClick={() => navigate('/booking')}
+                  onClick={() => {
+                    // Ensure metrics are calculated
+                    if (!bmi || !bmr || !tdee) {
+                      calculateMetrics();
+                    }
+                    
+                    // Build health data object
+                    const healthData = {
+                      bmi: bmi || 0,
+                      bmr: bmr || 0,
+                      tdee: tdee || 0,
+                      height: height,
+                      weight: weight,
+                      age: age,
+                      gender: gender,
+                      goal: goal,
+                      activityLevel: activityLevel,
+                      sleepHours: sleepHours,
+                      stressLevel: stressLevel,
+                      recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0,
+                    };
+                    
+                    // Navigate with health data
+                    navigate('/booking', { state: { healthData } });
+                  }}
                   className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base md:text-lg shadow-lg hover:shadow-xl transition-all"
                   size="lg"
                 >

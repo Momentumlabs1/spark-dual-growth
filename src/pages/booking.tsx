@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import {
   Calendar,
   Mail,
@@ -646,6 +647,9 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
 
 // Wrapper component for standalone route
 const BookingPage = () => {
+  const location = useLocation();
+  
+  // Get health data from navigation state or use defaults
   const defaultHealthData = {
     bmi: 0,
     bmr: 0,
@@ -660,8 +664,10 @@ const BookingPage = () => {
     stressLevel: "medium",
     recommendedCalories: 0,
   };
+  
+  const healthData = location.state?.healthData || defaultHealthData;
 
-  return <BookingPageComplete healthData={defaultHealthData} />;
+  return <BookingPageComplete healthData={healthData} />;
 };
 
 export default BookingPage;

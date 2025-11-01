@@ -66,38 +66,83 @@ serve(async (req) => {
 
     console.log('✅ Using Calendar ID:', GOOGLE_CALENDAR_ID);
 
-    // 🔑 Create JWT Auth Client
-    // Handle both literal \n and actual newlines in private key
-    let formattedKey = GOOGLE_PRIVATE_KEY;
+    // 🔑 Create JWT Auth Client with robust key handling
+    let privateKey = GOOGLE_PRIVATE_KEY;
+    let clientEmail = GOOGLE_CLIENT_EMAIL;
     
-    // Trim whitespace and remove surrounding quotes
-    formattedKey = formattedKey.trim();
+    // Step 1: Detect if the key is a JSON service account file
+    if (privateKey.trim().startsWith('{')) {
+      console.log('🔍 Detected JSON format, extracting credentials...');
+      try {
+        const serviceAccount = JSON.parse(privateKey);
+        privateKey = serviceAccount.private_key;
+        clientEmail = serviceAccount.client_email || clientEmail;
+        console.log('✅ Extracted from JSON, using client_email:', clientEmail);
+      } catch (e) {
+        console.error('❌ Failed to parse JSON:', e);
+        throw new Error('Invalid JSON service account format. Please paste the entire downloaded JSON file or just the private_key value.');
+      }
+    }
+    
+    // Step 2: Strict normalization
+    // Remove whitespace and quotes
+    let formattedKey = privateKey.trim();
     formattedKey = formattedKey.replace(/^["']|["']$/g, '');
     
-    // If the key contains literal \n strings, replace them with actual newlines
+    // Convert CRLF to LF
+    formattedKey = formattedKey.replace(/\r\n/g, '\n');
+    
+    // Replace literal \n with actual newlines
     if (formattedKey.includes('\\n')) {
       formattedKey = formattedKey.replace(/\\n/g, '\n');
     }
     
-    // Ensure proper PEM format with correct line breaks
+    // If key is on one line, format it properly
     if (!formattedKey.includes('\n')) {
-      // Key is on one line, need to format it properly
-      formattedKey = formattedKey
-        .replace(/-----BEGIN PRIVATE KEY-----/, '-----BEGIN PRIVATE KEY-----\n')
-        .replace(/-----END PRIVATE KEY-----/, '\n-----END PRIVATE KEY-----')
-        .replace(/(.{64})/g, '$1\n') // Add newline every 64 chars
-        .replace(/\n\n/g, '\n'); // Remove double newlines
+      const beginMarker = '-----BEGIN PRIVATE KEY-----';
+      const endMarker = '-----END PRIVATE KEY-----';
+      
+      // Extract the content between markers (or entire key if no markers)
+      let keyContent = formattedKey;
+      if (formattedKey.includes(beginMarker)) {
+        keyContent = formattedKey.replace(beginMarker, '').replace(endMarker, '');
+      }
+      
+      // Break into 64-character lines
+      const lines = [];
+      for (let i = 0; i < keyContent.length; i += 64) {
+        lines.push(keyContent.substring(i, i + 64));
+      }
+      
+      formattedKey = `${beginMarker}\n${lines.join('\n')}\n${endMarker}`;
     }
     
-    console.log('🔑 Private key format check:', {
+    // Remove excessive newlines
+    formattedKey = formattedKey.replace(/\n{3,}/g, '\n\n');
+    
+    // Step 3: Calculate SHA-256 fingerprint for debugging (without exposing secret)
+    const encoder = new TextEncoder();
+    const data = encoder.encode(formattedKey);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const fingerprint = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
+    
+    console.log('🔑 Private key diagnostics:', {
       hasBeginMarker: formattedKey.includes('-----BEGIN PRIVATE KEY-----'),
       hasEndMarker: formattedKey.includes('-----END PRIVATE KEY-----'),
       hasNewlines: formattedKey.includes('\n'),
       length: formattedKey.length,
+      fingerprint: fingerprint, // First 16 chars of SHA-256 hash (safe to log)
+      clientEmail: clientEmail,
     });
     
+    // Step 4: Validate PEM format
+    if (!formattedKey.includes('-----BEGIN PRIVATE KEY-----') || !formattedKey.includes('-----END PRIVATE KEY-----')) {
+      throw new Error('Invalid PEM format: Missing BEGIN/END markers. Please ensure you copied the complete private key from the JSON service account file.');
+    }
+    
     const auth = new google.auth.JWT({
-      email: GOOGLE_CLIENT_EMAIL,
+      email: clientEmail,
       key: formattedKey,
       scopes: ['https://www.googleapis.com/auth/calendar'],
     });
