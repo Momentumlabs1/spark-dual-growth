@@ -182,6 +182,8 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
 
     if (emailSuccess) {
       setShowCalendar(true);
+      // Öffne den Google-Terminplan in neuem Tab (Einbettung ist von Google blockiert)
+      window.open(CONFIG.GOOGLE_CALENDAR_LINK, "_blank", "noopener,noreferrer");
     } else {
       setError("Fehler beim Senden der Daten. Bitte versuche es erneut.");
     }
