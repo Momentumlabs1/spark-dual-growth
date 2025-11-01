@@ -23,7 +23,7 @@ const HeroSection = () => {
             <motion.img
               src="/assets/niklas-fabienne-hero22.png"
               alt="Niklas und Fabienne - Körper & Geist Coaching"
-              className="w-full h-full object-cover object-[center_30%] lg:object-[center_20%] pointer-events-none select-none"
+              className="w-full h-full object-cover object-center pointer-events-none select-none"
               loading="eager"
             />
 
