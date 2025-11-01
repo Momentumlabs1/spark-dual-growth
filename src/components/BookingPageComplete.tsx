@@ -21,8 +21,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CONFIG = {
-  GOOGLE_CALENDAR_LINK: "https://calendar.app.google/4FV2w2sL4KL9Gtq89",
-  COACH_EMAIL: "coach@example.com",
+  GOOGLE_CALENDAR_LINK: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0y_your_real_link_here",
+  COACH_EMAIL: "info@momentumlabs.at",
   COACH_NAME: "Niklas & Fabienne",
 };
 
@@ -193,11 +193,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
     return (
       <section className="min-h-screen bg-nf-light py-8 md:py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
-          >
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
             <Alert className="border-green-500 bg-green-50">
               <CheckCircle2 className="h-5 w-5 text-green-600" />
               <AlertDescription className="text-green-800 font-medium">
@@ -212,9 +208,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
             transition={{ delay: 0.2 }}
             className="text-center mb-6"
           >
-            <h1 className="text-2xl md:text-4xl font-bold text-nf-black mb-3">
-              Wähle deinen Wunschtermin 📅
-            </h1>
+            <h1 className="text-2xl md:text-4xl font-bold text-nf-black mb-3">Wähle deinen Wunschtermin 📅</h1>
             <p className="text-base md:text-lg text-nf-gray">
               Buche jetzt dein kostenloses 60-minütiges Beratungsgespräch
             </p>
@@ -237,7 +231,9 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                 <CardContent className="space-y-2 text-sm">
                   <div>
                     <div className="text-xs text-gray-500 font-semibold">Name</div>
-                    <div className="font-bold text-nf-black">{firstName} {lastName}</div>
+                    <div className="font-bold text-nf-black">
+                      {firstName} {lastName}
+                    </div>
                   </div>
                   <div>
                     <div className="text-xs text-gray-500 font-semibold">Email</div>
@@ -322,7 +318,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                       title="Termin buchen"
                     />
                   </div>
-                  
+
                   <div className="p-6 bg-gray-50 border-t">
                     <p className="text-sm text-gray-600 mb-3 text-center">
                       Falls die Kalenderansicht nicht lädt, klicke hier:
@@ -377,28 +373,18 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
   return (
     <section className="min-h-screen bg-gradient-to-br from-nf-light to-gray-100 py-12 md:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
           <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold mb-4">
             ✅ Deine BMI-Analyse ist fertig!
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-nf-black mb-4">
             Sichere dir jetzt dein kostenloses Beratungsgespräch! 🎯
           </h1>
-          <p className="text-lg text-nf-gray">
-            Nur noch ein Schritt zu deinem personalisierten Plan
-          </p>
+          <p className="text-lg text-nf-gray">Nur noch ein Schritt zu deinem personalisierten Plan</p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
             <Card className="shadow-2xl border-t-4 border-nf-red">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -499,11 +485,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
           </motion.div>
 
           <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-            >
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
               <Card className="shadow-lg border-2 border-green-500">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -539,11 +521,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
               </Card>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
               <Card className="shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-blue-900">
@@ -577,11 +555,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
               </Card>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
               <Card className="shadow-lg bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
