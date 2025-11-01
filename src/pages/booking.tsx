@@ -1,4 +1,4 @@
-mport { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -659,4 +659,25 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
   );
 };
 
-export default BookingPageComplete;
+// Wrapper component for standalone route
+const BookingPage = () => {
+  // Default/mock data for when accessed directly
+  const defaultHealthData = {
+    bmi: 0,
+    bmr: 0,
+    tdee: 0,
+    height: "0",
+    weight: "0",
+    age: "0",
+    gender: "male",
+    goal: "maintain",
+    activityLevel: "moderate",
+    sleepHours: "7-8",
+    stressLevel: "medium",
+    recommendedCalories: 0,
+  };
+
+  return <BookingPageComplete healthData={defaultHealthData} />;
+};
+
+export default BookingPage;
