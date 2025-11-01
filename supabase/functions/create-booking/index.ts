@@ -70,6 +70,10 @@ serve(async (req) => {
     // Handle both literal \n and actual newlines in private key
     let formattedKey = GOOGLE_PRIVATE_KEY;
     
+    // Trim whitespace and remove surrounding quotes
+    formattedKey = formattedKey.trim();
+    formattedKey = formattedKey.replace(/^["']|["']$/g, '');
+    
     // If the key contains literal \n strings, replace them with actual newlines
     if (formattedKey.includes('\\n')) {
       formattedKey = formattedKey.replace(/\\n/g, '\n');
