@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -10,7 +10,6 @@ import {
   Shield,
   Award,
   TrendingUp,
-  Send,
   AlertCircle,
   ArrowRight,
   Info,
@@ -20,13 +19,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-// ⚙️ KONFIGURATION - NUR DIESE WERTE ÄNDERN!
-const CONFIG = {
-  GOOGLE_CALENDAR_LINK: "https://calendar.app.google/4FV2w2sL4KL9Gtq89",
-  COACH_EMAIL: "coach@example.com", // ← DEINE COACH EMAIL HIER
-  COACH_NAME: "Niklas & Fabienne",
-};
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarUI } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { de } from "date-fns/locale";
+import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface BookingPageProps {
   healthData: {
@@ -50,9 +49,12 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedTime, setSelectedTime] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [meetLink, setMeetLink] = useState("");
+  const [eventLink, setEventLink] = useState("");
   const [error, setError] = useState("");
 
   const validateForm = () => {
@@ -64,6 +66,16 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim() || !emailRegex.test(email)) {
       setError("Bitte gib eine gültige E-Mail-Adresse ein.");
+      return false;
+    }
+
+    if (!selectedDate) {
+      setError("Bitte wähle ein Datum aus.");
+      return false;
+    }
+
+    if (!selectedTime) {
+      setError("Bitte wähle eine Uhrzeit aus.");
       return false;
     }
 
@@ -118,85 +130,12 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return "Adipositas";
   };
 
-  const sendBookingEmail = async () => {
-    // 📧 EMAIL MIT EMAILJS SENDEN
-    // Setup-Anleitung siehe unten!
-
-    const emailBody = `
-Neue Terminbuchung von ${firstName} ${lastName}!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 KONTAKTDATEN:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Name: ${firstName} ${lastName}
-Email: ${email}
-Telefon: ${phone || "Nicht angegeben"}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 BMI & KÖRPERDATEN:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-BMI: ${healthData.bmi} (${getBMICategory(healthData.bmi)})
-Körpergröße: ${healthData.height} cm
-Gewicht: ${healthData.weight} kg
-Alter: ${healthData.age} Jahre
-Geschlecht: ${healthData.gender === "male" ? "Männlich" : "Weiblich"}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔥 KALORIENBEDARF:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Grundumsatz (BMR): ${healthData.bmr} kcal/Tag
-Tagesbedarf (TDEE): ${healthData.tdee} kcal/Tag
-Empfohlen für Ziel: ${healthData.recommendedCalories} kcal/Tag
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎯 ZIELE & LIFESTYLE:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hauptziel: ${getGoalLabel(healthData.goal)}
-Aktivitätslevel: ${getActivityLabel(healthData.activityLevel)}
-Schlaf: ${getSleepLabel(healthData.sleepHours)}
-Stresslevel: ${getStressLabel(healthData.stressLevel)}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⏰ NÄCHSTER SCHRITT:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Der Kunde bucht jetzt seinen Termin im Google Calendar.
-Bitte achte auf den Namen "${firstName} ${lastName}" 
-im Calendar und matche ihn mit dieser Email!
-
-Zeitstempel: ${new Date().toLocaleString("de-DE")}
-    `;
-
-    try {
-      // ⚠️ EMAILJS SETUP (siehe unten für Anleitung)
-      
-      // Wenn du EmailJS eingerichtet hast, kommentiere diese Zeilen ein:
-      /*
-      const emailjs = (await import('@emailjs/browser')).default;
-      
-      await emailjs.send(
-        'YOUR_SERVICE_ID',     // ← Von EmailJS Dashboard
-        'YOUR_TEMPLATE_ID',    // ← Von EmailJS Dashboard
-        {
-          to_email: CONFIG.COACH_EMAIL,
-          from_name: `${firstName} ${lastName}`,
-          from_email: email,
-          subject: `🆕 Neue Buchung: ${firstName} ${lastName}`,
-          message: emailBody,
-        },
-        'YOUR_PUBLIC_KEY'      // ← Von EmailJS Dashboard
-      );
-      */
-
-      // TEMPORARY: Console log für Testing
-      console.log("📧 Email würde gesendet werden an:", CONFIG.COACH_EMAIL);
-      console.log("Inhalt:", emailBody);
-
-      return true;
-    } catch (error) {
-      console.error("Email error:", error);
-      return false;
-    }
-  };
+  // Available time slots (9:00 - 18:00)
+  const timeSlots = [
+    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+    "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -206,72 +145,96 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
     setIsSubmitting(true);
     setError("");
 
-    // Email mit BMI-Daten senden
-    const emailSuccess = await sendBookingEmail();
+    try {
+      const appointmentDate = format(selectedDate!, 'yyyy-MM-dd');
+      
+      console.log('📅 Booking appointment:', {
+        firstName,
+        lastName,
+        email,
+        date: appointmentDate,
+        time: selectedTime,
+      });
 
-    if (emailSuccess) {
-      setEmailSent(true);
-      setShowCalendar(true);
-      // Öffne den Google-Terminplan in neuem Tab (Einbettung ist von Google blockiert)
-      window.open(CONFIG.GOOGLE_CALENDAR_LINK, "_blank", "noopener,noreferrer");
-    } else {
-      setError("Fehler beim Senden der Daten. Bitte versuche es erneut.");
+      const { data, error: functionError } = await supabase.functions.invoke('create-booking', {
+        body: {
+          firstName,
+          lastName,
+          email,
+          phone,
+          appointmentDate,
+          appointmentTime: selectedTime,
+          healthData,
+        },
+      });
+
+      if (functionError) {
+        console.error('Function error:', functionError);
+        throw new Error(functionError.message);
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'Fehler beim Erstellen des Termins');
+      }
+
+      console.log('✅ Booking created:', data);
+
+      setMeetLink(data.meetLink);
+      setEventLink(data.eventLink);
+      setShowSuccess(true);
+
+      toast.success('Termin erfolgreich gebucht! 🎉', {
+        description: 'Du erhältst eine Bestätigungs-Email mit allen Details.',
+      });
+
+    } catch (error: any) {
+      console.error('❌ Booking error:', error);
+      setError(error.message || "Fehler beim Buchen. Bitte versuche es erneut.");
+      toast.error('Fehler beim Buchen', {
+        description: error.message || 'Bitte versuche es erneut.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
-  // Calendar View - Nach Email-Bestätigung
-  if (showCalendar) {
+  // Success View
+  if (showSuccess) {
     return (
       <section className="min-h-screen bg-nf-light py-8 md:py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Success Message */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center mb-8"
           >
-            <Alert className="border-green-500 bg-green-50">
-              <CheckCircle2 className="h-5 w-5 text-green-600" />
-              <AlertDescription className="text-green-800 font-medium">
-                ✅ Deine Daten wurden erfolgreich an {CONFIG.COACH_NAME} gesendet! Wähle jetzt deinen Wunschtermin.
-              </AlertDescription>
-            </Alert>
-          </motion.div>
-
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-center mb-6"
-          >
-            <h1 className="text-2xl md:text-4xl font-bold text-nf-black mb-3">
-              Wähle deinen Wunschtermin 📅
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+              <CheckCircle2 className="h-12 w-12 text-green-600" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-nf-black mb-3">
+              Termin erfolgreich gebucht! 🎉
             </h1>
-            <p className="text-base md:text-lg text-nf-gray">
-              Buche jetzt dein kostenloses 60-minütiges Beratungsgespräch
+            <p className="text-lg text-nf-gray">
+              Du erhältst gleich eine Bestätigungs-Email mit allen Details
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* Left Column: Summary */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Contact Summary */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="lg:col-span-1 space-y-4"
+              transition={{ delay: 0.2 }}
             >
-              {/* Contact Info */}
               <Card className="shadow-lg border-2 border-blue-200">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <User className="h-5 w-5 text-blue-600" />
-                    Deine Daten
+                    Deine Buchung
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm">
+                <CardContent className="space-y-3 text-sm">
                   <div>
                     <div className="text-xs text-gray-500 font-semibold">Name</div>
                     <div className="font-bold text-nf-black">{firstName} {lastName}</div>
@@ -286,141 +249,107 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                       <div className="text-nf-black">{phone}</div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
-
-              {/* BMI Summary */}
-              <Card className="shadow-lg border-2 border-green-200">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-green-600" />
-                    Deine Analyse
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="bg-gray-50 p-2 rounded">
-                      <div className="text-xs text-gray-500 font-semibold">BMI</div>
-                      <div className="text-lg font-bold text-nf-black">{healthData.bmi}</div>
+                  <div className="pt-2 border-t">
+                    <div className="text-xs text-gray-500 font-semibold">Termin</div>
+                    <div className="font-bold text-nf-black">
+                      {selectedDate && format(selectedDate, 'EEEE, dd. MMMM yyyy', { locale: de })}
                     </div>
-                    <div className="bg-gray-50 p-2 rounded">
-                      <div className="text-xs text-gray-500 font-semibold">Ziel</div>
-                      <div className="text-sm font-bold text-nf-black">{getGoalLabel(healthData.goal)}</div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-r from-nf-red to-red-600 p-3 rounded-lg text-white">
-                    <div className="text-xs font-semibold mb-1">EMPFOHLEN</div>
-                    <div className="text-2xl font-bold">{healthData.recommendedCalories}</div>
-                    <div className="text-xs opacity-90">kcal/Tag</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Info Box */}
-              <Card className="shadow-lg bg-blue-50 border-2 border-blue-200">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3">
-                    <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-1" />
-                    <div className="text-sm text-blue-900">
-                      <div className="font-bold mb-2">Was passiert jetzt?</div>
-                      <ol className="space-y-1 list-decimal list-inside text-xs">
-                        <li>Wähle einen freien Termin</li>
-                        <li>Du erhältst eine Bestätigung per Email</li>
-                        <li>Wir bereiten uns auf dein Gespräch vor</li>
-                      </ol>
-                    </div>
+                    <div className="text-lg font-bold text-nf-red">{selectedTime} Uhr</div>
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
 
-            {/* Right Column: Embedded Google Calendar */}
+            {/* Meeting Links */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="lg:col-span-2"
+              transition={{ delay: 0.3 }}
             >
-              <Card className="shadow-2xl border-t-4 border-nf-red overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-nf-red to-red-600 text-white">
-                  <CardTitle className="flex items-center gap-2 text-xl">
-                    <Calendar className="h-6 w-6" />
-                    Verfügbare Termine
+              <Card className="shadow-lg border-2 border-green-200">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-green-600" />
+                    Deine Links
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-0">
-                  {/* Embedded Google Calendar Booking Page */}
-                  <div className="w-full" style={{ minHeight: "600px" }}>
-                    <iframe
-                      src={CONFIG.GOOGLE_CALENDAR_LINK}
-                      style={{
-                        border: 0,
-                        width: "100%",
-                        height: "600px",
-                      }}
-                      frameBorder="0"
-                      scrolling="yes"
-                      title="Termin buchen"
-                    />
-                  </div>
-                  
-                  {/* Fallback Button */}
-                  <div className="p-6 bg-gray-50 border-t">
-                    <p className="text-sm text-gray-600 mb-3 text-center">
-                      Falls die Kalenderansicht nicht lädt, klicke hier:
-                    </p>
-                    <Button
-                      onClick={() => window.open(CONFIG.GOOGLE_CALENDAR_LINK, "_blank")}
-                      className="w-full bg-nf-red hover:bg-nf-red/90 text-white font-bold"
-                      size="lg"
-                    >
-                      <Calendar className="h-5 w-5 mr-2" />
-                      Termin in neuem Fenster öffnen
-                    </Button>
-                  </div>
+                <CardContent className="space-y-3">
+                  {meetLink && (
+                    <div>
+                      <Button
+                        onClick={() => window.open(meetLink, '_blank')}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white"
+                        size="lg"
+                      >
+                        📹 Google Meet öffnen
+                      </Button>
+                      <p className="text-xs text-gray-600 mt-2 text-center">
+                        Dieser Link ist auch in deiner Email
+                      </p>
+                    </div>
+                  )}
+                  {eventLink && (
+                    <div>
+                      <Button
+                        onClick={() => window.open(eventLink, '_blank')}
+                        variant="outline"
+                        className="w-full"
+                        size="lg"
+                      >
+                        📅 Im Calendar ansehen
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
           </div>
 
-          {/* Trust Elements */}
+          {/* Next Steps */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 grid md:grid-cols-3 gap-4"
+            transition={{ delay: 0.4 }}
+            className="mt-8"
           >
-            <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow">
-              <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0" />
-              <div className="text-sm">
-                <div className="font-bold text-nf-black">100% Kostenlos</div>
-                <div className="text-gray-600">Keine versteckten Kosten</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow">
-              <Clock className="h-6 w-6 text-blue-500 flex-shrink-0" />
-              <div className="text-sm">
-                <div className="font-bold text-nf-black">60 Minuten</div>
-                <div className="text-gray-600">Individuelles Gespräch</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow">
-              <Shield className="h-6 w-6 text-purple-500 flex-shrink-0" />
-              <div className="text-sm">
-                <div className="font-bold text-nf-black">Unverbindlich</div>
-                <div className="text-gray-600">Keine Verpflichtung</div>
-              </div>
-            </div>
+            <Card className="shadow-lg bg-blue-50 border-2 border-blue-200">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3">
+                  <Info className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <div className="font-bold text-blue-900 mb-3">Was passiert jetzt?</div>
+                    <ol className="space-y-2 text-sm text-blue-800">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold">1.</span>
+                        <span>Du erhältst eine Email-Bestätigung mit dem Google Meet Link</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold">2.</span>
+                        <span>24h vor dem Termin erhältst du eine Erinnerung</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold">3.</span>
+                        <span>Zum Termin einfach auf den Meet-Link klicken</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold">4.</span>
+                        <span>Wir besprechen deine Ziele und erstellen deinen Plan</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
       </section>
     );
   }
 
-  // Main Booking Form - Before showing calendar
+  // Main Booking Form
   return (
     <section className="min-h-screen bg-gradient-to-br from-nf-light to-gray-100 py-12 md:py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -434,7 +363,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
             Sichere dir jetzt dein kostenloses Beratungsgespräch! 🎯
           </h1>
           <p className="text-lg text-nf-gray">
-            Nur noch ein Schritt zu deinem personalisierten Plan
+            Wähle deinen Wunschtermin und wir erstellen deinen persönlichen Plan
           </p>
         </motion.div>
 
@@ -449,7 +378,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <User className="h-5 w-5 text-nf-red" />
-                  Deine Kontaktdaten
+                  Buchungsformular
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -505,12 +434,66 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="+49 123 456789"
+                        placeholder="+43 123 456789"
                         className="pl-10"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
                     </div>
+                  </div>
+
+                  {/* Date Picker */}
+                  <div className="space-y-2">
+                    <Label>Wunschdatum *</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !selectedDate && "text-muted-foreground"
+                          )}
+                        >
+                          <Calendar className="mr-2 h-4 w-4" />
+                          {selectedDate ? (
+                            format(selectedDate, "PPP", { locale: de })
+                          ) : (
+                            <span>Datum wählen</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarUI
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={setSelectedDate}
+                          disabled={(date) =>
+                            date < new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  {/* Time Picker */}
+                  <div className="space-y-2">
+                    <Label htmlFor="time">Wunschzeit *</Label>
+                    <select
+                      id="time"
+                      value={selectedTime}
+                      onChange={(e) => setSelectedTime(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      required
+                    >
+                      <option value="">Uhrzeit wählen</option>
+                      {timeSlots.map((time) => (
+                        <option key={time} value={time}>
+                          {time} Uhr
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* Error Message */}
@@ -531,11 +514,11 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                     {isSubmitting ? (
                       <>
                         <Clock className="h-5 w-5 mr-2 animate-spin" />
-                        Wird gesendet...
+                        Wird gebucht...
                       </>
                     ) : (
                       <>
-                        Weiter zur Terminauswahl
+                        Jetzt kostenfrei buchen
                         <ArrowRight className="h-5 w-5 ml-2" />
                       </>
                     )}
@@ -663,7 +646,6 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
 
 // Wrapper component for standalone route
 const BookingPage = () => {
-  // Default/mock data for when accessed directly
   const defaultHealthData = {
     bmi: 0,
     bmr: 0,
