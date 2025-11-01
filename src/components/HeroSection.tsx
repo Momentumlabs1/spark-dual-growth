@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { Star, Zap, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
@@ -12,7 +15,7 @@ const HeroSection = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-24 sm:pt-28 md:pt-32 lg:pt-16 xl:pt-20 pb-8 sm:pb-10 lg:pb-8 xl:pb-10">
       {/* Preload hint - add to head */}
-      <link rel="preload" as="image" href="/assets/niklas-fabienne-hero22.png" fetchpriority="high" />
+      <link rel="preload" as="image" href="/assets/niklas-fabienne-hero22.png" fetchPriority="high" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
@@ -28,7 +31,7 @@ const HeroSection = () => {
               alt="Niklas und Fabienne - Körper & Geist Coaching"
               className="w-full h-full object-cover object-center pointer-events-none select-none"
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
               decoding="async"
             />
 
@@ -53,7 +56,7 @@ const HeroSection = () => {
             {/* Button Overlay - overlaps bottom of image */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
-                onClick={() => scrollToSection("#booking-funnel")}
+                onClick={() => navigate('/booking')}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.15 }}

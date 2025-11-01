@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Calculator,
   TrendingUp,
@@ -39,8 +40,7 @@ import {
 // Für Next.js: import { useRouter } from 'next/router'; oder import { useRouter } from 'next/navigation';
 
 const BMICalculatorFunnel = () => {
-  // Für React Router: const navigate = useNavigate();
-  // Für Next.js: const router = useRouter();
+  const navigate = useNavigate();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [height, setHeight] = useState<string>("");
@@ -849,11 +849,7 @@ const BMICalculatorFunnel = () => {
                   </div>
                 </div>
                 <Button
-                  onClick={() => {
-                    // ✅ WEITERLEITUNG ZUM BOOKING:
-                    window.location.href = "/booking";
-                    // Alternativ mit Router: navigate('/booking') oder router.push('/booking')
-                  }}
+                  onClick={() => navigate('/booking')}
                   className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base md:text-lg shadow-lg hover:shadow-xl transition-all"
                   size="lg"
                 >

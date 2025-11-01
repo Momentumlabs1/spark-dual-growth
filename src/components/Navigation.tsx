@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { label: "Coaching", href: "#coaching" },
@@ -45,7 +47,7 @@ const Navigation = () => {
                 </button>
               ))}
               <Button
-                onClick={() => scrollToSection("#kontakt")}
+                onClick={() => navigate('/booking')}
                 variant="default"
                 className="bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 py-2 ml-4"
               >
@@ -86,7 +88,10 @@ const Navigation = () => {
           ))}
           <div className="pt-2">
             <Button
-              onClick={() => scrollToSection("#kontakt")}
+              onClick={() => {
+                navigate('/booking');
+                setIsOpen(false);
+              }}
               variant="default"
               className="bg-nf-red hover:bg-nf-red/90 text-nf-white w-full"
             >
