@@ -67,9 +67,34 @@ serve(async (req) => {
     console.log('✅ Using Calendar ID:', GOOGLE_CALENDAR_ID);
 
     // 🔑 Create JWT Auth Client
+    // Handle both literal \n and actual newlines in private key
+    let formattedKey = GOOGLE_PRIVATE_KEY;
+    
+    // If the key contains literal \n strings, replace them with actual newlines
+    if (formattedKey.includes('\\n')) {
+      formattedKey = formattedKey.replace(/\\n/g, '\n');
+    }
+    
+    // Ensure proper PEM format with correct line breaks
+    if (!formattedKey.includes('\n')) {
+      // Key is on one line, need to format it properly
+      formattedKey = formattedKey
+        .replace(/-----BEGIN PRIVATE KEY-----/, '-----BEGIN PRIVATE KEY-----\n')
+        .replace(/-----END PRIVATE KEY-----/, '\n-----END PRIVATE KEY-----')
+        .replace(/(.{64})/g, '$1\n') // Add newline every 64 chars
+        .replace(/\n\n/g, '\n'); // Remove double newlines
+    }
+    
+    console.log('🔑 Private key format check:', {
+      hasBeginMarker: formattedKey.includes('-----BEGIN PRIVATE KEY-----'),
+      hasEndMarker: formattedKey.includes('-----END PRIVATE KEY-----'),
+      hasNewlines: formattedKey.includes('\n'),
+      length: formattedKey.length,
+    });
+    
     const auth = new google.auth.JWT({
       email: GOOGLE_CLIENT_EMAIL,
-      key: GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      key: formattedKey,
       scopes: ['https://www.googleapis.com/auth/calendar'],
     });
 
