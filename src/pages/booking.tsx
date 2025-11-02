@@ -57,6 +57,8 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
   const [meetLink, setMeetLink] = useState("");
   const [eventLink, setEventLink] = useState("");
   const [error, setError] = useState("");
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   const validateForm = () => {
     if (!firstName.trim() || !lastName.trim()) {
@@ -131,12 +133,46 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return "Adipositas";
   };
 
-  // Available time slots (9:00 - 18:00)
-  const timeSlots = [
-    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-    "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
-  ];
+  // Fetch available slots when date is selected
+  const fetchAvailableSlots = async (date: Date) => {
+    setIsLoadingSlots(true);
+    setSelectedTime(""); // Reset selected time
+    try {
+      const dateString = format(date, 'yyyy-MM-dd');
+      console.log('🔍 Fetching available slots for:', dateString);
+
+      const { data, error: functionError } = await supabase.functions.invoke('get-available-slots', {
+        body: { date: dateString },
+      });
+
+      if (functionError) {
+        console.error('Function error:', functionError);
+        throw new Error(functionError.message);
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'Fehler beim Laden der verfügbaren Zeiten');
+      }
+
+      console.log('✅ Available slots:', data.availableSlots);
+      setAvailableSlots(data.availableSlots);
+
+      if (data.availableSlots.length === 0) {
+        toast.error('Keine verfügbaren Zeiten', {
+          description: 'Bitte wähle einen anderen Tag.',
+        });
+      }
+
+    } catch (error: any) {
+      console.error('❌ Error fetching slots:', error);
+      toast.error('Fehler beim Laden der Zeiten', {
+        description: 'Bitte versuche es erneut.',
+      });
+      setAvailableSlots([]);
+    } finally {
+      setIsLoadingSlots(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -454,7 +490,12 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         <CalendarUI
                           mode="single"
                           selected={selectedDate}
-                          onSelect={setSelectedDate}
+                          onSelect={(date) => {
+                            setSelectedDate(date);
+                            if (date) {
+                              fetchAvailableSlots(date);
+                            }
+                          }}
                           disabled={(date) =>
                             date < new Date() || date < new Date("1900-01-01")
                           }
@@ -474,9 +515,15 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                       onChange={(e) => setSelectedTime(e.target.value)}
                       className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       required
+                      disabled={!selectedDate || isLoadingSlots}
                     >
-                      <option value="">Uhrzeit wählen</option>
-                      {timeSlots.map((time) => (
+                      <option value="">
+                        {isLoadingSlots ? 'Lade verfügbare Zeiten...' : 
+                         !selectedDate ? 'Zuerst Datum wählen' : 
+                         availableSlots.length === 0 ? 'Keine Zeiten verfügbar' : 
+                         'Uhrzeit wählen'}
+                      </option>
+                      {availableSlots.map((time) => (
                         <option key={time} value={time}>
                           {time} Uhr
                         </option>
