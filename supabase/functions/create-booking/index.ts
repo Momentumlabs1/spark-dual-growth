@@ -149,20 +149,14 @@ serve(async (req) => {
 
     const calendar = google.calendar({ version: 'v3', auth });
 
-    // 📅 Parse date and time
-    const [year, month, day] = appointmentDate.split('-');
+    // 📅 Parse date and time - keeping it simple in Vienna timezone
+    // Format: YYYY-MM-DDTHH:mm:ss (without Z suffix, so Google interprets it in the specified timeZone)
+    const startDateTimeString = `${appointmentDate}T${appointmentTime}:00`;
+    
+    // Calculate end time (1 hour later)
     const [hours, minutes] = appointmentTime.split(':');
-    
-    const startDateTime = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(day),
-      parseInt(hours),
-      parseInt(minutes)
-    );
-    
-    const endDateTime = new Date(startDateTime);
-    endDateTime.setHours(endDateTime.getHours() + 1); // 60 min duration
+    const endHour = (parseInt(hours) + 1).toString().padStart(2, '0');
+    const endDateTimeString = `${appointmentDate}T${endHour}:${minutes}:00`;
 
     // 📝 Helper functions for labels
     const getActivityLabel = (level: string) => {
@@ -259,11 +253,11 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
       summary: `🏋️ Coaching: ${firstName} ${lastName}`,
       description: description,
       start: {
-        dateTime: startDateTime.toISOString(),
+        dateTime: startDateTimeString,
         timeZone: 'Europe/Vienna',
       },
       end: {
-        dateTime: endDateTime.toISOString(),
+        dateTime: endDateTimeString,
         timeZone: 'Europe/Vienna',
       },
       reminders: {
