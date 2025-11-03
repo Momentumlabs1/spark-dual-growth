@@ -384,7 +384,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
             ✅ Deine BMI-Analyse ist fertig!
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-nf-black mb-4">
-            Sichere dir jetzt dein kostenloses Beratungsgespräch! 🎯
+            Sichere dir jetzt dein 30-minütiges Beratungsgespräch! 🎯
           </h1>
           <p className="text-lg text-nf-gray">
             Wähle deinen Wunschtermin und wir erstellen deinen persönlichen Plan

@@ -321,7 +321,7 @@ const BMICalculatorFunnel = () => {
               <div className="grid gap-3">
                 {[
                   { value: "lose", label: "🔥 Abnehmen", desc: "Gewicht verlieren" },
-                  { value: "maintain", label: "⚖️ Gewicht halten", desc: "Aktuelle Form beibehalten" },
+                  { value: "maintain", label: "⚖️ Gesunder Lifestyle", desc: "Aktuelle Form beibehalten" },
                   { value: "gain", label: "💪 Zunehmen", desc: "Muskeln aufbauen" },
                 ].map((option) => (
                   <motion.button

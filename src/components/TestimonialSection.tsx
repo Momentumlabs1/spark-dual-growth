@@ -146,7 +146,7 @@ const testimonials: Testimonial[] = [
     },
     images: {
       before: ["/assets/sarah-vorne-alt.png", "/assets/sarah-seite-alt.png", "/assets/sarah-hinten-alt.png"],
-      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png.png", "/assets/sarah-hinten-neu.png"],
+      after: ["/assets/sarah-vorne-neu.png", "/assets/sarah-seite-neu.png", "/assets/sarah-hinten-neu.png"],
     },
   },
   {
@@ -417,7 +417,7 @@ const TestimonialSection = () => {
   );
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section id="testimonials" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -534,7 +534,7 @@ const TestimonialSection = () => {
               Starte jetzt deine Reise zu deinem Traumkörper – genauso wie unsere 500+ erfolgreichen Kunden!
             </p>
             <button
-              onClick={() => (window.location.href = "/#contact")}
+              onClick={() => (window.location.href = "/booking")}
               className="bg-white text-red-600 px-10 py-4 rounded-full text-lg md:text-xl font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
               Jetzt starten! 🔥

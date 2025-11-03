@@ -153,10 +153,13 @@ serve(async (req) => {
     // Format: YYYY-MM-DDTHH:mm:ss (without Z suffix, so Google interprets it in the specified timeZone)
     const startDateTimeString = `${appointmentDate}T${appointmentTime}:00`;
     
-    // Calculate end time (1 hour later)
+    // Calculate end time (30 minutes later)
     const [hours, minutes] = appointmentTime.split(':');
-    const endHour = (parseInt(hours) + 1).toString().padStart(2, '0');
-    const endDateTimeString = `${appointmentDate}T${endHour}:${minutes}:00`;
+    const startMinutes = parseInt(hours) * 60 + parseInt(minutes);
+    const endMinutes = startMinutes + 30;
+    const endHour = Math.floor(endMinutes / 60).toString().padStart(2, '0');
+    const endMinute = (endMinutes % 60).toString().padStart(2, '0');
+    const endDateTimeString = `${appointmentDate}T${endHour}:${endMinute}:00`;
 
     // 📝 Helper functions for labels
     const getActivityLabel = (level: string) => {

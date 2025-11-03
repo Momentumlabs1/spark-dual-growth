@@ -7,13 +7,6 @@ const CoachingSection = () => {
 
   const features = [
     {
-      icon: Target,
-      title: "Professionelle Trainingspläne",
-      description:
-        "Individuell angepasste Trainingspläne basierend auf deinen Zielen, deinem Fitnesslevel und verfügbarer Zeit.",
-      color: "from-red-400 to-pink-500",
-    },
-    {
       icon: Apple,
       title: "Individuelle Ernährungsberatung",
       description:
@@ -25,6 +18,13 @@ const CoachingSection = () => {
       title: "Persönliche Betreuung",
       description: "Regelmäßiges Feedback, Anpassungen und Motivation durch dein persönliches Coaching-Team.",
       color: "from-blue-400 to-cyan-500",
+    },
+    {
+      icon: Target,
+      title: "Professionelle Trainingspläne",
+      description:
+        "Individuell angepasste Trainingspläne basierend auf deinen Zielen, deinem Fitnesslevel und verfügbarer Zeit.",
+      color: "from-red-400 to-pink-500",
     },
     {
       icon: Brain,
@@ -57,7 +57,7 @@ const CoachingSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 md:py-16 px-4 bg-white overflow-hidden">
+    <section id="coaching" ref={sectionRef} className="py-8 md:py-16 px-4 bg-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div

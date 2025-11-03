@@ -25,6 +25,7 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
             className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-[448px] xl:max-w-[512px] mb-0 overflow-hidden rounded-2xl"
+            style={{ aspectRatio: '512/683' }}
           >
             <img
               src="/assets/niklas-fabienne-hero22.png"
@@ -33,6 +34,7 @@ const HeroSection = () => {
               loading="eager"
               fetchPriority="high"
               decoding="async"
+              style={{ display: 'block', width: '100%', height: 'auto' }}
             />
 
             {/* Title Overlay - positioned on their bodies */}
