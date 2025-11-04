@@ -16,7 +16,7 @@ const TeamSection = () => {
       specialties: [
         "Ernährungsanalyse & zielgerechte Optimierung",
         "Individuelle Trainingsplanung (Muskelaufbau & Leistungssteigerung)",
-        "Stoffwechsel- und Energieoptimierung",
+        "Stoffwechsel- und Energiegewinnung",
         "Optimierung der Körperkomposition (Fettabbau & Muskelzuwachs)",
         "Bewegungs- & Technikcoaching",
         "Trainingsperiodisierung & Progression",
