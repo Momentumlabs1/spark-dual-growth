@@ -2,7 +2,6 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import TeamSection from "@/components/TeamSection";
 import ServicesGrid from "@/components/ServicesGrid";
-import BMICalculator from "@/components/BMICalculator";
 import TestimonialSection from "@/components/TestimonialSection";
 import BookingFunnel from "@/components/BookingFunnel";
 import Footer from "@/components/Footer";
@@ -19,9 +18,6 @@ const Index = () => {
 
       {/* Services Section */}
       <ServicesGrid />
-
-      {/* BMI Calculator */}
-      <BMICalculator />
 
       {/* Health Calculator CTA */}
       <HealthCalculatorCTA />
