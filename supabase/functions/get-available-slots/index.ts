@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { google } from "npm:googleapis@^144.0.0";
 import { z } from "npm:zod@^3.25.0";
+import { DateTime } from "npm:luxon@^3.5.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -117,15 +118,14 @@ serve(async (req) => {
       "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
     ];
 
-    // 📆 Query Google Calendar for events on this day
-    const startOfDay = `${date}T00:00:00`;
-    const endOfDay = `${date}T23:59:59`;
+    // 📆 Compute day range in Europe/Vienna and convert to UTC RFC3339
+    const startOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).startOf('day').toUTC().toISO();
+    const endOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).endOf('day').toUTC().toISO();
 
     const response = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,
-      timeMin: startOfDay,
-      timeMax: endOfDay,
-      timeZone: 'Europe/Vienna',
+      timeMin: startOfDay!,
+      timeMax: endOfDay!,
       singleEvents: true,
       orderBy: 'startTime',
     });
@@ -136,9 +136,10 @@ serve(async (req) => {
     const bookedSlots = new Set<string>();
     
     events.forEach((event) => {
-      if (event.start?.dateTime) {
-        const startTime = event.start.dateTime.substring(11, 16);
-        bookedSlots.add(startTime);
+      const dt = event.start?.dateTime || event.start?.date;
+      if (dt) {
+        const timeVienna = DateTime.fromISO(dt).setZone('Europe/Vienna').toFormat('HH:mm');
+        bookedSlots.add(timeVienna);
       }
     });
 
