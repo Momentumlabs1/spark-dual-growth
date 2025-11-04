@@ -5,7 +5,7 @@ import ServicesGrid from "@/components/ServicesGrid";
 import TestimonialSection from "@/components/TestimonialSection";
 import BookingFunnel from "@/components/BookingFunnel";
 import Footer from "@/components/Footer";
-import HealthCalculatorCTA from "@/components/HealthCalculatorCTA";
+import HealthCalculatorCTA from "@/components/HealthCalculatorSection";
 
 const Index = () => {
   return (
