@@ -429,7 +429,7 @@ const TestimonialSection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Was unsere <span className="text-red-600">Kunden</span> sagen
           </h2>
-          <p className="text-lg md:text-xl text-gray-600">Echte Ergebnisse von echten Menschen</p>
+          <p className="text-lg md:text-xl text-gray-600">Ehrliche Ergebnisse von echten Menschen</p>
         </motion.div>
 
         {/* Testimonial Cards Grid */}

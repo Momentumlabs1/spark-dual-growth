@@ -627,7 +627,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-semibold text-blue-900">60 Minuten individuelles Gespräch</div>
+                      <div className="font-semibold text-blue-900">30 Minuten persönliches Gespräch</div>
                       <div className="text-sm text-blue-700">Persönliche Analyse deiner Situation</div>
                     </div>
                   </div>

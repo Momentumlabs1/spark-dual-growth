@@ -355,8 +355,8 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
             <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow">
               <Clock className="h-6 w-6 text-blue-500 flex-shrink-0" />
               <div className="text-sm">
-                <div className="font-bold text-nf-black">60 Minuten</div>
-                <div className="text-gray-600">Individuelles Gespräch</div>
+                <div className="font-bold text-nf-black">30 Minuten</div>
+                <div className="text-gray-600">Persönliches Gespräch</div>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow">
