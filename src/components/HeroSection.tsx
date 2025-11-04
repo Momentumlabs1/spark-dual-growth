@@ -14,9 +14,6 @@ const HeroSection = () => {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-24 sm:pt-28 md:pt-32 lg:pt-16 xl:pt-20 pb-8 sm:pb-10 lg:pb-8 xl:pb-10">
-      {/* Preload hint - add to head */}
-      <link rel="preload" as="image" href="/assets/niklas-fabienne-hero22.png" fetchPriority="high" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Hero Image Container with Text and Button Overlay */}
