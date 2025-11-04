@@ -12,10 +12,23 @@ const loader = document.getElementById("loader");
 const startApp = () => {
   createRoot(document.getElementById("root")!).render(<App />);
   requestAnimationFrame(() => {
-    loader?.classList.add("loaded");
-    setTimeout(() => {
-      loader?.remove();
-    }, 300);
+    const hide = () => {
+      loader?.classList.add("loaded");
+      setTimeout(() => {
+        loader?.remove();
+      }, 300);
+    };
+    const heroEl = document.querySelector('img[src="/assets/niklas-fabienne-hero22.png"]') as HTMLImageElement | null;
+    if (heroEl) {
+      if (heroEl.complete) {
+        hide();
+      } else {
+        heroEl.addEventListener("load", hide, { once: true });
+        heroEl.addEventListener("error", hide, { once: true });
+      }
+    } else {
+      hide();
+    }
   });
 };
 

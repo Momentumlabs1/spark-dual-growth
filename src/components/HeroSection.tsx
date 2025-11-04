@@ -17,10 +17,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           {/* Hero Image Container with Text and Button Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
+          <div
             className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-[448px] xl:max-w-[512px] mb-0 overflow-hidden rounded-2xl"
             style={{ aspectRatio: '512/683' }}
           >
@@ -37,10 +34,7 @@ const HeroSection = () => {
             />
 
             {/* Title Overlay - positioned on their bodies */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+            <div
               className="absolute top-[40%] lg:top-[38%] xl:top-[40%] left-0 right-0 text-center px-4 z-10"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-bold leading-tight">
@@ -52,15 +46,12 @@ const HeroSection = () => {
                 <br />
                 ganzheitlichem Online Coaching
               </p>
-            </motion.div>
+            </div>
 
             {/* Button Overlay - overlaps bottom of image */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
                 onClick={() => navigate('/booking')}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ backgroundColor: "rgb(220, 38, 38)" }}
@@ -70,13 +61,10 @@ const HeroSection = () => {
                 <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
               </motion.button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Trust Badges */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+          <div
             className="relative z-10 mt-4 lg:mt-2 xl:mt-3 flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-2 items-center justify-center w-full max-w-2xl"
           >
             <div className="bg-white text-gray-800 px-4 sm:px-6 md:px-8 lg:px-5 py-2.5 sm:py-3 md:py-4 lg:py-2.5 rounded-full flex items-center gap-1.5 sm:gap-2 shadow-lg">
@@ -94,7 +82,7 @@ const HeroSection = () => {
                 Erfolgsgeschichten
               </span>
             </button>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
