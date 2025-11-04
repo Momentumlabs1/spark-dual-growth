@@ -1,33 +1,57 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { google } from "npm:googleapis@^144.0.0";
+import { z } from "npm:zod@^3.25.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface BookingRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone?: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  healthData: {
-    bmi: number;
-    bmr: number;
-    tdee: number;
-    height: string;
-    weight: string;
-    age: string;
-    gender: string;
-    goal: string;
-    activityLevel: string;
-    sleepHours: string;
-    stressLevel: string;
-    recommendedCalories: number;
-  };
+// 🔒 Simple rate limiting using in-memory store
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_MAX = 5; // max 5 requests
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // per hour
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+  
+  if (!record || now > record.resetAt) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+  
+  if (record.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
 }
+
+// 🔒 Zod validation schema
+const BookingSchema = z.object({
+  firstName: z.string().trim().min(1, "Vorname erforderlich").max(100, "Vorname zu lang"),
+  lastName: z.string().trim().min(1, "Nachname erforderlich").max(100, "Nachname zu lang"),
+  email: z.string().email("Ungültige E-Mail-Adresse").max(255, "E-Mail zu lang"),
+  phone: z.string().max(20, "Telefonnummer zu lang").optional(),
+  appointmentDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ungültiges Datumsformat"),
+  appointmentTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Ungültige Uhrzeit"),
+  healthData: z.object({
+    bmi: z.number().min(10).max(100),
+    bmr: z.number().min(500).max(5000),
+    tdee: z.number().min(500).max(8000),
+    height: z.string().regex(/^\d+(\.\d+)?$/),
+    weight: z.string().regex(/^\d+(\.\d+)?$/),
+    age: z.string().regex(/^\d+$/),
+    gender: z.enum(["male", "female"]),
+    goal: z.enum(["lose", "maintain", "gain"]),
+    activityLevel: z.enum(["sedentary", "light", "moderate", "active", "very-active"]),
+    sleepHours: z.string(),
+    stressLevel: z.string(),
+    recommendedCalories: z.number().min(500).max(8000),
+  }),
+});
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -36,9 +60,40 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📅 Creating booking...');
+    // 🔒 Rate limiting
+    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    
+    if (!checkRateLimit(clientIP)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Zu viele Anfragen. Bitte versuche es später erneut.',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 429,
+        }
+      );
+    }
 
-    const requestData: BookingRequest = await req.json();
+    const requestData = await req.json();
+
+    // 🔒 Validate input with zod
+    const validation = BookingSchema.safeParse(requestData);
+    
+    if (!validation.success) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Ungültige Eingabedaten. Bitte überprüfe deine Angaben.',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
+    }
+
     const { 
       firstName, 
       lastName, 
@@ -47,12 +102,7 @@ serve(async (req) => {
       appointmentDate, 
       appointmentTime,
       healthData 
-    } = requestData;
-
-    // ✅ Validate required fields
-    if (!firstName || !lastName || !email || !appointmentDate || !appointmentTime) {
-      throw new Error('Missing required fields');
-    }
+    } = validation.data;
 
     // 🔐 Google Calendar API Setup
     const GOOGLE_CALENDAR_ID = Deno.env.get('GOOGLE_CALENDAR_ID');
@@ -60,55 +110,39 @@ serve(async (req) => {
     const GOOGLE_PRIVATE_KEY = Deno.env.get('GOOGLE_PRIVATE_KEY');
 
     if (!GOOGLE_CALENDAR_ID || !GOOGLE_CLIENT_EMAIL || !GOOGLE_PRIVATE_KEY) {
-      console.error('❌ Missing Google credentials');
-      throw new Error('Calendar credentials not configured');
+      console.error('[create-booking] Missing Google credentials');
+      throw new Error('Configuration error');
     }
-
-    console.log('✅ Using Calendar ID:', GOOGLE_CALENDAR_ID);
 
     // 🔑 Create JWT Auth Client with robust key handling
     let privateKey = GOOGLE_PRIVATE_KEY;
     let clientEmail = GOOGLE_CLIENT_EMAIL;
     
-    // Step 1: Detect if the key is a JSON service account file
     if (privateKey.trim().startsWith('{')) {
-      console.log('🔍 Detected JSON format, extracting credentials...');
       try {
         const serviceAccount = JSON.parse(privateKey);
         privateKey = serviceAccount.private_key;
         clientEmail = serviceAccount.client_email || clientEmail;
-        console.log('✅ Extracted from JSON, using client_email:', clientEmail);
       } catch (e) {
-        console.error('❌ Failed to parse JSON:', e);
-        throw new Error('Invalid JSON service account format. Please paste the entire downloaded JSON file or just the private_key value.');
+        throw new Error('Configuration error');
       }
     }
     
-    // Step 2: Strict normalization
-    // Remove whitespace and quotes
-    let formattedKey = privateKey.trim();
-    formattedKey = formattedKey.replace(/^["']|["']$/g, '');
+    let formattedKey = privateKey.trim().replace(/^["']|["']$/g, '').replace(/\r\n/g, '\n');
     
-    // Convert CRLF to LF
-    formattedKey = formattedKey.replace(/\r\n/g, '\n');
-    
-    // Replace literal \n with actual newlines
     if (formattedKey.includes('\\n')) {
       formattedKey = formattedKey.replace(/\\n/g, '\n');
     }
     
-    // If key is on one line, format it properly
     if (!formattedKey.includes('\n')) {
       const beginMarker = '-----BEGIN PRIVATE KEY-----';
       const endMarker = '-----END PRIVATE KEY-----';
       
-      // Extract the content between markers (or entire key if no markers)
       let keyContent = formattedKey;
       if (formattedKey.includes(beginMarker)) {
         keyContent = formattedKey.replace(beginMarker, '').replace(endMarker, '');
       }
       
-      // Break into 64-character lines
       const lines = [];
       for (let i = 0; i < keyContent.length; i += 64) {
         lines.push(keyContent.substring(i, i + 64));
@@ -117,28 +151,10 @@ serve(async (req) => {
       formattedKey = `${beginMarker}\n${lines.join('\n')}\n${endMarker}`;
     }
     
-    // Remove excessive newlines
     formattedKey = formattedKey.replace(/\n{3,}/g, '\n\n');
     
-    // Step 3: Calculate SHA-256 fingerprint for debugging (without exposing secret)
-    const encoder = new TextEncoder();
-    const data = encoder.encode(formattedKey);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const fingerprint = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
-    
-    console.log('🔑 Private key diagnostics:', {
-      hasBeginMarker: formattedKey.includes('-----BEGIN PRIVATE KEY-----'),
-      hasEndMarker: formattedKey.includes('-----END PRIVATE KEY-----'),
-      hasNewlines: formattedKey.includes('\n'),
-      length: formattedKey.length,
-      fingerprint: fingerprint, // First 16 chars of SHA-256 hash (safe to log)
-      clientEmail: clientEmail,
-    });
-    
-    // Step 4: Validate PEM format
     if (!formattedKey.includes('-----BEGIN PRIVATE KEY-----') || !formattedKey.includes('-----END PRIVATE KEY-----')) {
-      throw new Error('Invalid PEM format: Missing BEGIN/END markers. Please ensure you copied the complete private key from the JSON service account file.');
+      throw new Error('Configuration error');
     }
     
     const auth = new google.auth.JWT({
@@ -149,11 +165,9 @@ serve(async (req) => {
 
     const calendar = google.calendar({ version: 'v3', auth });
 
-    // 📅 Parse date and time - keeping it simple in Vienna timezone
-    // Format: YYYY-MM-DDTHH:mm:ss (without Z suffix, so Google interprets it in the specified timeZone)
+    // 📅 Parse date and time
     const startDateTimeString = `${appointmentDate}T${appointmentTime}:00`;
     
-    // Calculate end time (30 minutes later)
     const [hours, minutes] = appointmentTime.split(':');
     const startMinutes = parseInt(hours) * 60 + parseInt(minutes);
     const endMinutes = startMinutes + 30;
@@ -247,11 +261,7 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
 📅 Gebucht am: ${new Date().toLocaleString("de-DE")}
     `.trim();
 
-    // 🎫 Create Google Calendar Event with Meet Link
-    console.log('🔄 Creating calendar event...');
-    
-    // Note: We don't add attendees because Service Accounts need Domain-Wide Delegation
-    // to invite attendees. Instead, users will get the calendar link to add themselves.
+    // 🎫 Create Google Calendar Event
     const event = {
       summary: `🏋️ Coaching: ${firstName} ${lastName}`,
       description: description,
@@ -266,8 +276,8 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
       reminders: {
         useDefault: false,
         overrides: [
-          { method: 'email', minutes: 24 * 60 }, // 1 day before
-          { method: 'email', minutes: 60 },      // 1 hour before
+          { method: 'email', minutes: 24 * 60 },
+          { method: 'email', minutes: 60 },
         ],
       },
     };
@@ -278,10 +288,7 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
       requestBody: event,
     });
 
-    console.log('✅ Event created:', response.data.id);
-
     const eventLink = response.data.htmlLink || '';
-    console.log('✅ Event Link:', eventLink);
 
     return new Response(
       JSON.stringify({
@@ -297,13 +304,12 @@ Stresslevel: ${getStressLabel(healthData.stressLevel)}
     );
 
   } catch (error: any) {
-    console.error('❌ Error creating booking:', error);
+    console.error('[create-booking]', error);
     
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message || 'Fehler beim Erstellen des Termins',
-        details: error.toString(),
+        error: 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.',
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -206,15 +206,12 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       });
 
       if (functionError) {
-        console.error('Function error:', functionError);
         throw new Error(functionError.message);
       }
 
       if (!data.success) {
         throw new Error(data.error || 'Fehler beim Erstellen des Termins');
       }
-
-      console.log('✅ Booking created:', data);
 
       setEventLink(data.eventLink);
       setShowSuccess(true);
@@ -224,7 +221,6 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       });
 
     } catch (error: any) {
-      console.error('❌ Booking error:', error);
       setError(error.message || "Fehler beim Buchen. Bitte versuche es erneut.");
       toast.error('Fehler beim Buchen', {
         description: error.message || 'Bitte versuche es erneut.',

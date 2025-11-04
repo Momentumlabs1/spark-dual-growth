@@ -1,14 +1,38 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { google } from "npm:googleapis@^144.0.0";
+import { z } from "npm:zod@^3.25.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface AvailableSlotsRequest {
-  date: string; // Format: YYYY-MM-DD
+// 🔒 Simple rate limiting using in-memory store
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_MAX = 10; // max 10 requests
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // per hour
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+  
+  if (!record || now > record.resetAt) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+  
+  if (record.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
 }
+
+// 🔒 Zod validation schema
+const AvailableSlotsSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ungültiges Datumsformat"),
+});
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -17,16 +41,41 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📅 Fetching available slots...');
-
-    const requestData: AvailableSlotsRequest = await req.json();
-    const { date } = requestData;
-
-    if (!date) {
-      throw new Error('Date is required');
+    // 🔒 Rate limiting
+    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    
+    if (!checkRateLimit(clientIP)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Zu viele Anfragen. Bitte versuche es später erneut.',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 429,
+        }
+      );
     }
 
-    console.log('📅 Checking availability for date:', date);
+    const requestData = await req.json();
+
+    // 🔒 Validate input with zod
+    const validation = AvailableSlotsSchema.safeParse(requestData);
+    
+    if (!validation.success) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Ungültiges Datum.',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
+    }
+
+    const { date } = validation.data;
 
     // 🔐 Google Calendar API Setup
     const GOOGLE_CALENDAR_ID = Deno.env.get('GOOGLE_CALENDAR_ID');
@@ -34,8 +83,8 @@ serve(async (req) => {
     const GOOGLE_PRIVATE_KEY = Deno.env.get('GOOGLE_PRIVATE_KEY');
 
     if (!GOOGLE_CALENDAR_ID || !GOOGLE_CLIENT_EMAIL || !GOOGLE_PRIVATE_KEY) {
-      console.error('❌ Missing Google credentials');
-      throw new Error('Calendar credentials not configured');
+      console.error('[get-available-slots] Missing Google credentials');
+      throw new Error('Configuration error');
     }
 
     // 🔑 Create JWT Auth Client with robust key handling
@@ -48,7 +97,6 @@ serve(async (req) => {
       clientEmail = serviceAccount.client_email || clientEmail;
     }
     
-    // Format private key
     let formattedKey = privateKey.trim().replace(/^["']|["']$/g, '').replace(/\r\n/g, '\n');
     if (formattedKey.includes('\\n')) {
       formattedKey = formattedKey.replace(/\\n/g, '\n');
@@ -73,8 +121,6 @@ serve(async (req) => {
     const startOfDay = `${date}T00:00:00`;
     const endOfDay = `${date}T23:59:59`;
 
-    console.log('🔍 Querying calendar from', startOfDay, 'to', endOfDay);
-
     const response = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,
       timeMin: startOfDay,
@@ -85,24 +131,19 @@ serve(async (req) => {
     });
 
     const events = response.data.items || [];
-    console.log(`📋 Found ${events.length} events on ${date}`);
 
     // 🚫 Extract booked time slots
     const bookedSlots = new Set<string>();
     
     events.forEach((event) => {
       if (event.start?.dateTime) {
-        // Extract time from ISO string (format: YYYY-MM-DDTHH:mm:ss)
-        const startTime = event.start.dateTime.substring(11, 16); // Extract HH:mm
+        const startTime = event.start.dateTime.substring(11, 16);
         bookedSlots.add(startTime);
-        console.log('⛔ Booked slot:', startTime);
       }
     });
 
     // ✅ Filter available slots
     const availableSlots = allTimeSlots.filter(slot => !bookedSlots.has(slot));
-
-    console.log(`✅ Available slots: ${availableSlots.length}/${allTimeSlots.length}`);
 
     return new Response(
       JSON.stringify({
@@ -118,13 +159,12 @@ serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('❌ Error fetching available slots:', error);
+    console.error('[get-available-slots]', error);
     
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message || 'Fehler beim Abrufen der verfügbaren Zeiten',
-        details: error.toString(),
+        error: 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.',
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
