@@ -329,22 +329,6 @@ const BMICalculatorFunnel = () => {
                   personalisierten Kalorienbedarf
                 </p>
               </div>
-
-              {/* Feature Pills */}
-              <div className="flex flex-wrap justify-center gap-2 pt-2">
-                <Badge variant="secondary" className="bg-green-100 text-green-700 border-0 px-3 py-1">
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
-                  Wissenschaftlich fundiert
-                </Badge>
-                <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-0 px-3 py-1">
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
-                  100% kostenlos
-                </Badge>
-                <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-0 px-3 py-1">
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
-                  Sofortige Ergebnisse
-                </Badge>
-              </div>
             </div>
 
             {/* Goal Selection */}
@@ -750,167 +734,127 @@ const BMICalculatorFunnel = () => {
               <p className="text-sm md:text-base text-nf-gray">Hier ist deine persönliche Analyse</p>
             </div>
 
-            {/* BMI Section - VERBESSERT */}
+            {/* BMI Section - REDESIGNED */}
             {bmi && bmiCategory && (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                <Card className={`shadow-lg border-2 ${bmiCategory.borderColor}`}>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <TrendingUp className="h-5 w-5 text-nf-red" />
-                      Dein BMI
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* BMI Value & Category */}
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="text-5xl md:text-6xl font-bold text-nf-black">{bmi}</div>
-                        <div className="text-sm text-nf-gray mt-1">Body Mass Index</div>
+                <Card className="shadow-xl border-0 overflow-hidden">
+                  <div className={`h-2 bg-gradient-to-r ${bmiCategory.color === "#3B82F6" ? "from-blue-500 to-blue-600" : bmiCategory.color === "#10B981" ? "from-green-500 to-green-600" : bmiCategory.color === "#F59E0B" ? "from-orange-500 to-orange-600" : "from-red-500 to-red-600"}`} />
+                  <CardContent className="p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${bmiCategory.color === "#3B82F6" ? "bg-blue-100" : bmiCategory.color === "#10B981" ? "bg-green-100" : bmiCategory.color === "#F59E0B" ? "bg-orange-100" : "bg-red-100"}`}>
+                        <TrendingUp className={`h-5 w-5 ${bmiCategory.color === "#3B82F6" ? "text-blue-600" : bmiCategory.color === "#10B981" ? "text-green-600" : bmiCategory.color === "#F59E0B" ? "text-orange-600" : "text-red-600"}`} />
                       </div>
-                      <div className="flex-shrink-0">
-                        <Badge
-                          className={`${bmiCategory.bgColor} ${bmiCategory.textColor} text-base md:text-lg px-4 py-2 font-bold shadow-md`}
-                        >
-                          {bmiCategory.category}
-                        </Badge>
-                      </div>
+                      <h4 className="text-xl font-bold text-nf-black">Dein Body Mass Index</h4>
                     </div>
 
-                    {/* Chart */}
-                    <div className="h-32 md:h-36 bg-gray-50 rounded-lg p-2">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={bmiChartData}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={35}
-                            outerRadius={55}
-                            startAngle={90}
-                            endAngle={450}
-                            dataKey="value"
-                          >
-                            {bmiChartData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.fill} />
-                            ))}
-                          </Pie>
-                        </PieChart>
-                      </ResponsiveContainer>
+                    <div className="flex items-end justify-between mb-6">
+                      <div>
+                        <div className="text-6xl md:text-7xl font-bold text-nf-black mb-1">{bmi}</div>
+                        <div className="text-sm text-nf-gray">BMI Wert</div>
+                      </div>
+                      <Badge
+                        className={`${bmiCategory.bgColor} ${bmiCategory.textColor} text-lg px-5 py-2 font-bold`}
+                      >
+                        {bmiCategory.category}
+                      </Badge>
                     </div>
 
-                    {/* Advice */}
-                    <div className="bg-gray-50 p-3 rounded-lg border-l-4 border-nf-red">
-                      <p className="text-sm md:text-base text-nf-black font-medium">{getBMIAdvice(bmi)}</p>
+                    <div className={`p-4 rounded-xl ${bmiCategory.color === "#3B82F6" ? "bg-blue-50 border-l-4 border-blue-500" : bmiCategory.color === "#10B981" ? "bg-green-50 border-l-4 border-green-500" : bmiCategory.color === "#F59E0B" ? "bg-orange-50 border-l-4 border-orange-500" : "bg-red-50 border-l-4 border-red-500"}`}>
+                      <p className="text-nf-black font-medium">{getBMIAdvice(bmi)}</p>
                     </div>
                   </CardContent>
                 </Card>
               </motion.div>
             )}
 
-            {/* Calorie Section - VERBESSERT */}
+            {/* Calorie Section - REDESIGNED */}
             {tdee && bmr && (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                <Card className="shadow-lg border-2 border-orange-500">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <Flame className="h-5 w-5 text-orange-500" />
-                      Dein Kalorienbedarf
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* Primary Stats */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border-2 border-blue-200">
-                        <div className="text-xs text-blue-600 font-semibold mb-1">GRUNDUMSATZ</div>
-                        <div className="text-3xl font-bold text-blue-900">{bmr}</div>
-                        <div className="text-xs text-blue-600 mt-1">kcal/Tag (BMR)</div>
+                <Card className="shadow-xl border-0 overflow-hidden">
+                  <div className="h-2 bg-gradient-to-r from-orange-500 to-red-500" />
+                  <CardContent className="p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
+                        <Flame className="h-5 w-5 text-orange-600" />
                       </div>
-                      <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border-2 border-orange-200">
-                        <div className="text-xs text-orange-600 font-semibold mb-1">GESAMTUMSATZ</div>
-                        <div className="text-3xl font-bold text-orange-900">{tdee}</div>
-                        <div className="text-xs text-orange-600 mt-1">kcal/Tag (TDEE)</div>
+                      <h4 className="text-xl font-bold text-nf-black">Dein Kalorienbedarf</h4>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-xl border border-blue-200">
+                        <div className="text-xs text-blue-600 font-bold mb-2 uppercase tracking-wide">Grundumsatz</div>
+                        <div className="text-4xl font-bold text-blue-900 mb-1">{bmr}</div>
+                        <div className="text-xs text-blue-600">kcal/Tag (BMR)</div>
+                      </div>
+                      <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-5 rounded-xl border border-orange-200">
+                        <div className="text-xs text-orange-600 font-bold mb-2 uppercase tracking-wide">Gesamtumsatz</div>
+                        <div className="text-4xl font-bold text-orange-900 mb-1">{tdee}</div>
+                        <div className="text-xs text-orange-600">kcal/Tag (TDEE)</div>
                       </div>
                     </div>
 
-                    {/* Goal-Based Recommendation */}
+                    {/* Recommendation */}
                     {goal && (
-                      <div className="bg-gradient-to-r from-nf-red to-red-600 p-4 rounded-lg text-white">
-                        <div className="flex items-center gap-2 mb-2">
+                      <div className="bg-gradient-to-r from-nf-red to-red-600 p-6 rounded-xl text-white">
+                        <div className="flex items-center gap-2 mb-3">
                           <Award className="h-5 w-5" />
-                          <div className="text-xs font-semibold uppercase tracking-wide">
+                          <div className="text-sm font-bold uppercase tracking-wide">
                             {goal === "lose" && "Empfohlen zum Abnehmen"}
                             {goal === "maintain" && "Empfohlen zum Gewicht halten"}
                             {goal === "gain" && "Empfohlen zum Zunehmen"}
                           </div>
                         </div>
-                        <div className="flex items-baseline gap-2">
-                          <div className="text-4xl md:text-5xl font-bold">{getCalorieGoal(tdee, goal)}</div>
-                          <div className="text-xl">kcal/Tag</div>
+                        <div className="flex items-baseline gap-3">
+                          <div className="text-5xl md:text-6xl font-bold">{getCalorieGoal(tdee, goal)}</div>
+                          <div className="text-2xl font-semibold">kcal/Tag</div>
                         </div>
                       </div>
                     )}
-
-                    {/* Chart */}
-                    <div className="h-40 md:h-48 bg-gray-50 rounded-lg p-3">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={calorieChartData} margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                          <XAxis dataKey="name" fontSize={12} stroke="#6B7280" tick={{ fill: "#374151" }} />
-                          <YAxis hide />
-                          <Tooltip
-                            formatter={(value) => [`${value} kcal`, "Kalorien"]}
-                            contentStyle={{
-                              backgroundColor: "white",
-                              border: "2px solid #E5E7EB",
-                              borderRadius: "8px",
-                              padding: "8px",
-                            }}
-                          />
-                          <Bar dataKey="value" radius={[8, 8, 0, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
             )}
 
-            {/* Lifestyle Insights - KOMPAKTER */}
+            {/* Lifestyle Insights - REDESIGNED */}
             {insights.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="space-y-3"
               >
-                <h4 className="font-bold text-nf-black text-base md:text-lg flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-nf-red" />
-                  Deine Lifestyle-Analyse
-                </h4>
-                <div className="space-y-2">
-                  {insights.map((insight, index) => (
-                    <Alert
-                      key={index}
-                      className={`border-l-4 ${
-                        insight.type === "warning"
-                          ? "bg-orange-50 border-orange-500"
-                          : insight.type === "success"
-                            ? "bg-green-50 border-green-500"
-                            : "bg-blue-50 border-blue-500"
-                      }`}
-                    >
-                      <AlertDescription>
-                        <div className="flex gap-3">
-                          <div className="text-2xl flex-shrink-0">{insight.icon}</div>
-                          <div className="flex-1">
-                            <div className="font-bold text-nf-black text-sm mb-1">{insight.title}</div>
-                            <div className="text-xs text-nf-gray leading-relaxed">{insight.description}</div>
+                <Card className="shadow-xl border-0">
+                  <CardContent className="p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <Activity className="h-5 w-5 text-purple-600" />
+                      </div>
+                      <h4 className="text-xl font-bold text-nf-black">Deine Lifestyle-Analyse</h4>
+                    </div>
+                    <div className="space-y-3">
+                      {insights.map((insight, index) => (
+                        <div
+                          key={index}
+                          className={`p-4 rounded-xl border-l-4 ${
+                            insight.type === "warning"
+                              ? "bg-orange-50 border-orange-500"
+                              : insight.type === "success"
+                                ? "bg-green-50 border-green-500"
+                                : "bg-blue-50 border-blue-500"
+                          }`}
+                        >
+                          <div className="flex gap-3 items-start">
+                            <div className="text-2xl flex-shrink-0">{insight.icon}</div>
+                            <div className="flex-1 min-w-0">
+                              <div className="font-bold text-nf-black mb-1">{insight.title}</div>
+                              <div className="text-sm text-nf-gray leading-relaxed">{insight.description}</div>
+                            </div>
                           </div>
                         </div>
-                      </AlertDescription>
-                    </Alert>
-                  ))}
-                </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             )}
 
