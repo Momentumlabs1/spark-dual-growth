@@ -226,32 +226,21 @@ const GesundheitscheckPage = () => {
       case 0:
         return (
           <motion.div key="step0" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-8">
-            <div className="text-center space-y-5">
-              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, type: "spring" }} className="inline-flex items-center justify-center w-24 h-24 md:w-28 md:h-28 bg-gradient-to-br from-nf-red to-red-600 rounded-full shadow-2xl mb-4">
-                <Target className="h-12 w-12 md:h-14 md:w-14 text-white" />
-              </motion.div>
-              
+            <div className="text-center space-y-6">
               <div className="space-y-4">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-nf-black leading-tight">
-                  Lass uns dich<br />kennenlernen! 👋
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-nf-black leading-tight">
+                  Starten wir!
                 </h1>
                 
-                <p className="text-lg md:text-xl text-nf-gray max-w-xl mx-auto leading-relaxed">
-                  Bevor wir gemeinsam durchstarten, möchten wir mehr über dich erfahren.
+                <p className="text-xl md:text-2xl text-nf-gray max-w-2xl mx-auto leading-relaxed">
+                  Ein paar Fragen zu dir – dann kann's losgehen.
                 </p>
-                
-                <div className="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl max-w-xl mx-auto">
-                  <p className="text-base text-nf-black">
-                    <span className="font-bold">Nur 2 Minuten</span> für deine persönliche Analyse – 
-                    damit wir im <span className="font-bold">kostenlosen Erstgespräch</span> direkt loslegen können!
-                  </p>
-                </div>
               </div>
             </div>
 
             <div className="space-y-4 pt-4">
               <Label className="text-lg md:text-xl font-bold text-nf-black block text-center">
-                Was ist dein Hauptziel?
+                Was ist dein Ziel?
               </Label>
               
               <div className="grid gap-3 md:gap-4">
