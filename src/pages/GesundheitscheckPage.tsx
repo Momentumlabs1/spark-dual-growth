@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
+import Navigation from "@/components/Navigation";
 import {
   TrendingUp,
   Target,
@@ -13,7 +14,8 @@ import {
   Brain,
   Activity,
   Award,
-  Home,
+  Calendar,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -82,32 +84,12 @@ const GesundheitscheckPage = () => {
 
   const getBMICategory = (bmiValue: number) => {
     if (bmiValue < 18.5)
-      return {
-        category: "Untergewicht",
-        color: "#3B82F6",
-        bgColor: "bg-blue-500",
-        textColor: "text-white",
-      };
+      return { category: "Untergewicht", color: "#3B82F6", bgColor: "bg-blue-500", textColor: "text-white" };
     if (bmiValue < 25)
-      return {
-        category: "Normalgewicht",
-        color: "#10B981",
-        bgColor: "bg-green-500",
-        textColor: "text-white",
-      };
+      return { category: "Normalgewicht", color: "#10B981", bgColor: "bg-green-500", textColor: "text-white" };
     if (bmiValue < 30)
-      return {
-        category: "Übergewicht",
-        color: "#F59E0B",
-        bgColor: "bg-orange-500",
-        textColor: "text-white",
-      };
-    return {
-      category: "Adipositas",
-      color: "#EF4444",
-      bgColor: "bg-red-500",
-      textColor: "text-white",
-    };
+      return { category: "Übergewicht", color: "#F59E0B", bgColor: "bg-orange-500", textColor: "text-white" };
+    return { category: "Adipositas", color: "#EF4444", bgColor: "bg-red-500", textColor: "text-white" };
   };
 
   const getBMIAdvice = (bmiValue: number) => {
@@ -244,21 +226,34 @@ const GesundheitscheckPage = () => {
       case 0:
         return (
           <motion.div key="step0" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-8">
-            <div className="text-center space-y-4">
-              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, type: "spring" }} className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-nf-red to-red-600 rounded-full shadow-xl mb-2">
-                <Target className="h-10 w-10 md:h-12 md:w-12 text-white" />
+            <div className="text-center space-y-5">
+              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, type: "spring" }} className="inline-flex items-center justify-center w-24 h-24 md:w-28 md:h-28 bg-gradient-to-br from-nf-red to-red-600 rounded-full shadow-2xl mb-4">
+                <Target className="h-12 w-12 md:h-14 md:w-14 text-white" />
               </motion.div>
-              <div className="space-y-3">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-nf-black leading-tight">
-                  Dein persönlicher<br />Fitness-Check
-                </h3>
-                <p className="text-base md:text-lg text-nf-gray max-w-md mx-auto leading-relaxed">
-                  Erfahre in nur <span className="font-bold text-nf-red">2 Minuten</span> alles über deinen aktuellen Gesundheitszustand
+              
+              <div className="space-y-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-nf-black leading-tight">
+                  Lass uns dich<br />kennenlernen! 👋
+                </h1>
+                
+                <p className="text-lg md:text-xl text-nf-gray max-w-xl mx-auto leading-relaxed">
+                  Bevor wir gemeinsam durchstarten, möchten wir mehr über dich erfahren.
                 </p>
+                
+                <div className="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl max-w-xl mx-auto">
+                  <p className="text-base text-nf-black">
+                    <span className="font-bold">Nur 2 Minuten</span> für deine persönliche Analyse – 
+                    damit wir im <span className="font-bold">kostenlosen Erstgespräch</span> direkt loslegen können!
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <Label className="text-base md:text-lg font-bold text-nf-black block text-center">Was ist dein Hauptziel?</Label>
+
+            <div className="space-y-4 pt-4">
+              <Label className="text-lg md:text-xl font-bold text-nf-black block text-center">
+                Was ist dein Hauptziel?
+              </Label>
+              
               <div className="grid gap-3 md:gap-4">
                 {[
                   { value: "lose", icon: TrendingUp, gradient: "from-red-500 to-orange-500", label: "Abnehmen", desc: "Erreiche dein Wunschgewicht nachhaltig" },
@@ -271,7 +266,7 @@ const GesundheitscheckPage = () => {
                     <motion.button key={option.value} onClick={() => setGoal(option.value)} whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} className={`relative p-5 md:p-6 rounded-xl text-left transition-all duration-300 group ${isSelected ? "bg-gradient-to-br " + option.gradient + " text-white shadow-2xl ring-4 ring-offset-2 ring-nf-red/30" : "bg-white border-2 border-gray-200 hover:border-nf-red/50 hover:shadow-lg"}`}>
                       <div className="flex items-start gap-4">
                         <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all ${isSelected ? "bg-white/20" : "bg-gradient-to-br " + option.gradient + " group-hover:scale-110"}`}>
-                          <IconComponent className={`h-6 w-6 text-white`} />
+                          <IconComponent className="h-6 w-6 text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className={`font-bold text-lg md:text-xl mb-1 ${isSelected ? "text-white" : "text-nf-black"}`}>{option.label}</div>
@@ -463,7 +458,7 @@ const GesundheitscheckPage = () => {
           <motion.div key="step7" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-5">
             <div className="text-center pb-4 border-b-2 border-gray-100">
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
-                <CheckCircle2 className="h-14 w-14 md:h-16 md:w-16 text-green-500 mx-auto mb-3" />
+                <Sparkles className="h-14 w-14 md:h-16 md:w-16 text-nf-red mx-auto mb-3" />
               </motion.div>
               <h3 className="text-2xl md:text-3xl font-bold text-nf-black mb-2">Deine Analyse ist fertig! 🎉</h3>
               <p className="text-sm md:text-base text-nf-gray">Hier sind deine personalisierten Ergebnisse</p>
@@ -567,33 +562,71 @@ const GesundheitscheckPage = () => {
               </motion.div>
             )}
 
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} className="mt-6">
-              <div className="bg-gradient-to-br from-nf-red via-red-600 to-red-700 p-5 md:p-6 rounded-xl text-white shadow-2xl">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="bg-white/20 p-2 rounded-lg">
-                    <Target className="h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xl md:text-2xl font-bold mb-2">Bereit durchzustarten?</h4>
-                    <p className="text-sm md:text-base opacity-95 leading-relaxed">
-                      Sichere dir jetzt dein <span className="font-bold">kostenloses Beratungsgespräch</span> und starte mit einem personalisierten Plan!
+            {/* MEGA CTA BUTTON */}
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} className="pt-8">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-nf-red via-red-600 to-red-700 p-1">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+                <div className="relative bg-gradient-to-br from-nf-red via-red-600 to-red-700 rounded-xl p-8 md:p-10">
+                  <div className="text-center space-y-6">
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.7, type: "spring" }} className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-4">
+                      <Calendar className="h-10 w-10 text-white" />
+                    </motion.div>
+                    
+                    <div className="space-y-3">
+                      <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                        Bereit für den nächsten Schritt?
+                      </h2>
+                      <p className="text-xl text-white/95 max-w-2xl mx-auto leading-relaxed">
+                        Sichere dir jetzt dein <span className="font-bold">kostenloses Erstgespräch</span> mit einem unserer Experten!
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-3 pt-2">
+                        <div className="flex items-center gap-2 text-white/90">
+                          <CheckCircle2 className="h-5 w-5" />
+                          <span className="text-sm">Unverbindlich</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-white/90">
+                          <CheckCircle2 className="h-5 w-5" />
+                          <span className="text-sm">30 Minuten</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-white/90">
+                          <CheckCircle2 className="h-5 w-5" />
+                          <span className="text-sm">Personalisiert</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button
+                      onClick={() => {
+                        if (!bmi || !bmr || !tdee) calculateMetrics();
+                        const healthData = { 
+                          bmi: bmi || 0, 
+                          bmr: bmr || 0, 
+                          tdee: tdee || 0, 
+                          height, 
+                          weight, 
+                          age, 
+                          gender, 
+                          goal, 
+                          activityLevel, 
+                          sleepHours, 
+                          stressLevel, 
+                          recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0 
+                        };
+                        navigate('/booking', { state: { healthData } });
+                      }}
+                      size="lg"
+                      className="w-full md:w-auto bg-white text-nf-red hover:bg-gray-50 font-bold py-6 px-12 text-xl shadow-2xl hover:shadow-3xl transition-all hover:scale-105"
+                    >
+                      <Calendar className="mr-3 h-6 w-6" />
+                      Jetzt Termin vereinbaren
+                      <ArrowRight className="ml-3 h-6 w-6" />
+                    </Button>
+
+                    <p className="text-sm text-white/75 italic">
+                      Im Gespräch besprechen wir deine Ergebnisse im Detail und erstellen deinen persönlichen Aktionsplan
                     </p>
                   </div>
                 </div>
-                <Button
-                  onClick={() => {
-                    if (!bmi || !bmr || !tdee) calculateMetrics();
-                    const healthData = { bmi: bmi || 0, bmr: bmr || 0, tdee: tdee || 0, height, weight, age, gender, goal, activityLevel, sleepHours, stressLevel, recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0 };
-                    navigate('/booking', { state: { healthData } });
-                  }}
-                  className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base md:text-lg shadow-lg hover:shadow-xl transition-all"
-                  size="lg"
-                >
-                  <span className="mr-2">🎯</span>
-                  Jetzt kostenloses Gespräch buchen
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <p className="text-center text-xs mt-3 opacity-75">✓ Keine Verpflichtung ✓ 100% kostenlos ✓ Individuell auf dich zugeschnitten</p>
               </div>
             </motion.div>
           </motion.div>
@@ -606,26 +639,8 @@ const GesundheitscheckPage = () => {
 
   return (
     <div className="min-h-screen bg-nf-light">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-nf-red to-red-600 rounded-lg flex items-center justify-center">
-                <Target className="h-6 w-6 text-white" />
-              </div>
-              <span className="font-bold text-xl text-nf-black hidden sm:block">NutriForm</span>
-            </Link>
-            <Button variant="ghost" onClick={() => navigate('/')} className="text-nf-gray hover:text-nf-black">
-              <Home className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Zurück zur Startseite</span>
-              <span className="sm:hidden">Home</span>
-            </Button>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
-      {/* Main Content */}
       <main className="py-12 md:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {currentStep >= 1 && currentStep < 7 && (
@@ -654,7 +669,7 @@ const GesundheitscheckPage = () => {
                     {currentStep === 6 ? (
                       <>
                         Ergebnisse anzeigen
-                        <Flame className="h-4 w-4 ml-2" />
+                        <Sparkles className="h-4 w-4 ml-2" />
                       </>
                     ) : (
                       <>
@@ -676,7 +691,6 @@ const GesundheitscheckPage = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-white border-t border-gray-200 py-6 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-sm text-nf-gray">
