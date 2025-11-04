@@ -11,7 +11,6 @@ import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
 import BookingPage from "./pages/booking";
 import GesundheitscheckPage from "./pages/GesundheitscheckPage";
-import TerminVorbereitungPage from "./pages/TerminVorbereitungPage"; // ← NEU!
 
 const queryClient = new QueryClient();
 
@@ -22,14 +21,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/home" element={<Index />} />
+          <Route path="/" element={<ComingSoon />} />
+          <Route path="/preview" element={<Index />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<AGB />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/gesundheitscheck" element={<GesundheitscheckPage />} />
-          <Route path="/termin-vorbereitung" element={<TerminVorbereitungPage />} /> {/* ← NEU! */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
