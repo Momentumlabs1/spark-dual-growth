@@ -306,44 +306,130 @@ const BMICalculatorFunnel = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="space-y-6"
+            className="space-y-8"
           >
-            <div className="text-center mb-8">
-              <Target className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Willkommen zum Gesundheits-Check!</h3>
-              <p className="text-sm md:text-base text-nf-gray">
-                In nur <span className="font-semibold text-nf-red">2 Minuten</span> erfährst du deinen BMI und
-                personalisierten Kalorienbedarf
-              </p>
+            {/* Hero Section */}
+            <div className="text-center space-y-4">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+                className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-nf-red to-red-600 rounded-full shadow-xl mb-2"
+              >
+                <Target className="h-10 w-10 md:h-12 md:w-12 text-white" />
+              </motion.div>
+              
+              <div className="space-y-3">
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-nf-black leading-tight">
+                  Dein persönlicher<br />Gesundheits-Check
+                </h3>
+                
+                <p className="text-base md:text-lg text-nf-gray max-w-md mx-auto leading-relaxed">
+                  Erfahre in nur <span className="font-bold text-nf-red">2 Minuten</span> deinen BMI und
+                  personalisierten Kalorienbedarf
+                </p>
+              </div>
+
+              {/* Feature Pills */}
+              <div className="flex flex-wrap justify-center gap-2 pt-2">
+                <Badge variant="secondary" className="bg-green-100 text-green-700 border-0 px-3 py-1">
+                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  Wissenschaftlich fundiert
+                </Badge>
+                <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-0 px-3 py-1">
+                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  100% kostenlos
+                </Badge>
+                <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-0 px-3 py-1">
+                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  Sofortige Ergebnisse
+                </Badge>
+              </div>
             </div>
-            <div className="space-y-3">
-              <Label className="text-lg font-semibold">Was ist dein Hauptziel?</Label>
-              <div className="grid gap-3">
+
+            {/* Goal Selection */}
+            <div className="space-y-4">
+              <Label className="text-base md:text-lg font-bold text-nf-black block text-center">
+                Was ist dein Hauptziel?
+              </Label>
+              
+              <div className="grid gap-3 md:gap-4">
                 {[
-                  { value: "lose", label: "🔥 Abnehmen", desc: "Gewicht verlieren" },
-                  { value: "maintain", label: "⚖️ Gesunder Lifestyle", desc: "Aktuelle Form beibehalten" },
-                  { value: "gain", label: "💪 Zunehmen", desc: "Muskeln aufbauen" },
-                ].map((option) => (
-                  <motion.button
-                    key={option.value}
-                    onClick={() => setGoal(option.value)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all duration-200 relative ${
-                      goal === option.value
-                        ? "border-nf-red bg-nf-red/10 shadow-lg ring-2 ring-nf-red/20"
-                        : "border-gray-200 hover:border-nf-red/50 hover:bg-gray-50"
-                    }`}
-                  >
-                    <div className="font-semibold text-sm md:text-base text-nf-black">{option.label}</div>
-                    <div className="text-xs md:text-sm text-nf-gray">{option.desc}</div>
-                    {goal === option.value && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2">
-                        <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-nf-red" />
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
+                  {
+                    value: "lose",
+                    icon: TrendingUp,
+                    gradient: "from-red-500 to-orange-500",
+                    label: "Abnehmen",
+                    desc: "Erreiche dein Wunschgewicht nachhaltig",
+                  },
+                  {
+                    value: "maintain",
+                    icon: Activity,
+                    gradient: "from-green-500 to-emerald-500",
+                    label: "Gesunder Lifestyle",
+                    desc: "Halte dein Gewicht und fühle dich wohl",
+                  },
+                  {
+                    value: "gain",
+                    icon: Award,
+                    gradient: "from-blue-500 to-cyan-500",
+                    label: "Zunehmen",
+                    desc: "Baue gesund Muskeln und Masse auf",
+                  },
+                ].map((option) => {
+                  const IconComponent = option.icon;
+                  const isSelected = goal === option.value;
+                  
+                  return (
+                    <motion.button
+                      key={option.value}
+                      onClick={() => setGoal(option.value)}
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`relative p-5 md:p-6 rounded-xl text-left transition-all duration-300 group ${
+                        isSelected
+                          ? "bg-gradient-to-br " + option.gradient + " text-white shadow-2xl ring-4 ring-offset-2 ring-nf-red/30"
+                          : "bg-white border-2 border-gray-200 hover:border-nf-red/50 hover:shadow-lg"
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        {/* Icon */}
+                        <div
+                          className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
+                            isSelected
+                              ? "bg-white/20"
+                              : "bg-gradient-to-br " + option.gradient + " group-hover:scale-110"
+                          }`}
+                        >
+                          <IconComponent className={`h-6 w-6 ${isSelected ? "text-white" : "text-white"}`} />
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className={`font-bold text-lg md:text-xl mb-1 ${isSelected ? "text-white" : "text-nf-black"}`}>
+                            {option.label}
+                          </div>
+                          <div className={`text-sm md:text-base ${isSelected ? "text-white/90" : "text-nf-gray"}`}>
+                            {option.desc}
+                          </div>
+                        </div>
+
+                        {/* Check Icon */}
+                        {isSelected && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="absolute top-4 right-4"
+                          >
+                            <div className="bg-white rounded-full p-1">
+                              <CheckCircle2 className="h-5 w-5 text-nf-red" />
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
