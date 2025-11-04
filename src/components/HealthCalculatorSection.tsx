@@ -27,26 +27,26 @@ const HealthCalculatorCTA = () => {
             </p>
 
             {/* Feature Grid */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-5 sm:mb-10 max-w-xl sm:max-w-3xl mx-auto">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
+            <div className="flex justify-center items-center gap-6 sm:gap-12 mb-5 sm:mb-10">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mb-2">
+                  <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-red-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 text-xs sm:text-base">BMI-Berechnung</h3>
+                <h3 className="font-bold text-gray-900 text-xs sm:text-base text-center">BMI-<br/>Berechnung</h3>
               </div>
 
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <Target className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-orange-100 rounded-full flex items-center justify-center mb-2">
+                  <Target className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 text-xs sm:text-base">Kalorienbedarf</h3>
+                <h3 className="font-bold text-gray-900 text-xs sm:text-base text-center">Kalorien-<br/>bedarf</h3>
               </div>
 
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-pink-600" />
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-pink-100 rounded-full flex items-center justify-center mb-2">
+                  <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-pink-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 text-xs sm:text-base">Health-Tipps</h3>
+                <h3 className="font-bold text-gray-900 text-xs sm:text-base text-center">Health-<br/>Tipps</h3>
               </div>
             </div>
 
