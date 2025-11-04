@@ -118,8 +118,8 @@ serve(async (req) => {
     ];
 
     // 📆 Query Google Calendar for events on this day
-    const startOfDay = `${date}T00:00:00+01:00`;
-    const endOfDay = `${date}T23:59:59+01:00`;
+    const startOfDay = `${date}T00:00:00`;
+    const endOfDay = `${date}T23:59:59`;
 
     const response = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,
