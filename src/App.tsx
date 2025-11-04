@@ -10,8 +10,7 @@ import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
 import BookingPage from "./pages/booking";
-import GesundheitscheckPage from "./pages/GesundheitscheckPage";
-import TerminVorbereitungPage from "./pages/TerminVorbereitungPage"; // ← NEU!
+import GesundheitscheckPage from "./pages/GesundheitscheckPage"; // ← NEU HINZUFÜGEN
 
 const queryClient = new QueryClient();
 
@@ -28,8 +27,7 @@ const App = () => (
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<AGB />} />
           <Route path="/booking" element={<BookingPage />} />
-          <Route path="/gesundheitscheck" element={<GesundheitscheckPage />} />
-          <Route path="/termin-vorbereitung" element={<TerminVorbereitungPage />} /> {/* ← NEU! */}
+          <Route path="/gesundheitscheck" element={<GesundheitscheckPage />} /> {/* ← NEU HINZUFÜGEN */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
