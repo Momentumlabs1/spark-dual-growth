@@ -16,21 +16,21 @@ const CoachingSection = () => {
     {
       icon: Dumbbell,
       title: "Persönliche Betreuung",
-      description: "Regelmäßiges Feedback, Anpassungen und Motivation persönlich durch Niklas & Fabienne.",
+      description: "Regelmäßiges Feedback, Anpassungen und Motivation durch dein persönliches Coaching-Team.",
       color: "from-blue-400 to-cyan-500",
     },
     {
       icon: Target,
       title: "Professionelle Trainingspläne",
       description:
-        "Individuell angepasste Trainingspläne basierend auf deinen Zielen, deinem Fitnesslevel und deiner Zeit.",
+        "Individuell angepasste Trainingspläne basierend auf deinen Zielen, deinem Fitnesslevel und verfügbarer Zeit.",
       color: "from-red-400 to-pink-500",
     },
     {
       icon: Brain,
       title: "Mentale Stärke",
       description:
-        "Entwickle das richtige Mindset und mentale Tools für langfristigen Erfolg und persönliches Wachstum.",
+        "Entwickle die richtige Mindset und mentale Tools für langfristigen Erfolg und persönliches Wachstum.",
       color: "from-purple-400 to-pink-500",
     },
   ];
