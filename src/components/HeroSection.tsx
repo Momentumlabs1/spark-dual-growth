@@ -30,7 +30,9 @@ const HeroSection = () => {
               className="w-full h-full object-cover object-center pointer-events-none select-none"
               loading="eager"
               fetchPriority="high"
-              decoding="async"
+              decoding="sync"
+              width={512}
+              height={683}
               style={{ display: 'block', width: '100%', height: 'auto' }}
             />
 

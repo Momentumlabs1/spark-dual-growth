@@ -8,11 +8,9 @@ heroImage.src = "/assets/niklas-fabienne-hero22.png";
 
 const loader = document.getElementById("loader");
 
-heroImage.onload = () => {
-  // Image loaded, render app and hide loader
+// Helper to render app and hide loader
+const startApp = () => {
   createRoot(document.getElementById("root")!).render(<App />);
-  
-  // Small delay to ensure smooth transition
   requestAnimationFrame(() => {
     loader?.classList.add("loaded");
     setTimeout(() => {
@@ -21,12 +19,30 @@ heroImage.onload = () => {
   });
 };
 
-heroImage.onerror = () => {
-  // If image fails to load, still render app
-  console.error("Failed to preload hero image");
-  createRoot(document.getElementById("root")!).render(<App />);
-  loader?.classList.add("loaded");
-  setTimeout(() => {
-    loader?.remove();
-  }, 300);
-};
+// Prefer decode() to ensure the image is fully decoded before showing UI
+const fontReady = (document as any).fonts?.ready ?? Promise.resolve();
+
+const waitForHero = (async () => {
+  try {
+    // Prefer decode when available to ensure the image is fully decoded
+    await (heroImage as any).decode?.();
+  } catch {
+    // ignore decode errors
+  }
+  // Ensure the image has at least finished loading
+  await new Promise<void>((resolve) => {
+    if ((heroImage as any).complete) {
+      resolve();
+    } else {
+      heroImage.addEventListener("load", () => resolve(), { once: true });
+      heroImage.addEventListener("error", () => resolve(), { once: true });
+    }
+  });
+})();
+
+Promise.allSettled([waitForHero, fontReady]).then(() => {
+  startApp();
+}).catch(() => {
+  // Fallback: render anyway if promises reject
+  startApp();
+});
