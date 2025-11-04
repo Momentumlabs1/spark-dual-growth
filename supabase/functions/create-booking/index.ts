@@ -170,7 +170,7 @@ serve(async (req) => {
     
     const [hours, minutes] = appointmentTime.split(':');
     const startMinutes = parseInt(hours) * 60 + parseInt(minutes);
-    const endMinutes = startMinutes + 30;
+    const endMinutes = startMinutes + 30; // 30 Minuten Dauer
     const endHour = Math.floor(endMinutes / 60).toString().padStart(2, '0');
     const endMinute = (endMinutes % 60).toString().padStart(2, '0');
     const endDateTimeString = `${appointmentDate}T${endHour}:${endMinute}:00`;

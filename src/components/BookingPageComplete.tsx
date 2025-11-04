@@ -212,7 +212,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
           >
             <h1 className="text-2xl md:text-4xl font-bold text-nf-black mb-3">Wähle deinen Wunschtermin 📅</h1>
             <p className="text-base md:text-lg text-nf-gray">
-              Buche jetzt dein kostenloses 60-minütiges Beratungsgespräch
+              Buche jetzt dein kostenloses 30-minütiges Beratungsgespräch
             </p>
           </motion.div>
 
@@ -535,7 +535,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-semibold text-blue-900">60 Minuten individuelles Gespräch</div>
+                      <div className="font-semibold text-blue-900">30 Minuten individuelles Gespräch</div>
                       <div className="text-sm text-blue-700">Persönliche Analyse deiner Situation</div>
                     </div>
                   </div>

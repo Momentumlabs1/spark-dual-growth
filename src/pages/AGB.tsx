@@ -7,7 +7,7 @@ const AGB = () => {
     <div className="min-h-screen bg-nf-black pt-20 pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link to="/">
+          <Link to="/preview">
             <Button variant="ghost" className="mb-4 text-nf-white hover:bg-nf-red/20">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Zurück zur Startseite

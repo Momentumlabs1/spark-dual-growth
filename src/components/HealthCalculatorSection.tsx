@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Activity, Target, Zap } from 'lucide-react';
 
 const HealthCalculatorCTA = () => {
+  const navigate = useNavigate();
   return (
     <section className="py-6 sm:py-20 px-3 sm:px-4 bg-gradient-to-b from-white to-red-50/30">
       <div className="max-w-5xl mx-auto">
@@ -53,7 +55,7 @@ const HealthCalculatorCTA = () => {
             {/* CTA Button */}
             <button 
               className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-12 py-4 sm:py-7 text-base sm:text-xl font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 group w-full sm:w-auto inline-flex items-center justify-center"
-              onClick={() => alert('Weiterleitung zu /gesundheits-rechner')}
+              onClick={() => navigate('/gesundheitscheck')}
             >
               Jetzt kostenlos starten
               <ArrowRight className="ml-2 w-4 h-4 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform duration-300" />

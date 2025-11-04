@@ -47,7 +47,7 @@ const Navigation = () => {
                 </button>
               ))}
               <Button
-                onClick={() => navigate('/booking')}
+                onClick={() => navigate('/termin-vorbereitung')}
                 variant="default"
                 className="bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 py-2 ml-4"
               >
@@ -89,7 +89,7 @@ const Navigation = () => {
           <div className="pt-2">
             <Button
               onClick={() => {
-                navigate('/booking');
+                navigate('/termin-vorbereitung');
                 setIsOpen(false);
               }}
               variant="default"

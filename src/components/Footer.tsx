@@ -13,7 +13,7 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Instagram, href: '#', name: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/niklas.hauger', name: 'Instagram' },
     { icon: Facebook, href: '#', name: 'Facebook' },
     { icon: Youtube, href: '#', name: 'YouTube' }
   ];

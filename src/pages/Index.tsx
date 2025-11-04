@@ -6,6 +6,7 @@ import TestimonialSection from "@/components/TestimonialSection";
 import BookingFunnel from "@/components/BookingFunnel";
 import Footer from "@/components/Footer";
 import HealthCalculatorCTA from "@/components/HealthCalculatorSection";
+import ContactForm from "@/components/ContactForm";
 
 const Index = () => {
   return (
@@ -28,7 +29,10 @@ const Index = () => {
       {/* Testimonials & Social Proof */}
       <TestimonialSection />
 
-      {/* Booking Funnel */}
+      {/* Contact Section */}
+      <section id="kontakt" className="py-16 bg-white">
+        <ContactForm />
+      </section>
 
       {/* Footer */}
       <Footer />

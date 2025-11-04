@@ -533,7 +533,7 @@ const TestimonialSection = () => {
               Starte jetzt deine Reise zu deinem Traumkörper – genauso wie unsere 500+ erfolgreichen Kunden!
             </p>
             <button
-              onClick={() => (window.location.href = "/booking")}
+              onClick={() => (window.location.href = "/termin-vorbereitung")}
               className="bg-white text-red-600 px-10 py-4 rounded-full text-lg md:text-xl font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
               Jetzt starten! 🔥

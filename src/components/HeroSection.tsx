@@ -51,7 +51,7 @@ const HeroSection = () => {
             {/* Button Overlay - overlaps bottom of image */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
-                onClick={() => navigate('/booking')}
+                onClick={() => navigate('/termin-vorbereitung')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ backgroundColor: "rgb(220, 38, 38)" }}
