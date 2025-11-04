@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Star, X, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { Star, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area } from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Testimonial {
   id: string;
@@ -307,15 +308,13 @@ const TestimonialSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImagesLoaded, setCurrentImagesLoaded] = useState(false);
 
-  // Aggressive preload ALL images on component mount (background)
+  // Preload only priority images (first 3 testimonials) for faster initial load
   useEffect(() => {
-    const allImages: string[] = [];
-    testimonials.forEach((t) => {
-      allImages.push(...t.images.before, ...t.images.after);
-    });
+    const priorityImages = testimonials
+      .slice(0, 3)
+      .flatMap((t) => [t.images.before[0], t.images.after[0]]);
 
-    // Preload with high priority using link preload
-    allImages.forEach((src) => {
+    priorityImages.forEach((src) => {
       const link = document.createElement("link");
       link.rel = "preload";
       link.as = "image";
@@ -454,7 +453,7 @@ const TestimonialSection = () => {
                       src={testimonial.images.before[0]}
                       alt="Vorher"
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      loading={index < 3 ? "eager" : "lazy"}
                       onError={(e) => {
                         e.currentTarget.src = testimonial.images.after[0];
                       }}
@@ -470,7 +469,7 @@ const TestimonialSection = () => {
                       src={testimonial.images.after[0]}
                       alt="Nachher"
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      loading={index < 3 ? "eager" : "lazy"}
                     />
                     <div className="absolute top-2 right-2 z-20 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-semibold text-white">
                       Nachher
@@ -574,14 +573,11 @@ const TestimonialSection = () => {
                     </span>
                   </div>
 
-                  {/* Loading State - Much Smaller */}
+                  {/* Loading State with Skeleton */}
                   {!currentImagesLoaded && (
-                    <div className="flex items-center justify-center py-8">
-                      <Loader2
-                        className={`h-8 w-8 animate-spin ${
-                          selectedTestimonial.goal === "muscleGain" ? "text-blue-600" : "text-red-600"
-                        }`}
-                      />
+                    <div className="grid grid-cols-2 gap-3 md:gap-6 mb-4">
+                      <Skeleton className="aspect-[3/4] w-full rounded-lg" />
+                      <Skeleton className="aspect-[3/4] w-full rounded-lg" />
                     </div>
                   )}
 
@@ -701,6 +697,7 @@ const TestimonialSection = () => {
                               src={selectedTestimonial.images.before[currentImageIndex]}
                               alt={`Vorher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              loading="eager"
                               onError={(e) => {
                                 console.error(
                                   "Failed to load image:",
@@ -726,6 +723,7 @@ const TestimonialSection = () => {
                               src={selectedTestimonial.images.after[currentImageIndex]}
                               alt={`Nachher - ${VIEW_LABELS[currentImageIndex]}`}
                               className="w-full h-full object-cover"
+                              loading="eager"
                             />
                           </div>
                         </div>
