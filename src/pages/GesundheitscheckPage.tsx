@@ -36,11 +36,12 @@ const GesundheitscheckPage = () => {
   const [goal, setGoal] = useState<string>("");
   const [sleepHours, setSleepHours] = useState<string>("");
   const [stressLevel, setStressLevel] = useState<string>("");
+  const [struggle, setStruggle] = useState<string>("");
   const [bmi, setBMI] = useState<number | null>(null);
   const [bmr, setBMR] = useState<number | null>(null);
   const [tdee, setTDEE] = useState<number | null>(null);
 
-  const totalSteps = 8;
+  const totalSteps = 9;
 
   const calculateMetrics = () => {
     const h = parseFloat(height);
@@ -184,7 +185,7 @@ const GesundheitscheckPage = () => {
   };
 
   const nextStep = () => {
-    if (currentStep === 6) {
+    if (currentStep === 7) {
       calculateMetrics();
     }
     setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
@@ -210,6 +211,8 @@ const GesundheitscheckPage = () => {
         return sleepHours !== "";
       case 6:
         return stressLevel !== "";
+      case 7:
+        return struggle.trim() !== "";
       default:
         return true;
     }
@@ -440,11 +443,54 @@ const GesundheitscheckPage = () => {
         );
 
       case 7:
+        return (
+          <motion.div key="step7" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-6">
+            <div className="text-center mb-6 md:mb-8">
+              <Target className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">
+                Eine letzte wichtige Frage...
+              </h3>
+              <p className="text-sm md:text-base text-nf-gray">
+                Das hilft uns, dich im Gespräch{" "}
+                <span className="font-semibold text-nf-red">noch besser zu verstehen</span>
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <Label htmlFor="struggle" className="text-base md:text-lg font-semibold">
+                Was ist deine größte Herausforderung beim Abnehmen/Fitness?
+              </Label>
+              <textarea
+                id="struggle"
+                value={struggle}
+                onChange={(e) => setStruggle(e.target.value)}
+                placeholder="z.B. Keine Zeit für Sport, ständig Heißhunger, weiß nicht wie ich anfangen soll..."
+                className="w-full min-h-[120px] p-4 rounded-lg border-2 border-gray-200 focus:border-nf-red focus:ring-2 focus:ring-nf-red/20 transition-all resize-none text-base"
+                autoFocus
+              />
+              <p className="text-xs text-nf-gray">
+                💡 Je ehrlicher du bist, desto besser können wir dir helfen!
+              </p>
+            </div>
+
+            <div className="mt-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-lg">
+              <div className="flex gap-3">
+                <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-green-900">
+                  <span className="font-semibold">Danke für deine Offenheit!</span> Diese Info hilft unserem Team,
+                  sich optimal auf dein Gespräch vorzubereiten.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 8:
         const insights = getLifestyleInsights();
         const bmiCategory = bmi ? getBMICategory(bmi) : null;
 
         return (
-          <motion.div key="step7" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-5">
+          <motion.div key="step8" variants={fadeVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.2 }} className="space-y-5">
             <div className="text-center pb-4 border-b-2 border-gray-100">
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
                 <Sparkles className="h-14 w-14 md:h-16 md:w-16 text-nf-red mx-auto mb-3" />
@@ -551,7 +597,6 @@ const GesundheitscheckPage = () => {
               </motion.div>
             )}
 
-            {/* MEGA CTA BUTTON */}
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} className="pt-8">
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-nf-red via-red-600 to-red-700 p-1">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
@@ -599,7 +644,8 @@ const GesundheitscheckPage = () => {
                           activityLevel, 
                           sleepHours, 
                           stressLevel, 
-                          recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0 
+                          recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0,
+                          struggle: struggle
                         };
                         navigate('/booking', { state: { healthData } });
                       }}
@@ -632,7 +678,7 @@ const GesundheitscheckPage = () => {
 
       <main className="py-12 md:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          {currentStep >= 1 && currentStep < 7 && (
+          {currentStep >= 1 && currentStep < 8 && (
             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 md:mb-8">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs md:text-sm text-nf-gray">Schritt {currentStep + 1} von {totalSteps}</span>
@@ -646,7 +692,7 @@ const GesundheitscheckPage = () => {
             <CardContent className="p-6 md:p-8">
               <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
 
-              {currentStep < 7 && (
+              {currentStep < 8 && (
                 <div className="flex gap-2 md:gap-3 mt-6 md:mt-8">
                   {currentStep > 0 && (
                     <Button onClick={prevStep} variant="outline" className="flex-1 text-sm md:text-base">
@@ -655,7 +701,7 @@ const GesundheitscheckPage = () => {
                     </Button>
                   )}
                   <Button onClick={nextStep} disabled={!canProceed()} className={`bg-nf-red hover:bg-nf-red/90 text-white font-semibold text-sm md:text-base ${currentStep === 0 ? "flex-1" : "flex-[2]"}`}>
-                    {currentStep === 6 ? (
+                    {currentStep === 7 ? (
                       <>
                         Ergebnisse anzeigen
                         <Sparkles className="h-4 w-4 ml-2" />
