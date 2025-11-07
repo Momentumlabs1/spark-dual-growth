@@ -16,12 +16,15 @@ import {
   Award,
   Calendar,
   ClipboardList,
+  MessageCircle,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
 
 const TerminVorbereitungPage = () => {
   const navigate = useNavigate();
@@ -35,8 +38,9 @@ const TerminVorbereitungPage = () => {
   const [goal, setGoal] = useState<string>("");
   const [sleepHours, setSleepHours] = useState<string>("");
   const [stressLevel, setStressLevel] = useState<string>("");
+  const [additionalInfo, setAdditionalInfo] = useState<string>("");
 
-  const totalSteps = 7; // Ohne Ergebnisseite!
+  const totalSteps = 8;
 
   const calculateMetrics = () => {
     const h = parseFloat(height);
@@ -110,13 +114,14 @@ const TerminVorbereitungPage = () => {
       activityLevel,
       sleepHours,
       stressLevel,
+      additionalInfo,
       recommendedCalories,
     };
   };
 
   const nextStep = () => {
-    // Wenn letzter Schritt (Step 6 - Stress), dann direkt zur Booking-Seite
-    if (currentStep === 6) {
+    // Wenn letzter Schritt (Step 7 - Additional Info), dann direkt zur Booking-Seite
+    if (currentStep === 7) {
       const healthData = calculateMetrics();
       if (healthData) {
         navigate("/booking", { state: { healthData } });
@@ -146,6 +151,8 @@ const TerminVorbereitungPage = () => {
         return sleepHours !== "";
       case 6:
         return stressLevel !== "";
+      case 7:
+        return true; // Textfeld ist optional
       default:
         return true;
     }
@@ -173,15 +180,24 @@ const TerminVorbereitungPage = () => {
             <div className="text-center space-y-6">
               <div className="space-y-4">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-nf-red/10 rounded-full mb-4">
-                  <ClipboardList className="h-8 w-8 text-nf-red" />
+                  <Sparkles className="h-8 w-8 text-nf-red" />
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-nf-black leading-tight">
-                  Ein paar Fragen zu dir
+                  Lernen wir uns kennen!
                 </h1>
 
                 <p className="text-xl md:text-2xl text-nf-gray max-w-2xl mx-auto leading-relaxed">
-                  Damit wir uns optimal auf dein Beratungsgespräch vorbereiten können.
+                  Damit dein <span className="font-bold text-nf-red">kostenloses Beratungsgespräch</span> perfekt auf dich zugeschnitten ist.
                 </p>
+              </div>
+
+              <div className="bg-gradient-to-r from-nf-red/10 to-orange-500/10 rounded-xl p-4 md:p-6 max-w-2xl mx-auto">
+                <div className="flex items-center gap-3 justify-center text-sm md:text-base">
+                  <CheckCircle2 className="h-5 w-5 text-nf-red flex-shrink-0" />
+                  <span className="text-nf-black">
+                    <span className="font-semibold">Dauer:</span> 30-45 Minuten persönliches Gespräch
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -556,6 +572,54 @@ const TerminVorbereitungPage = () => {
           </motion.div>
         );
 
+      case 7:
+        return (
+          <motion.div
+            key="step7"
+            variants={fadeVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div className="text-center mb-6 md:mb-8">
+              <MessageCircle className="h-12 w-12 md:h-16 md:w-16 text-nf-red mx-auto mb-3 md:mb-4" />
+              <h3 className="text-xl md:text-2xl font-bold text-nf-black mb-2">Fast geschafft! 🎉</h3>
+              <p className="text-sm md:text-base text-nf-gray">
+                Gibt es noch etwas, das wir{" "}
+                <span className="font-semibold text-nf-red">vor dem Gespräch wissen</span> sollten?
+              </p>
+            </div>
+            <div className="space-y-3">
+              <Label htmlFor="additionalInfo" className="text-base md:text-lg font-semibold">
+                Zusätzliche Informationen (optional)
+              </Label>
+              <Textarea
+                id="additionalInfo"
+                placeholder="z.B. Unverträglichkeiten, gesundheitliche Einschränkungen, besondere Wünsche oder Fragen für das Gespräch..."
+                value={additionalInfo}
+                onChange={(e) => setAdditionalInfo(e.target.value)}
+                className="min-h-32 md:min-h-40 text-base resize-none"
+                maxLength={500}
+              />
+              <p className="text-xs text-nf-gray text-right">{additionalInfo.length}/500 Zeichen</p>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl p-4 md:p-5 border border-green-500/20">
+              <div className="flex items-start gap-3">
+                <Sparkles className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="text-sm md:text-base text-nf-black">
+                  <p className="font-semibold mb-1">Wir sind perfekt vorbereitet!</p>
+                  <p className="text-nf-gray text-xs md:text-sm">
+                    Mit deinen Angaben können wir das Beratungsgespräch optimal auf dich zuschneiden und direkt mit konkreten Empfehlungen starten.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        );
+
       default:
         return null;
     }
@@ -599,9 +663,9 @@ const TerminVorbereitungPage = () => {
                     currentStep === 0 ? "flex-1" : "flex-[2]"
                   }`}
                 >
-                  {currentStep === 6 ? (
+                  {currentStep === 7 ? (
                     <>
-                      Weiter zur Terminbuchung
+                      Jetzt Termin buchen
                       <Calendar className="h-4 w-4 ml-2" />
                     </>
                   ) : (
@@ -622,7 +686,7 @@ const TerminVorbereitungPage = () => {
               transition={{ delay: 0.5 }}
               className="mt-4 md:mt-6 text-center text-xs md:text-sm text-nf-gray"
             >
-              <p>✓ Über 500 zufriedene Kunden ✓ Kostenlose Beratung ✓ Unverbindlich</p>
+              <p>✓ Über 500 zufriedene Kunden ✓ Kostenlose Beratung ✓ Unverbindlich ✓ 100% persönlich</p>
             </motion.div>
           )}
         </div>
