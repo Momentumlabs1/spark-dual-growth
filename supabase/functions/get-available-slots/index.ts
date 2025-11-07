@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { google } from "npm:googleapis@^144.0.0";
-import { z } from "npm:zod@^3.25.0";
+import { google } from "npm:googleapis@164.1.0";
+import { z } from "npm:zod@3.25.76";
 import { DateTime } from "npm:luxon@^3.5.0";
 
 const corsHeaders = {
@@ -78,6 +78,12 @@ serve(async (req) => {
 
     const { date } = validation.data;
 
+    console.log('[get-available-slots] ✅ Request received:', {
+      date,
+      clientIP,
+      timestamp: new Date().toISOString()
+    });
+
     // 🔐 Google Calendar API Setup
     const GOOGLE_CALENDAR_ID = Deno.env.get('GOOGLE_CALENDAR_ID');
     const GOOGLE_CLIENT_EMAIL = Deno.env.get('GOOGLE_CLIENT_EMAIL');
@@ -87,6 +93,12 @@ serve(async (req) => {
       console.error('[get-available-slots] Missing Google credentials');
       throw new Error('Configuration error');
     }
+
+    console.log('[get-available-slots] 🔐 Google credentials loaded:', {
+      calendarId: GOOGLE_CALENDAR_ID,
+      clientEmail: GOOGLE_CLIENT_EMAIL,
+      hasPrivateKey: !!GOOGLE_PRIVATE_KEY
+    });
 
     // 🔑 Create JWT Auth Client with robust key handling
     let privateKey = GOOGLE_PRIVATE_KEY;
@@ -122,6 +134,13 @@ serve(async (req) => {
     const startOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).startOf('day').toUTC().toISO();
     const endOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).endOf('day').toUTC().toISO();
 
+    console.log('[get-available-slots] 📅 Querying Google Calendar:', {
+      calendarId: GOOGLE_CALENDAR_ID,
+      timeMin: startOfDay,
+      timeMax: endOfDay,
+      timezone: 'Europe/Vienna'
+    });
+
     const response = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,
       timeMin: startOfDay!,
@@ -131,6 +150,15 @@ serve(async (req) => {
     });
 
     const events = response.data.items || [];
+
+    console.log('[get-available-slots] 📊 Google Calendar API Response:', {
+      eventsFound: events.length,
+      events: events.map(e => ({
+        summary: e.summary,
+        start: e.start?.dateTime || e.start?.date,
+        end: e.end?.dateTime || e.end?.date
+      }))
+    });
 
     // 🚫 Extract booked time slots
     const bookedSlots = new Set<string>();
@@ -143,8 +171,18 @@ serve(async (req) => {
       }
     });
 
+    console.log('[get-available-slots] 🚫 Booked time slots:', {
+      count: bookedSlots.size,
+      slots: Array.from(bookedSlots)
+    });
+
     // ✅ Filter available slots
     const availableSlots = allTimeSlots.filter(slot => !bookedSlots.has(slot));
+
+    console.log('[get-available-slots] ✅ Available time slots:', {
+      count: availableSlots.length,
+      slots: availableSlots
+    });
 
     return new Response(
       JSON.stringify({
@@ -160,12 +198,32 @@ serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('[get-available-slots]', error);
+    console.error('[get-available-slots] ❌ ERROR:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      code: error.code
+    });
+    
+    // Google API specific errors
+    if (error.code === 403) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Zugriff auf Google Calendar verweigert. Bitte Berechtigungen prüfen.',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 500,
+        }
+      );
+    }
     
     return new Response(
       JSON.stringify({
         success: false,
         error: 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.',
+        details: error.message
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
