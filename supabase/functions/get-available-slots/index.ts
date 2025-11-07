@@ -160,14 +160,53 @@ serve(async (req) => {
       }))
     });
 
-    // 🚫 Extract booked time slots
+    // 🚫 Extract booked time slots by checking overlaps with event durations
     const bookedSlots = new Set<string>();
+    const dayStartLocal = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).startOf('day');
+    const dayEndLocal = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).endOf('day');
+
+    console.log('[get-available-slots] 📋 Processing events for slot blocking:', {
+      date,
+      eventsCount: events.length
+    });
     
-    events.forEach((event) => {
-      const dt = event.start?.dateTime || event.start?.date;
-      if (dt) {
-        const timeVienna = DateTime.fromISO(dt).setZone('Europe/Vienna').toFormat('HH:mm');
-        bookedSlots.add(timeVienna);
+    events.forEach((event, index) => {
+      let startLocal: DateTime;
+      let endLocal: DateTime;
+
+      // Handle all-day events
+      if (event.start?.date) {
+        startLocal = dayStartLocal;
+        endLocal = dayEndLocal;
+        console.log(`[get-available-slots] 📅 Event ${index + 1} (all-day): "${event.summary}" - blocking entire day`);
+      } else if (event.start?.dateTime && event.end?.dateTime) {
+        startLocal = DateTime.fromISO(event.start.dateTime).setZone('Europe/Vienna');
+        endLocal = DateTime.fromISO(event.end.dateTime).setZone('Europe/Vienna');
+        console.log(`[get-available-slots] 📅 Event ${index + 1}: "${event.summary}"`, {
+          start: startLocal.toFormat('HH:mm'),
+          end: endLocal.toFormat('HH:mm'),
+          duration: endLocal.diff(startLocal, 'minutes').minutes + ' minutes'
+        });
+      } else {
+        console.log(`[get-available-slots] ⚠️ Event ${index + 1}: "${event.summary}" - skipping (incomplete time data)`);
+        return;
+      }
+
+      // Check each time slot for overlap with this event
+      const slotsBlockedByThisEvent: string[] = [];
+      allTimeSlots.forEach(slot => {
+        const [hour, minute] = slot.split(':').map(Number);
+        const slotDateTime = dayStartLocal.set({ hour, minute });
+        
+        // If slot starts within event duration, it's blocked
+        if (slotDateTime >= startLocal && slotDateTime < endLocal) {
+          bookedSlots.add(slot);
+          slotsBlockedByThisEvent.push(slot);
+        }
+      });
+
+      if (slotsBlockedByThisEvent.length > 0) {
+        console.log(`[get-available-slots]   → Blocked ${slotsBlockedByThisEvent.length} slots:`, slotsBlockedByThisEvent);
       }
     });
 
