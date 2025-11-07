@@ -41,6 +41,7 @@ interface BookingPageProps {
     activityLevel: string;
     sleepHours: string;
     stressLevel: string;
+    additionalInfo?: string;
     recommendedCalories: number;
   };
 }

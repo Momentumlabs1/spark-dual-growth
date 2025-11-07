@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { google } from "npm:googleapis@^144.0.0";
-import { z } from "npm:zod@^3.25.0";
+import { google } from "npm:googleapis@164.1.0";
+import { z } from "npm:zod@3.25.76";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -49,6 +49,7 @@ const BookingSchema = z.object({
     activityLevel: z.enum(["sedentary", "light", "moderate", "active", "very-active"]),
     sleepHours: z.string(),
     stressLevel: z.string(),
+    additionalInfo: z.string().optional(),
     recommendedCalories: z.number().min(500).max(8000),
   }),
 });
@@ -224,6 +225,10 @@ serve(async (req) => {
     };
 
     // 📧 Event Description with all health data
+    const additionalInfoSection = healthData.additionalInfo?.trim() 
+      ? `\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n💬 ZUSÄTZLICHE INFORMATIONEN:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${healthData.additionalInfo.trim()}\n` 
+      : '';
+
     const description = `
 🎯 COACHING-BERATUNG: ${firstName} ${lastName}
 
@@ -255,7 +260,7 @@ Empfohlen für Ziel: ${healthData.recommendedCalories} kcal/Tag
 Hauptziel: ${getGoalLabel(healthData.goal)}
 Aktivitätslevel: ${getActivityLabel(healthData.activityLevel)}
 Schlaf: ${getSleepLabel(healthData.sleepHours)}
-Stresslevel: ${getStressLabel(healthData.stressLevel)}
+Stresslevel: ${getStressLabel(healthData.stressLevel)}${additionalInfoSection}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📅 Gebucht am: ${new Date().toLocaleString("de-DE")}
