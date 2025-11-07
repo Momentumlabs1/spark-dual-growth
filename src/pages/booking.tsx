@@ -22,6 +22,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -603,26 +604,27 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                   {/* Time Picker */}
                   <div className="space-y-2">
                     <Label htmlFor="time">Wunschzeit *</Label>
-                    <select
-                      id="time"
+                    <Select
                       value={selectedTime}
-                      onChange={(e) => setSelectedTime(e.target.value)}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      required
+                      onValueChange={setSelectedTime}
                       disabled={!selectedDate || isPreloading}
                     >
-                      <option value="">
-                        {isPreloading ? 'Termine werden geladen...' : 
-                         !selectedDate ? 'Zuerst Datum wählen' : 
-                         availableSlots.length === 0 ? 'Keine Zeiten verfügbar' : 
-                         'Uhrzeit wählen'}
-                      </option>
-                      {availableSlots.map((time) => (
-                        <option key={time} value={time}>
-                          {time} Uhr
-                        </option>
-                      ))}
-                    </select>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder={
+                          isPreloading ? 'Termine werden geladen...' : 
+                          !selectedDate ? 'Zuerst Datum wählen' : 
+                          availableSlots.length === 0 ? 'Keine Zeiten verfügbar' : 
+                          'Uhrzeit wählen'
+                        } />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white dark:bg-gray-950 max-h-[300px]">
+                        {availableSlots.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time} Uhr
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   {/* Error Message */}
