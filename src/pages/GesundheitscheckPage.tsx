@@ -631,22 +631,76 @@ const GesundheitscheckPage = () => {
 
                     <Button
                       onClick={() => {
-                        if (!bmi || !bmr || !tdee) calculateMetrics();
-                        const healthData = { 
-                          bmi: bmi || 0, 
-                          bmr: bmr || 0, 
-                          tdee: tdee || 0, 
-                          height, 
-                          weight, 
-                          age, 
-                          gender, 
-                          goal, 
-                          activityLevel, 
-                          sleepHours, 
-                          stressLevel, 
-                          recommendedCalories: tdee ? getCalorieGoal(tdee, goal) : 0,
-                          struggle: struggle
+                        // Berechne alle Werte DIREKT (nicht über State)
+                        const h = parseFloat(height);
+                        const w = parseFloat(weight);
+                        const a = parseFloat(age);
+                        
+                        // BMI berechnen
+                        const heightInMeters = h / 100;
+                        const calculatedBMI = w / (heightInMeters * heightInMeters);
+                        
+                        // BMR berechnen
+                        let calculatedBMR;
+                        if (gender === "male") {
+                          calculatedBMR = 10 * w + 6.25 * h - 5 * a + 5;
+                        } else {
+                          calculatedBMR = 10 * w + 6.25 * h - 5 * a - 161;
+                        }
+                        
+                        // TDEE berechnen
+                        const activityMultipliers = {
+                          sedentary: 1.2,
+                          light: 1.375,
+                          moderate: 1.55,
+                          active: 1.725,
+                          "very-active": 1.9,
                         };
+                        
+                        let calculatedTDEE = calculatedBMR * activityMultipliers[activityLevel as keyof typeof activityMultipliers];
+                        
+                        if (sleepHours === "less-than-6") {
+                          calculatedTDEE *= 1.05;
+                        }
+                        if (stressLevel === "high" || stressLevel === "very-high") {
+                          calculatedTDEE *= 1.03;
+                        }
+                        
+                        // Kalorienziel berechnen
+                        let deficitMultiplier = 500;
+                        if (sleepHours === "less-than-6" || stressLevel === "high" || stressLevel === "very-high") {
+                          deficitMultiplier = 350;
+                        }
+                        
+                        let recommendedCalories = calculatedTDEE;
+                        if (goal === "lose") {
+                          recommendedCalories = calculatedTDEE - deficitMultiplier;
+                        } else if (goal === "gain") {
+                          recommendedCalories = calculatedTDEE + 300;
+                        }
+                        
+                        // Alle Daten zusammenstellen
+                        const healthData = {
+                          bmi: Math.round(calculatedBMI * 10) / 10,
+                          bmr: Math.round(calculatedBMR),
+                          tdee: Math.round(calculatedTDEE),
+                          height: height,
+                          weight: weight,
+                          age: age,
+                          gender: gender,
+                          goal: goal,
+                          activityLevel: activityLevel,
+                          sleepHours: sleepHours,
+                          stressLevel: stressLevel,
+                          recommendedCalories: Math.round(recommendedCalories),
+                          struggle: struggle.trim(), // ← WICHTIG: struggle wird mitgegeben
+                        };
+                        
+                        // Debug: Zeige die Daten in der Console
+                        console.log("Übertragene Daten:", healthData);
+                        console.log("Struggle:", healthData.struggle);
+                        
+                        // Navigate zur Booking-Seite
                         navigate('/booking', { state: { healthData } });
                       }}
                       size="lg"
