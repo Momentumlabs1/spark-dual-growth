@@ -176,6 +176,54 @@ serve(async (req) => {
     const endMinute = (endMinutes % 60).toString().padStart(2, '0');
     const endDateTimeString = `${appointmentDate}T${endHour}:${endMinute}:00`;
 
+    // 🔒 FINAL OVERLAP CHECK - Prevent double bookings
+    console.log('[create-booking] 🔍 Performing final overlap check...');
+    const { DateTime } = await import("npm:luxon@3.4.4");
+    
+    const bookingSlotStart = DateTime.fromISO(startDateTimeString, { zone: "Europe/Vienna" });
+    const bookingSlotEnd = DateTime.fromISO(endDateTimeString, { zone: "Europe/Vienna" });
+    
+    const startOfDayVienna = DateTime.fromISO(appointmentDate, { zone: "Europe/Vienna" }).startOf("day");
+    const endOfDayVienna = DateTime.fromISO(appointmentDate, { zone: "Europe/Vienna" }).endOf("day");
+    
+    const existingEventsResponse = await calendar.events.list({
+      calendarId: GOOGLE_CALENDAR_ID,
+      timeMin: startOfDayVienna.toUTC().toISO(),
+      timeMax: endOfDayVienna.toUTC().toISO(),
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    const existingEvents = existingEventsResponse.data.items || [];
+    console.log(`[create-booking] 📋 Found ${existingEvents.length} existing events on ${appointmentDate}`);
+
+    // Check if the requested slot overlaps with any existing event
+    for (const event of existingEvents) {
+      const eventStart = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: "Europe/Vienna" });
+      const eventEnd = DateTime.fromISO(event.end?.dateTime || event.end?.date || "", { zone: "Europe/Vienna" });
+
+      // Check for overlap using comprehensive overlap formula
+      if (
+        (bookingSlotStart >= eventStart && bookingSlotStart < eventEnd) ||
+        (bookingSlotEnd > eventStart && bookingSlotEnd <= eventEnd) ||
+        (bookingSlotStart <= eventStart && bookingSlotEnd >= eventEnd)
+      ) {
+        console.log(`[create-booking] ❌ CONFLICT: Slot ${appointmentTime} overlaps with event "${event.summary}"`);
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: 'Diese Zeit wurde gerade von jemand anderem gebucht. Bitte wähle eine andere Zeit.',
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 409,
+          }
+        );
+      }
+    }
+    
+    console.log('[create-booking] ✅ No conflicts found, proceeding with booking...');
+
     // 📝 Helper functions for labels
     const getActivityLabel = (level: string) => {
       const labels: Record<string, string> = {

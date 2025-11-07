@@ -1,212 +1,171 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { google } from "npm:googleapis@164.1.0";
-import { z } from "npm:zod@3.25.76";
-import { DateTime } from "npm:luxon@^3.5.0";
+import { google } from "npm:googleapis@128";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// 🔒 Simple rate limiting using in-memory store
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_MAX = 10; // max 10 requests
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // per hour
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimitStore.get(ip);
-  
-  if (!record || now > record.resetAt) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
-    return true;
-  }
-  
-  if (record.count >= RATE_LIMIT_MAX) {
-    return false;
-  }
-  
-  record.count++;
-  return true;
-}
-
-// 🔒 Zod validation schema
-const AvailableSlotsSchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ungültiges Datumsformat"),
-});
-
 serve(async (req) => {
-  // Handle CORS preflight requests
-  if (req.method === 'OPTIONS') {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // 🔒 Rate limiting
-    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
-    
-    if (!checkRateLimit(clientIP)) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Zu viele Anfragen. Bitte versuche es später erneut.',
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 429,
-        }
-      );
+    console.log("[get-available-slots] 🚀 Function called");
+
+    const { date } = await req.json();
+    console.log("[get-available-slots] 📆 Requested date:", date);
+
+    // Environment variables check
+    let GOOGLE_CLIENT_EMAIL = Deno.env.get("GOOGLE_CLIENT_EMAIL");
+    let GOOGLE_PRIVATE_KEY = Deno.env.get("GOOGLE_PRIVATE_KEY");
+    const GOOGLE_CALENDAR_ID = Deno.env.get("GOOGLE_CALENDAR_ID");
+
+    console.log("[get-available-slots] 🔐 Checking credentials...");
+    console.log("[get-available-slots]   - GOOGLE_CLIENT_EMAIL:", GOOGLE_CLIENT_EMAIL ? "✅" : "❌");
+    console.log("[get-available-slots]   - GOOGLE_PRIVATE_KEY:", GOOGLE_PRIVATE_KEY ? "✅" : "❌");
+    console.log("[get-available-slots]   - GOOGLE_CALENDAR_ID:", GOOGLE_CALENDAR_ID ? "✅" : "❌");
+
+    if (!GOOGLE_PRIVATE_KEY || !GOOGLE_CALENDAR_ID) {
+      const missingVars = [];
+      if (!GOOGLE_PRIVATE_KEY) missingVars.push("GOOGLE_PRIVATE_KEY");
+      if (!GOOGLE_CALENDAR_ID) missingVars.push("GOOGLE_CALENDAR_ID");
+      
+      console.error("[get-available-slots] ❌ Missing:", missingVars.join(", "));
+      throw new Error("Kalender-Konfiguration fehlt. Bitte Support kontaktieren.");
     }
 
-    const requestData = await req.json();
-
-    // 🔒 Validate input with zod
-    const validation = AvailableSlotsSchema.safeParse(requestData);
-    
-    if (!validation.success) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Ungültiges Datum.',
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 400,
-        }
-      );
-    }
-
-    const { date } = validation.data;
-
-    console.log('[get-available-slots] ✅ Request received:', {
-      date,
-      clientIP,
-      timestamp: new Date().toISOString()
-    });
-
-    // 🔐 Google Calendar API Setup
-    const GOOGLE_CALENDAR_ID = Deno.env.get('GOOGLE_CALENDAR_ID');
-    const GOOGLE_CLIENT_EMAIL = Deno.env.get('GOOGLE_CLIENT_EMAIL');
-    const GOOGLE_PRIVATE_KEY = Deno.env.get('GOOGLE_PRIVATE_KEY');
-
-    if (!GOOGLE_CALENDAR_ID || !GOOGLE_CLIENT_EMAIL || !GOOGLE_PRIVATE_KEY) {
-      console.error('[get-available-slots] Missing Google credentials');
-      throw new Error('Configuration error');
-    }
-
-    console.log('[get-available-slots] 🔐 Google credentials loaded:', {
-      calendarId: GOOGLE_CALENDAR_ID,
-      clientEmail: GOOGLE_CLIENT_EMAIL,
-      hasPrivateKey: !!GOOGLE_PRIVATE_KEY
-    });
-
-    // 🔑 Create JWT Auth Client with robust key handling
+    // Handle both full JSON and private_key-only formats
+    console.log("[get-available-slots] 🔍 Parsing credentials...");
     let privateKey = GOOGLE_PRIVATE_KEY;
     let clientEmail = GOOGLE_CLIENT_EMAIL;
-    
-    if (privateKey.trim().startsWith('{')) {
-      const serviceAccount = JSON.parse(privateKey);
-      privateKey = serviceAccount.private_key;
-      clientEmail = serviceAccount.client_email || clientEmail;
+
+    try {
+      const parsed = JSON.parse(GOOGLE_PRIVATE_KEY);
+      if (parsed.private_key) {
+        console.log("[get-available-slots] ✅ Detected full JSON service account format");
+        privateKey = parsed.private_key;
+        clientEmail = parsed.client_email;
+      }
+    } catch (e) {
+      console.log("[get-available-slots] ✅ Detected private_key-only format");
     }
-    
-    let formattedKey = privateKey.trim().replace(/^["']|["']$/g, '').replace(/\r\n/g, '\n');
-    if (formattedKey.includes('\\n')) {
-      formattedKey = formattedKey.replace(/\\n/g, '\n');
+
+    if (!clientEmail) {
+      console.error("[get-available-slots] ❌ No client_email found!");
+      throw new Error("GOOGLE_CLIENT_EMAIL fehlt.");
     }
+
+    // Clean up the private key
+    privateKey = privateKey.replace(/\\n/g, "\n");
     
+    if (!privateKey.includes("BEGIN PRIVATE KEY")) {
+      throw new Error("GOOGLE_PRIVATE_KEY ist ungültig (BEGIN header fehlt)");
+    }
+    if (!privateKey.includes("END PRIVATE KEY")) {
+      throw new Error("GOOGLE_PRIVATE_KEY ist ungültig (END footer fehlt)");
+    }
+
+    privateKey = privateKey.trim().replace(/^["']|["']$/g, "");
+
+    console.log("[get-available-slots] ✅ Private key validated");
+    console.log("[get-available-slots] 📧 Using client email:", clientEmail);
+    console.log("[get-available-slots] 📅 Using calendar ID:", GOOGLE_CALENDAR_ID);
+
+    // Initialize Google Calendar
+    console.log("[get-available-slots] 🔧 Initializing Google Calendar API...");
     const auth = new google.auth.JWT({
       email: clientEmail,
-      key: formattedKey,
-      scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+      key: privateKey,
+      scopes: ["https://www.googleapis.com/auth/calendar"],
     });
 
-    const calendar = google.calendar({ version: 'v3', auth });
+    const calendar = google.calendar({ version: "v3", auth });
+    console.log("[get-available-slots] ✅ Google Calendar API initialized");
 
-    // 📅 Generate all possible time slots (9:00 - 17:30, 30-minute intervals)
-    const allTimeSlots = [
-      "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-      "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-      "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
-    ];
-
-    // 📆 Compute day range in Europe/Vienna and convert to UTC RFC3339
-    const startOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).startOf('day').toUTC().toISO();
-    const endOfDay = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).endOf('day').toUTC().toISO();
-
-    console.log('[get-available-slots] 📅 Querying Google Calendar:', {
-      calendarId: GOOGLE_CALENDAR_ID,
-      timeMin: startOfDay,
-      timeMax: endOfDay,
-      timezone: 'Europe/Vienna'
-    });
-
-    const response = await calendar.events.list({
-      calendarId: GOOGLE_CALENDAR_ID,
-      timeMin: startOfDay!,
-      timeMax: endOfDay!,
-      singleEvents: true,
-      orderBy: 'startTime',
-    });
-
-    const events = response.data.items || [];
-
-    console.log('[get-available-slots] 📊 Google Calendar API Response:', {
-      eventsFound: events.length,
-      events: events.map(e => ({
-        summary: e.summary,
-        start: e.start?.dateTime || e.start?.date,
-        end: e.end?.dateTime || e.end?.date
-      }))
-    });
-
-    // 🚫 Extract booked time slots by checking overlaps with event durations
-    const bookedSlots = new Set<string>();
-    const dayStartLocal = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).startOf('day');
-    const dayEndLocal = DateTime.fromISO(date, { zone: 'Europe/Vienna' }).endOf('day');
-
-    console.log('[get-available-slots] 📋 Processing events for slot blocking:', {
-      date,
-      eventsCount: events.length
-    });
+    // Calculate time boundaries in Europe/Vienna timezone
+    const { DateTime } = await import("npm:luxon@3.4.4");
     
-    events.forEach((event, index) => {
-      let startLocal: DateTime;
-      let endLocal: DateTime;
+    const startOfDayVienna = DateTime.fromISO(date, { zone: "Europe/Vienna" }).startOf("day");
+    const endOfDayVienna = DateTime.fromISO(date, { zone: "Europe/Vienna" }).endOf("day");
+    
+    const startOfDayUTC = startOfDayVienna.toUTC().toISO();
+    const endOfDayUTC = endOfDayVienna.toUTC().toISO();
 
-      // Handle all-day events
-      if (event.start?.date) {
-        startLocal = dayStartLocal;
-        endLocal = dayEndLocal;
-        console.log(`[get-available-slots] 📅 Event ${index + 1} (all-day): "${event.summary}" - blocking entire day`);
-      } else if (event.start?.dateTime && event.end?.dateTime) {
-        startLocal = DateTime.fromISO(event.start.dateTime).setZone('Europe/Vienna');
-        endLocal = DateTime.fromISO(event.end.dateTime).setZone('Europe/Vienna');
-        console.log(`[get-available-slots] 📅 Event ${index + 1}: "${event.summary}"`, {
-          start: startLocal.toFormat('HH:mm'),
-          end: endLocal.toFormat('HH:mm'),
-          duration: endLocal.diff(startLocal, 'minutes').minutes + ' minutes'
-        });
-      } else {
-        console.log(`[get-available-slots] ⚠️ Event ${index + 1}: "${event.summary}" - skipping (incomplete time data)`);
-        return;
+    console.log("[get-available-slots] ⏰ Time boundaries:");
+    console.log("[get-available-slots]   - Vienna:", startOfDayVienna.toISO(), "to", endOfDayVienna.toISO());
+    console.log("[get-available-slots]   - UTC:", startOfDayUTC, "to", endOfDayUTC);
+
+    // Fetch events from Google Calendar
+    console.log("[get-available-slots] 📡 Fetching events from Google Calendar...");
+    let calendarResponse;
+    try {
+      calendarResponse = await calendar.events.list({
+        calendarId: GOOGLE_CALENDAR_ID,
+        timeMin: startOfDayUTC,
+        timeMax: endOfDayUTC,
+        singleEvents: true,
+        orderBy: "startTime",
+      });
+      console.log("[get-available-slots] ✅ Calendar API response status:", calendarResponse.status);
+    } catch (calendarError: any) {
+      console.error("[get-available-slots] ❌ Calendar API Error:", calendarError.message);
+      throw calendarError;
+    }
+
+    const events = calendarResponse.data.items || [];
+    console.log(`[get-available-slots] 📋 Found ${events.length} events`);
+
+    if (events.length > 0) {
+      console.log("[get-available-slots] 📅 Events:");
+      events.forEach((event, index) => {
+        console.log(`[get-available-slots]   ${index + 1}. ${event.summary || "No title"}`);
+        console.log(`[get-available-slots]      Start: ${event.start?.dateTime || event.start?.date}`);
+        console.log(`[get-available-slots]      End: ${event.end?.dateTime || event.end?.date}`);
+      });
+    }
+
+    // Generate all time slots (09:00 - 17:30, every 30 minutes)
+    const allTimeSlots: string[] = [];
+    for (let hour = 9; hour <= 17; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        if (hour === 17 && minute > 30) break;
+        allTimeSlots.push(`${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`);
       }
+    }
 
-      // Check each time slot for overlap with this event
+    // Check each slot for overlaps
+    const bookedSlots = new Set<string>();
+    
+    events.forEach((event) => {
+      const eventStart = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: "Europe/Vienna" });
+      const eventEnd = DateTime.fromISO(event.end?.dateTime || event.end?.date || "", { zone: "Europe/Vienna" });
+      
       const slotsBlockedByThisEvent: string[] = [];
-      allTimeSlots.forEach(slot => {
-        const [hour, minute] = slot.split(':').map(Number);
-        const slotDateTime = dayStartLocal.set({ hour, minute });
-        
-        // If slot starts within event duration, it's blocked
-        if (slotDateTime >= startLocal && slotDateTime < endLocal) {
+
+      allTimeSlots.forEach((slot) => {
+        const slotStartVienna = DateTime.fromISO(`${date}T${slot}:00`, { zone: "Europe/Vienna" });
+        const slotEndVienna = slotStartVienna.plus({ minutes: 30 });
+
+        // ✅ COMPREHENSIVE OVERLAP CHECK
+        // Block slot if ANY of these conditions are true:
+        // 1. Slot starts within event
+        // 2. Slot ends within event
+        // 3. Slot completely encompasses event
+        if (
+          (slotStartVienna >= eventStart && slotStartVienna < eventEnd) ||
+          (slotEndVienna > eventStart && slotEndVienna <= eventEnd) ||
+          (slotStartVienna <= eventStart && slotEndVienna >= eventEnd)
+        ) {
           bookedSlots.add(slot);
           slotsBlockedByThisEvent.push(slot);
         }
       });
 
       if (slotsBlockedByThisEvent.length > 0) {
-        console.log(`[get-available-slots]   → Blocked ${slotsBlockedByThisEvent.length} slots:`, slotsBlockedByThisEvent);
+        console.log(`[get-available-slots]   → "${event.summary}" blocked ${slotsBlockedByThisEvent.length} slots:`, slotsBlockedByThisEvent);
       }
     });
 
@@ -215,7 +174,7 @@ serve(async (req) => {
       slots: Array.from(bookedSlots)
     });
 
-    // ✅ Filter available slots
+    // Filter available slots
     const availableSlots = allTimeSlots.filter(slot => !bookedSlots.has(slot));
 
     console.log('[get-available-slots] ✅ Available time slots:', {
@@ -237,31 +196,16 @@ serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('[get-available-slots] ❌ ERROR:', {
+    console.error("[get-available-slots] ❌ ERROR:", {
       message: error.message,
       stack: error.stack,
       name: error.name,
-      code: error.code
     });
-    
-    // Google API specific errors
-    if (error.code === 403) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Zugriff auf Google Calendar verweigert. Bitte Berechtigungen prüfen.',
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 500,
-        }
-      );
-    }
     
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.',
+        error: "Ein Fehler ist aufgetreten. Bitte versuche es später erneut.",
         details: error.message
       }),
       {
