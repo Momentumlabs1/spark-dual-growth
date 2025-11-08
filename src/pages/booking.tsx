@@ -140,11 +140,16 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return "Adipositas";
   };
 
-  // Get next 5 weekdays (Monday-Friday)
+  // Get next 5 weekdays (Monday-Friday) starting from now + 18 hours
   const getNext5Weekdays = () => {
     const weekdays: Date[] = [];
-    let currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0); // Reset time to start of day
+    
+    // Calculate earliest bookable time (now + 18 hours)
+    const now = new Date();
+    const earliestBookable = new Date(now.getTime() + 18 * 60 * 60 * 1000);
+    earliestBookable.setHours(0, 0, 0, 0); // Set to start of that day
+    
+    let currentDate = new Date(earliestBookable);
     
     while (weekdays.length < 5) {
       const dayOfWeek = currentDate.getDay();
@@ -792,6 +797,7 @@ const BookingPage = () => {
     activityLevel: "moderate",
     sleepHours: "7-8",
     stressLevel: "medium",
+    additionalInfo: "",
     recommendedCalories: 0,
   };
   

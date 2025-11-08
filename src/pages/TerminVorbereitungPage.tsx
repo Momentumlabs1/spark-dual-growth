@@ -186,20 +186,11 @@ const TerminVorbereitungPage = () => {
                   Lernen wir uns kennen!
                 </h1>
 
-                <p className="text-xl md:text-2xl text-nf-gray max-w-2xl mx-auto leading-relaxed">
-                  Damit dein <span className="font-bold text-nf-red">kostenloses Beratungsgespräch</span> perfekt auf dich zugeschnitten ist.
-                </p>
-              </div>
-
-              <div className="bg-gradient-to-r from-nf-red/10 to-orange-500/10 rounded-xl p-4 md:p-6 max-w-2xl mx-auto">
-                <div className="flex items-center gap-3 justify-center text-sm md:text-base">
-                  <CheckCircle2 className="h-5 w-5 text-nf-red flex-shrink-0" />
-                  <span className="text-nf-black">
-                    <span className="font-semibold">Dauer:</span> 30-45 Minuten persönliches Gespräch
-                  </span>
-                </div>
-              </div>
+              <p className="text-xl md:text-2xl text-nf-gray max-w-2xl mx-auto leading-relaxed">
+                Damit dein <span className="font-bold text-nf-red">kostenloses Beratungsgespräch</span> perfekt auf dich zugeschnitten ist.
+              </p>
             </div>
+          </div>
 
             <div className="space-y-4 pt-4">
               <Label className="text-lg md:text-xl font-bold text-nf-black block text-center">

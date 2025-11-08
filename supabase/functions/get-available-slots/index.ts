@@ -136,8 +136,14 @@ serve(async (req) => {
       }
     }
 
+    // Calculate 18-hour lead time requirement
+    const nowVienna = DateTime.now().setZone("Europe/Vienna");
+    const cutoffVienna = nowVienna.plus({ hours: 18 });
+    console.log(`[get-available-slots] ⏰ Earliest bookable time: ${cutoffVienna.toISO()} (Vienna)`);
+
     // Check each slot for overlaps
     const bookedSlots = new Set<string>();
+    const filteredByLeadTime = new Set<string>();
     
     events.forEach((event) => {
       const eventStart = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: "Europe/Vienna" });
@@ -148,6 +154,12 @@ serve(async (req) => {
       allTimeSlots.forEach((slot) => {
         const slotStartVienna = DateTime.fromISO(`${date}T${slot}:00`, { zone: "Europe/Vienna" });
         const slotEndVienna = slotStartVienna.plus({ minutes: 30 });
+
+        // Check 18-hour lead time requirement
+        if (slotStartVienna < cutoffVienna) {
+          filteredByLeadTime.add(slot);
+          return; // Skip this slot - doesn't meet 18h requirement
+        }
 
         // ✅ COMPREHENSIVE OVERLAP CHECK
         // Block slot if ANY of these conditions are true:
@@ -169,13 +181,22 @@ serve(async (req) => {
       }
     });
 
+    if (filteredByLeadTime.size > 0) {
+      console.log('[get-available-slots] ⏱️  Filtered by 18h lead time:', {
+        count: filteredByLeadTime.size,
+        slots: Array.from(filteredByLeadTime)
+      });
+    }
+
     console.log('[get-available-slots] 🚫 Booked time slots:', {
       count: bookedSlots.size,
       slots: Array.from(bookedSlots)
     });
 
-    // Filter available slots
-    const availableSlots = allTimeSlots.filter(slot => !bookedSlots.has(slot));
+    // Filter available slots (exclude booked AND lead-time filtered)
+    const availableSlots = allTimeSlots.filter(slot => 
+      !bookedSlots.has(slot) && !filteredByLeadTime.has(slot)
+    );
 
     console.log('[get-available-slots] ✅ Available time slots:', {
       count: availableSlots.length,
