@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Youtube, ArrowUp } from 'lucide-react';
+import { Instagram, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -13,9 +13,7 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://www.instagram.com/niklas.hauger', name: 'Instagram' },
-    { icon: Facebook, href: '#', name: 'Facebook' },
-    { icon: Youtube, href: '#', name: 'YouTube' }
+    { icon: Instagram, href: 'https://www.instagram.com/niklas.hauger', name: 'Instagram' }
   ];
 
   return (
@@ -87,11 +85,8 @@ const Footer = () => {
               ))}
             </div>
             <div className="text-nf-white/70">
-              <p className="mb-2">
-                📧 <a href="mailto:info@nf-coaching.de" className="hover:text-nf-red transition-smooth">info@nf-coaching.de</a>
-              </p>
               <p>
-                📱 <a href="tel:+491234567890" className="hover:text-nf-red transition-smooth">+49 (0) 123 456789</a>
+                📧 <a href="mailto:info@nf-coaching.de" className="hover:text-nf-red transition-smooth">info@nf-coaching.de</a>
               </p>
             </div>
           </div>
