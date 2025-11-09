@@ -140,7 +140,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return "Adipositas";
   };
 
-  // Get next 5 weekdays (Monday-Friday) starting from now + 18 hours
+  // Get next 3 weekdays (Monday-Friday) starting from now + 18 hours
   const getNext5Weekdays = () => {
     const weekdays: Date[] = [];
     
@@ -151,7 +151,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     
     let currentDate = new Date(earliestBookable);
     
-    while (weekdays.length < 5) {
+    while (weekdays.length < 3) { // Only 3 weekdays now
       const dayOfWeek = currentDate.getDay();
       // 0 = Sunday, 6 = Saturday -> skip weekends
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
@@ -163,17 +163,15 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return weekdays;
   };
 
-  // Preload slots for next 5 weekdays on mount
+  // Preload slots for next 3 weekdays on mount - optimistic UI
   useEffect(() => {
     const preloadSlots = async () => {
-      setIsPreloading(true);
+      setIsPreloading(false); // Set false immediately for optimistic UI
       const weekdays = getNext5Weekdays();
       setBookableWeekdays(weekdays);
       
-      console.log('🚀 Preloading slots for next 5 weekdays:', weekdays.map(d => format(d, 'yyyy-MM-dd')));
-      
       try {
-        // Fetch all 5 days in parallel
+        // Fetch all 3 days in parallel
         const promises = weekdays.map(async (date) => {
           const dateString = format(date, 'yyyy-MM-dd');
           const { data } = await supabase.functions.invoke('get-available-slots', {
@@ -195,15 +193,9 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
         });
         
         setSlotsCache(newCache);
-        console.log('✅ Preloaded slots for 5 weekdays:', Object.fromEntries(newCache));
         
       } catch (error) {
-        console.error('❌ Error preloading slots:', error);
-        toast.error('Fehler beim Laden der Termine', {
-          description: 'Bitte lade die Seite neu.'
-        });
-      } finally {
-        setIsPreloading(false);
+        toast.error('Fehler beim Laden der Termine');
       }
     };
     
@@ -430,7 +422,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-bold">4.</span>
-                        <span>Halte deine Telefonnummer bereit und wir besprechen deine Ziele</span>
+                        <span>Achte darauf, dass du zur vereinbarten Zeit gut & fokussiert, über dieses wichtige Thema sprechen kannst</span>
                       </li>
                     </ol>
                   </div>

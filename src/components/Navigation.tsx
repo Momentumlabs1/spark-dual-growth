@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navItems = [
     { label: "Coaching", href: "#coaching" },
@@ -15,9 +16,22 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    // If we're not on the preview page, navigate there first
+    if (location.pathname !== '/' && location.pathname !== '/preview') {
+      navigate('/preview');
+      // After navigation, scroll to section (short delay for DOM update)
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    } else {
+      // We're already on preview → scroll directly
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
     setIsOpen(false);
   };
@@ -28,7 +42,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#" className="flex items-center">
+            <a href="/" onClick={(e) => { e.preventDefault(); navigate('/preview'); }} className="flex items-center cursor-pointer">
               <img src="/assets/main-logo-weiss.png" alt="NF Coaching Logo" className="h-12 w-auto" />
             </a>
           </div>
