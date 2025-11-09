@@ -177,10 +177,42 @@ serve(async (req) => {
     const endMinute = (endMinutes % 60).toString().padStart(2, '0');
     const endDateTimeString = `${appointmentDate}T${endHour}:${endMinute}:00`;
 
-    // 🔒 FINAL OVERLAP CHECK - Prevent double bookings (optimized)
+    // ✅ Compute booking slot times in Vienna timezone
     const bookingSlotStart = DateTime.fromISO(startDateTimeString, { zone: "Europe/Vienna" });
     const bookingSlotEnd = DateTime.fromISO(endDateTimeString, { zone: "Europe/Vienna" });
-    
+
+    // ✅ Business rules
+    const nowVienna = DateTime.now().setZone("Europe/Vienna");
+    // 1) 18h lead time
+    if (bookingSlotStart < nowVienna.plus({ hours: 18 })) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Termine sind nur mit mindestens 18 Stunden Vorlauf buchbar.' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+    // 2) No weekends
+    if (bookingSlotStart.weekday === 6 || bookingSlotStart.weekday === 7) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Termine am Wochenende sind nicht buchbar.' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+    // 3) Only within next 5 weekdays
+    let remaining = 5;
+    let cursor = nowVienna.startOf('day');
+    while (remaining > 0) {
+      cursor = cursor.plus({ days: 1 });
+      if (cursor.weekday >= 1 && cursor.weekday <= 5) remaining--;
+    }
+    const maxBookableDay = cursor.endOf('day');
+    if (bookingSlotStart > maxBookableDay) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Termine sind nur innerhalb der nächsten 5 Werktage buchbar.' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    // 🔒 FINAL OVERLAP CHECK - Prevent double bookings (optimized)
     // Only check ±30 minutes around booking time for faster query
     const existingEventsResponse = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,

@@ -154,6 +154,22 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return dayEnd < cutoff;
   };
 
+  // Maximal bis zu den nächsten 5 Werktagen buchbar (ohne Wochenenden)
+  const getMaxBookableDate = () => {
+    const base = new Date();
+    const probe = new Date(base);
+    let remaining = 5;
+    while (remaining > 0) {
+      probe.setDate(probe.getDate() + 1);
+      const wd = probe.getDay();
+      if (wd !== 0 && wd !== 6) {
+        remaining--;
+      }
+    }
+    // Ende des Tages
+    probe.setHours(23, 59, 59, 999);
+    return new Date(probe);
+  };
   // Load availability range on mount (14 days)
   useEffect(() => {
     const loadRange = async () => {
@@ -164,7 +180,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
         const start = format(now, 'yyyy-MM-dd');
         
         const { data } = await supabase.functions.invoke('get-availability-range', {
-          body: { startDate: start, days: 14 },
+          body: { startDate: start, days: 7 },
         });
 
         if (data?.success && data?.days) {
@@ -536,6 +552,8 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         <CalendarUI
                           mode="single"
                           selected={selectedDate}
+                          fromDate={new Date()}
+                          toDate={getMaxBookableDate()}
                           onSelect={async (date) => {
                             setSelectedDate(date);
                             setSelectedTime("");
@@ -578,17 +596,15 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                             }
                           }}
                           disabled={(date) => {
-                            // Block past dates
                             const today = new Date();
                             today.setHours(0, 0, 0, 0);
                             if (date < today) return true;
-                            
-                            // Block weekends
                             if (isWeekend(date)) return true;
-                            
-                            // Block dates within 18h lead time
                             if (isBeforeLeadTime(date)) return true;
-                            
+
+                            const maxBookableDate = getMaxBookableDate();
+                            if (date > maxBookableDate) return true;
+
                             return false;
                           }}
                           initialFocus
