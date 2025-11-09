@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { google } from "npm:googleapis@164.1.0";
 import { z } from "npm:zod@3.25.76";
+import { DateTime } from "npm:luxon@3.4.4";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -176,39 +177,34 @@ serve(async (req) => {
     const endMinute = (endMinutes % 60).toString().padStart(2, '0');
     const endDateTimeString = `${appointmentDate}T${endHour}:${endMinute}:00`;
 
-    // 🔒 FINAL OVERLAP CHECK - Prevent double bookings
-    console.log('[create-booking] 🔍 Performing final overlap check...');
-    const { DateTime } = await import("npm:luxon@3.4.4");
-    
+    // 🔒 FINAL OVERLAP CHECK - Prevent double bookings (optimized)
     const bookingSlotStart = DateTime.fromISO(startDateTimeString, { zone: "Europe/Vienna" });
     const bookingSlotEnd = DateTime.fromISO(endDateTimeString, { zone: "Europe/Vienna" });
     
-    const startOfDayVienna = DateTime.fromISO(appointmentDate, { zone: "Europe/Vienna" }).startOf("day");
-    const endOfDayVienna = DateTime.fromISO(appointmentDate, { zone: "Europe/Vienna" }).endOf("day");
-    
+    // Only check ±30 minutes around booking time for faster query
     const existingEventsResponse = await calendar.events.list({
       calendarId: GOOGLE_CALENDAR_ID,
-      timeMin: startOfDayVienna.toUTC().toISO(),
-      timeMax: endOfDayVienna.toUTC().toISO(),
+      timeMin: bookingSlotStart.minus({ minutes: 30 }).toUTC().toISO(),
+      timeMax: bookingSlotEnd.plus({ minutes: 30 }).toUTC().toISO(),
       singleEvents: true,
       orderBy: "startTime",
+      maxResults: 5,
+      fields: "items(start,end,summary)",
     });
 
     const existingEvents = existingEventsResponse.data.items || [];
-    console.log(`[create-booking] 📋 Found ${existingEvents.length} existing events on ${appointmentDate}`);
 
     // Check if the requested slot overlaps with any existing event
     for (const event of existingEvents) {
       const eventStart = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: "Europe/Vienna" });
       const eventEnd = DateTime.fromISO(event.end?.dateTime || event.end?.date || "", { zone: "Europe/Vienna" });
 
-      // Check for overlap using comprehensive overlap formula
+      // Check for overlap
       if (
         (bookingSlotStart >= eventStart && bookingSlotStart < eventEnd) ||
         (bookingSlotEnd > eventStart && bookingSlotEnd <= eventEnd) ||
         (bookingSlotStart <= eventStart && bookingSlotEnd >= eventEnd)
       ) {
-        console.log(`[create-booking] ❌ CONFLICT: Slot ${appointmentTime} overlaps with event "${event.summary}"`);
         return new Response(
           JSON.stringify({
             success: false,
@@ -221,8 +217,6 @@ serve(async (req) => {
         );
       }
     }
-    
-    console.log('[create-booking] ✅ No conflicts found, proceeding with booking...');
 
     // 📝 Helper functions for labels
     const getActivityLabel = (level: string) => {

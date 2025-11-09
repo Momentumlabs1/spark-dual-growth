@@ -140,66 +140,47 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
     return "Adipositas";
   };
 
-  // Get next 3 weekdays (Monday-Friday) starting from now + 18 hours
-  const getNext5Weekdays = () => {
-    const weekdays: Date[] = [];
-    
-    // Calculate earliest bookable time (now + 18 hours)
-    const now = new Date();
-    const earliestBookable = new Date(now.getTime() + 18 * 60 * 60 * 1000);
-    earliestBookable.setHours(0, 0, 0, 0); // Set to start of that day
-    
-    let currentDate = new Date(earliestBookable);
-    
-    while (weekdays.length < 3) { // Only 3 weekdays now
-      const dayOfWeek = currentDate.getDay();
-      // 0 = Sunday, 6 = Saturday -> skip weekends
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        weekdays.push(new Date(currentDate));
-      }
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    
-    return weekdays;
+  // Helper functions for date validation
+  const isWeekend = (d: Date) => {
+    const wd = d.getDay();
+    return wd === 0 || wd === 6;
   };
 
-  // Preload slots for next 3 weekdays on mount - optimistic UI
+  const isBeforeLeadTime = (d: Date) => {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() + 18 * 60 * 60 * 1000);
+    const dayEnd = new Date(d);
+    dayEnd.setHours(23, 59, 59, 999);
+    return dayEnd < cutoff;
+  };
+
+  // Load availability range on mount (14 days)
   useEffect(() => {
-    const preloadSlots = async () => {
-      setIsPreloading(false); // Set false immediately for optimistic UI
-      const weekdays = getNext5Weekdays();
-      setBookableWeekdays(weekdays);
+    const loadRange = async () => {
+      setIsPreloading(false); // Calendar is immediately interactive
       
       try {
-        // Fetch all 3 days in parallel
-        const promises = weekdays.map(async (date) => {
-          const dateString = format(date, 'yyyy-MM-dd');
-          const { data } = await supabase.functions.invoke('get-available-slots', {
-            body: { date: dateString },
-          });
-          
-          return {
-            date: dateString,
-            slots: data?.availableSlots || []
-          };
+        const now = new Date();
+        const start = format(now, 'yyyy-MM-dd');
+        
+        const { data } = await supabase.functions.invoke('get-availability-range', {
+          body: { startDate: start, days: 14 },
         });
-        
-        const results = await Promise.all(promises);
-        
-        // Store in cache
-        const newCache = new Map<string, string[]>();
-        results.forEach(({ date, slots }) => {
-          newCache.set(date, slots);
-        });
-        
-        setSlotsCache(newCache);
-        
+
+        if (data?.success && data?.days) {
+          const map = new Map<string, string[]>();
+          for (const [ds, slots] of Object.entries(data.days)) {
+            map.set(ds, slots as string[]);
+          }
+          setSlotsCache(map);
+        }
       } catch (error) {
-        toast.error('Fehler beim Laden der Termine');
+        // Silent fail - calendar remains interactive
+        console.error('Error loading availability:', error);
       }
     };
     
-    preloadSlots();
+    loadRange();
   }, []);
 
   // Fetch available slots when date is selected
@@ -555,20 +536,45 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         <CalendarUI
                           mode="single"
                           selected={selectedDate}
-                          onSelect={(date) => {
+                          onSelect={async (date) => {
                             setSelectedDate(date);
-                            if (date) {
-                              // Get slots from cache instantly (no API call)
-                              const dateString = format(date, 'yyyy-MM-dd');
-                              const cachedSlots = slotsCache.get(dateString) || [];
-                              setAvailableSlots(cachedSlots);
-                              setSelectedTime(""); // Reset selected time
-                              
-                              console.log('📅 Selected date:', dateString, '| Available slots:', cachedSlots.length);
-                              
-                              if (cachedSlots.length === 0) {
+                            setSelectedTime("");
+                            if (!date) return;
+
+                            const ds = format(date, 'yyyy-MM-dd');
+                            const cached = slotsCache.get(ds);
+                            
+                            if (cached) {
+                              setAvailableSlots(cached);
+                              if (cached.length === 0) {
                                 toast.error('Keine verfügbaren Zeiten für diesen Tag');
                               }
+                              return;
+                            }
+
+                            // Lazy load this specific date
+                            setIsLoadingSlots(true);
+                            try {
+                              const { data } = await supabase.functions.invoke('get-available-slots', {
+                                body: { date: ds },
+                              });
+                              const slots = data?.availableSlots || [];
+                              setAvailableSlots(slots);
+
+                              setSlotsCache(prev => {
+                                const next = new Map(prev);
+                                next.set(ds, slots);
+                                return next;
+                              });
+
+                              if (slots.length === 0) {
+                                toast.error('Keine verfügbaren Zeiten für diesen Tag');
+                              }
+                            } catch {
+                              toast.error('Fehler beim Laden der Zeiten');
+                              setAvailableSlots([]);
+                            } finally {
+                              setIsLoadingSlots(false);
                             }
                           }}
                           disabled={(date) => {
@@ -577,9 +583,13 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                             today.setHours(0, 0, 0, 0);
                             if (date < today) return true;
                             
-                            // Only allow preloaded weekdays
-                            const dateString = format(date, 'yyyy-MM-dd');
-                            return !slotsCache.has(dateString);
+                            // Block weekends
+                            if (isWeekend(date)) return true;
+                            
+                            // Block dates within 18h lead time
+                            if (isBeforeLeadTime(date)) return true;
+                            
+                            return false;
                           }}
                           initialFocus
                           className="pointer-events-auto"
@@ -588,12 +598,12 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                     </Popover>
                   </div>
 
-                  {/* Preloading Indicator */}
-                  {isPreloading && (
+                  {/* Loading indicator for lazy load */}
+                  {isLoadingSlots && (
                     <Alert className="border-blue-200 bg-blue-50">
                       <Clock className="h-4 w-4 text-blue-600 animate-spin" />
                       <AlertDescription className="text-blue-800">
-                        Verfügbare Termine für die nächsten 5 Werktage werden geladen...
+                        Verfügbare Zeiten werden geladen...
                       </AlertDescription>
                     </Alert>
                   )}
@@ -604,11 +614,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                     <Select
                       value={selectedTime}
                       onValueChange={setSelectedTime}
-                      disabled={!selectedDate || isPreloading}
+                      disabled={!selectedDate || isLoadingSlots}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder={
-                          isPreloading ? 'Termine werden geladen...' : 
+                          isLoadingSlots ? 'Termine werden geladen...' : 
                           !selectedDate ? 'Zuerst Datum wählen' : 
                           availableSlots.length === 0 ? 'Keine Zeiten verfügbar' : 
                           'Uhrzeit wählen'
