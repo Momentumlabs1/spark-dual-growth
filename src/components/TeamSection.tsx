@@ -124,7 +124,7 @@ const TeamSection = () => {
                         {member.specialties.map((specialty, idx) => (
                           <li key={idx} className="flex items-start text-nf-gray-700 text-xs lg:text-sm">
                             <div className="w-1.5 h-1.5 bg-nf-red rounded-full mr-2 flex-shrink-0 mt-1.5"></div>
-                            <span className="leading-relaxed">{specialty}</span>
+                            <span className="leading-relaxed break-words hyphens-auto">{specialty}</span>
                           </li>
                         ))}
                       </ul>

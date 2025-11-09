@@ -178,6 +178,14 @@ All colors MUST be HSL.
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Word breaking utilities for long German words */
+  .hyphens-auto {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+  }
 }
 
 @keyframes fade-in-up {
