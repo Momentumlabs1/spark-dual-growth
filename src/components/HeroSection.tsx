@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
-import { Star, Zap, CheckCircle, Play } from "lucide-react";
+import { Star, Zap, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  const [isPlaying, setIsPlaying] = useState(false);
   
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -14,9 +12,6 @@ const HeroSection = () => {
     }
   };
 
-  const handlePlay = () => {
-    setIsPlaying(true);
-  };
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#1a0000] to-[#2d0a0a] pt-24 sm:pt-28 md:pt-32 lg:pt-16 xl:pt-20 pb-8 sm:pb-10 lg:pb-8 xl:pb-10">
@@ -27,72 +22,46 @@ const HeroSection = () => {
             className="relative w-full max-w-[340px] sm:max-w-md md:max-w-lg lg:max-w-[448px] xl:max-w-[512px] mb-0 overflow-hidden rounded-2xl"
             style={{ aspectRatio: '512/683' }}
           >
-            {!isPlaying ? (
-              <>
-                <img
-                  src="/assets/niklas-fabienne-hero22.png"
-                  alt="Niklas und Fabienne - Körper & Geist Coaching"
-                  className="w-full h-full object-cover object-center pointer-events-none select-none"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="sync"
-                  width={512}
-                  height={683}
-                  style={{ display: 'block', width: '100%', height: 'auto' }}
-                />
+            <img
+              src="/assets/niklas-fabienne-hero22.png"
+              alt="Niklas und Fabienne - Körper & Geist Coaching"
+              className="w-full h-full object-cover object-center pointer-events-none select-none"
+              loading="eager"
+              fetchPriority="high"
+              decoding="sync"
+              width={512}
+              height={683}
+              style={{ display: 'block', width: '100%', height: 'auto' }}
+            />
 
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center z-10">
-                  <motion.button
-                    onClick={handlePlay}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-200"
-                  >
-                    <Play className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#e74c3c] fill-[#e74c3c] ml-1" />
-                  </motion.button>
-                </div>
+            {/* Title Overlay - positioned on their bodies */}
+            <div
+              className="absolute top-[40%] lg:top-[38%] xl:top-[40%] left-0 right-0 text-center px-4 z-5"
+            >
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+                <span className="text-white">KÖRPER </span>
+                <span className="text-[#ff4444]">& GEIST</span>
+              </h1>
+              <p className="text-white text-base sm:text-lg md:text-xl lg:text-base xl:text-lg mt-2 sm:mt-3 font-light">
+                Deine Fitness-Transformation mit
+                <br />
+                ganzheitlichem Online Coaching
+              </p>
+            </div>
 
-                {/* Title Overlay - positioned on their bodies */}
-                <div
-                  className="absolute top-[40%] lg:top-[38%] xl:top-[40%] left-0 right-0 text-center px-4 z-5"
-                >
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                    <span className="text-white">KÖRPER </span>
-                    <span className="text-[#ff4444]">& GEIST</span>
-                  </h1>
-                  <p className="text-white text-base sm:text-lg md:text-xl lg:text-base xl:text-lg mt-2 sm:mt-3 font-light">
-                    Deine Fitness-Transformation mit
-                    <br />
-                    ganzheitlichem Online Coaching
-                  </p>
-                </div>
-
-                {/* Button Overlay - overlaps bottom of image */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
-                  <motion.button
-                    onClick={() => navigate('/termin-vorbereitung')}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    style={{ backgroundColor: "rgb(220, 38, 38)" }}
-                    className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] lg:w-[75%] xl:w-[70%] text-white px-5 py-4 sm:px-7 sm:py-5 md:px-12 md:py-6 lg:px-8 lg:py-3.5 xl:px-10 xl:py-4 text-sm sm:text-base md:text-lg lg:text-sm xl:text-base font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8 lg:-translate-y-5"
-                  >
-                    <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-5 lg:h-5 xl:w-5 xl:h-5 flex-shrink-0" />
-                    <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
-                  </motion.button>
-                </div>
-              </>
-            ) : (
-              <div className="w-full h-full">
-                <iframe
-                  src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  title="Körper & Geist Coaching Video"
-                />
-              </div>
-            )}
+            {/* Button Overlay - overlaps bottom of image */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
+              <motion.button
+                onClick={() => navigate('/termin-vorbereitung')}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ backgroundColor: "rgb(220, 38, 38)" }}
+                className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] lg:w-[75%] xl:w-[70%] text-white px-5 py-4 sm:px-7 sm:py-5 md:px-12 md:py-6 lg:px-8 lg:py-3.5 xl:px-10 xl:py-4 text-sm sm:text-base md:text-lg lg:text-sm xl:text-base font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8 lg:-translate-y-5"
+              >
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-5 lg:h-5 xl:w-5 xl:h-5 flex-shrink-0" />
+                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+              </motion.button>
+            </div>
           </div>
 
           {/* Trust Badges */}

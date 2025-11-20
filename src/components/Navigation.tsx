@@ -10,15 +10,21 @@ const Navigation = () => {
 
   const navItems = [
     { label: "Coaching", href: "#coaching" },
-    { label: "Gesundheits-Rechner", href: "#bmi-rechner" },
+    { label: "Gesundheits-Rechner", href: "/gesundheitscheck", isRoute: true },
     { label: "Team", href: "#team" },
     { label: "Kontakt", href: "#kontakt" },
   ];
 
-  const scrollToSection = (href: string) => {
-    // If we're not on the preview page, navigate there first
-    if (location.pathname !== '/' && location.pathname !== '/preview') {
-      navigate('/preview');
+  const scrollToSection = (href: string, isRoute = false) => {
+    if (isRoute) {
+      navigate(href);
+      setIsOpen(false);
+      return;
+    }
+    
+    // If we're not on the home page, navigate there first
+    if (location.pathname !== '/') {
+      navigate('/');
       // After navigation, scroll to section (short delay for DOM update)
       setTimeout(() => {
         const element = document.querySelector(href);
@@ -27,7 +33,7 @@ const Navigation = () => {
         }
       }, 100);
     } else {
-      // We're already on preview → scroll directly
+      // We're already on home → scroll directly
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -42,7 +48,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" onClick={(e) => { e.preventDefault(); navigate('/preview'); }} className="flex items-center cursor-pointer">
+            <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }} className="flex items-center cursor-pointer">
               <img src="/assets/main-logo-weiss.png" alt="NF Coaching Logo" className="h-12 w-auto" />
             </a>
           </div>
@@ -53,7 +59,7 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <button
                   key={item.label}
-                  onClick={() => scrollToSection(item.href)}
+                  onClick={() => scrollToSection(item.href, item.isRoute)}
                   className="text-nf-black hover:text-nf-red px-3 py-2 text-sm font-medium transition-smooth relative group"
                 >
                   {item.label}
@@ -94,7 +100,7 @@ const Navigation = () => {
           {navItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => scrollToSection(item.href)}
+              onClick={() => scrollToSection(item.href, item.isRoute)}
               className="text-nf-black hover:text-nf-red block px-3 py-2 text-base font-medium w-full text-left transition-smooth"
             >
               {item.label}
