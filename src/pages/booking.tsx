@@ -47,10 +47,32 @@ interface BookingPageProps {
   };
 }
 
+// Common country codes for European/DACH region
+const COUNTRY_CODES = [
+  { code: "+49", country: "DE", flag: "🇩🇪" },
+  { code: "+43", country: "AT", flag: "🇦🇹" },
+  { code: "+41", country: "CH", flag: "🇨🇭" },
+  { code: "+31", country: "NL", flag: "🇳🇱" },
+  { code: "+32", country: "BE", flag: "🇧🇪" },
+  { code: "+33", country: "FR", flag: "🇫🇷" },
+  { code: "+39", country: "IT", flag: "🇮🇹" },
+  { code: "+44", country: "UK", flag: "🇬🇧" },
+  { code: "+45", country: "DK", flag: "🇩🇰" },
+  { code: "+46", country: "SE", flag: "🇸🇪" },
+  { code: "+47", country: "NO", flag: "🇳🇴" },
+  { code: "+48", country: "PL", flag: "🇵🇱" },
+  { code: "+34", country: "ES", flag: "🇪🇸" },
+  { code: "+351", country: "PT", flag: "🇵🇹" },
+  { code: "+420", country: "CZ", flag: "🇨🇿" },
+  { code: "+36", country: "HU", flag: "🇭🇺" },
+  { code: "+1", country: "US", flag: "🇺🇸" },
+];
+
 const BookingPageComplete = ({ healthData }: BookingPageProps) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+49");
   const [phone, setPhone] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState("");
@@ -264,7 +286,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
           firstName,
           lastName,
           email,
-          phone,
+          phone: phone ? `${countryCode} ${phone}` : "",
           appointmentDate,
           appointmentTime: selectedTime,
           healthData,
@@ -512,19 +534,36 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                     </div>
                   </div>
 
-                  {/* Phone */}
+                  {/* Phone with Country Code */}
                   <div className="space-y-2">
                     <Label htmlFor="phone">Telefon (optional)</Label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+43 123 456789"
-                        className="pl-10"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
+                    <div className="flex gap-2">
+                      <Select value={countryCode} onValueChange={setCountryCode}>
+                        <SelectTrigger className="w-[110px] flex-shrink-0">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {COUNTRY_CODES.map((item) => (
+                            <SelectItem key={item.code} value={item.code}>
+                              <span className="flex items-center gap-2">
+                                <span>{item.flag}</span>
+                                <span>{item.code}</span>
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div className="relative flex-1">
+                        <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="123 456789"
+                          className="pl-10"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                        />
+                      </div>
                     </div>
                   </div>
 
