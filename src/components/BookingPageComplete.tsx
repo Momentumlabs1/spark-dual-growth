@@ -64,6 +64,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       return false;
     }
 
+    if (!phone.trim()) {
+      setError("Bitte gib deine Telefonnummer ein.");
+      return false;
+    }
+
     setError("");
     return true;
   };
