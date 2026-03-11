@@ -449,6 +449,7 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                       <Input
                         id="phone"
                         type="tel"
+                        required
                         placeholder="+49 123 456789"
                         className="pl-10"
                         value={phone}

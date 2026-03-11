@@ -563,6 +563,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         <Input
                           id="phone"
                           type="tel"
+                          required
                           placeholder="123 456789"
                           className="pl-10"
                           value={phone}
