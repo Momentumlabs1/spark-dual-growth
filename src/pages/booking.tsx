@@ -541,7 +541,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
 
                   {/* Phone with Country Code */}
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Telefon (optional)</Label>
+                    <Label htmlFor="phone">Telefon *</Label>
                     <div className="flex gap-2">
                       <Select value={countryCode} onValueChange={setCountryCode}>
                         <SelectTrigger className="w-[110px] flex-shrink-0">
