@@ -101,6 +101,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       return false;
     }
 
+    if (!phone.trim()) {
+      setError("Bitte gib deine Telefonnummer ein.");
+      return false;
+    }
+
     if (!selectedDate) {
       setError("Bitte wähle ein Datum aus.");
       return false;
