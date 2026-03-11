@@ -101,6 +101,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       return false;
     }
 
+    if (!phone.trim()) {
+      setError("Bitte gib deine Telefonnummer ein.");
+      return false;
+    }
+
     if (!selectedDate) {
       setError("Bitte wähle ein Datum aus.");
       return false;
@@ -536,7 +541,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
 
                   {/* Phone with Country Code */}
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Telefon (optional)</Label>
+                    <Label htmlFor="phone">Telefon *</Label>
                     <div className="flex gap-2">
                       <Select value={countryCode} onValueChange={setCountryCode}>
                         <SelectTrigger className="w-[110px] flex-shrink-0">
@@ -558,6 +563,7 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
                         <Input
                           id="phone"
                           type="tel"
+                          required
                           placeholder="123 456789"
                           className="pl-10"
                           value={phone}

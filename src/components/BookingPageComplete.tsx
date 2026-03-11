@@ -64,6 +64,11 @@ const BookingPageComplete = ({ healthData }: BookingPageProps) => {
       return false;
     }
 
+    if (!phone.trim()) {
+      setError("Bitte gib deine Telefonnummer ein.");
+      return false;
+    }
+
     setError("");
     return true;
   };
@@ -438,12 +443,13 @@ Zeitstempel: ${new Date().toLocaleString("de-DE")}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Telefon (optional)</Label>
+                    <Label htmlFor="phone">Telefon *</Label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                       <Input
                         id="phone"
                         type="tel"
+                        required
                         placeholder="+49 123 456789"
                         className="pl-10"
                         value={phone}
