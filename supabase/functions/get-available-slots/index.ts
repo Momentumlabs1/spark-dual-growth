@@ -106,7 +106,7 @@ serve(async (req) => {
 
       allTimeSlots.forEach((slot) => {
         const slotStartVienna = DateTime.fromISO(`${date}T${slot}:00`, { zone: "Europe/Vienna" });
-        const slotEndVienna = slotStartVienna.plus({ minutes: 30 });
+        const slotEndVienna = slotStartVienna.plus({ minutes: 60 });
 
         // Check 18-hour lead time requirement
         if (slotStartVienna < cutoffVienna) {
