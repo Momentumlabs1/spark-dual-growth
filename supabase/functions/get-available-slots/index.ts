@@ -83,11 +83,11 @@ serve(async (req) => {
 
     const events = calendarResponse.data.items || [];
 
-    // Generate all time slots (09:00 - 17:30, every 30 minutes)
+    // Generate all time slots (09:00 - 17:00, every 30 minutes, 60min duration)
     const allTimeSlots: string[] = [];
     for (let hour = 9; hour <= 17; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
-        if (hour === 17 && minute > 30) break;
+        if (hour === 17 && minute > 0) break; // Last slot at 17:00 (ends 18:00)
         allTimeSlots.push(`${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`);
       }
     }
