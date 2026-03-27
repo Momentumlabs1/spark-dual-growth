@@ -83,13 +83,11 @@ serve(async (req) => {
 
     const events = calendarResponse.data.items || [];
 
-    // Generate all time slots (09:00 - 17:00, every 30 minutes, 60min duration)
+    // Generate all time slots (08:30 - 17:30, every 60 minutes, 60min duration)
     const allTimeSlots: string[] = [];
-    for (let hour = 9; hour <= 17; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
-        if (hour === 17 && minute > 0) break; // Last slot at 17:00 (ends 18:00)
-        allTimeSlots.push(`${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`);
-      }
+    for (let hour = 8; hour <= 17; hour++) {
+      const slot = `${hour.toString().padStart(2, "0")}:30`;
+      allTimeSlots.push(slot);
     }
 
     // Calculate 18-hour lead time requirement
