@@ -22,8 +22,8 @@ const Impressum = () => {
             <div className="mb-6">
               <p className="text-nf-white"><strong>Niklas Hauger</strong></p>
               <p className="text-nf-white/80">Niklas Hauger Coaching</p>
-              <p className="text-nf-white/80">Düsseldorfer Straße 38</p>
-              <p className="text-nf-white/80">40667 Meerbusch</p>
+              <p className="text-nf-white/80">Wiener Str. 61</p>
+              <p className="text-nf-white/80">42657 Solingen</p>
             </div>
 
             <h2 className="text-2xl font-semibold text-nf-white mb-4">Kontakt</h2>
