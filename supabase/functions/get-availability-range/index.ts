@@ -103,13 +103,10 @@ serve(async (req) => {
 
     const events = resp.data.items || [];
 
-    // Generate all possible slots
+    // Generate all possible slots: 08:30, 09:30, …, 17:30 (60-min slots)
     const allSlots = [];
-    for (let h = 9; h <= 17; h++) {
-      for (let m = 0; m < 60; m += 30) {
-        if (h === 17 && m > 30) break;
-        allSlots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
-      }
+    for (let h = 8; h <= 17; h++) {
+      allSlots.push(`${String(h).padStart(2, '0')}:30`);
     }
 
     // 18-hour cutoff
@@ -140,7 +137,7 @@ serve(async (req) => {
       
       const daySlots = allSlots.filter(slot => {
         const s = DateTime.fromISO(`${ds}T${slot}:00`, { zone: "Europe/Vienna" });
-        const e = s.plus({ minutes: 30 });
+        const e = s.plus({ minutes: 60 });
         
         // Check 18-hour cutoff
         if (s < cutoff) return false;
