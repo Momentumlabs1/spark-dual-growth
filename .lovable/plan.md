@@ -1,15 +1,36 @@
-## Kontext
+## Problem
 
-Der Security-Scanner meldet "Database Has No Security Policies". In diesem Projekt gibt es jedoch **keine einzige Tabelle** in der Datenbank – die Terminbuchung läuft vollständig über Google Calendar (Edge Functions `create-booking`, `get-available-slots`, `get-availability-range`). Es gibt also nichts zu schützen.
+Die Buchung von Alex Jung um **12:00–13:00** (statt 12:30–13:30) ist passiert, weil eine zweite Edge Function (`get-availability-range`) noch nicht angepasst wurde. Diese Funktion wird beim Vorladen des Kalenders verwendet und gibt dem User noch die alten Slots zur Auswahl.
 
-## Plan
+Aktueller Stand der drei Funktionen:
 
-1. Befund `database_missing_all_rls` (Scanner `supabase_lov`) als **ignoriert** markieren mit Begründung: keine Tabellen vorhanden, Daten liegen ausschließlich in Google Calendar.
-2. Security Memory aktualisieren, damit zukünftige Scans diesen Hinweis nicht erneut als Problem werten, solange das Projekt tabellenlos bleibt.
-3. Hinweis hinterlegen: Sobald eine erste Tabelle im Backend angelegt wird (z. B. für Kunden, Lead-Erfassung, Buchungs-Log), muss **RLS direkt beim Anlegen aktiviert** und mit einer passenden Policy versehen werden.
+| Funktion | Slots | Dauer | Status |
+|---|---|---|---|
+| `get-available-slots` | 08:30–17:30 (60min Schritte) | 60 min | ✅ korrekt |
+| `create-booking` | (Dauer) | 60 min | ✅ korrekt |
+| `get-availability-range` | **09:00, 09:30, 10:00 … 17:30** | **30 min** | ❌ falsch |
 
-## Was sich nicht ändert
+Da der Funnel den Kalender vor-lädt, sieht der User die Slots aus `get-availability-range` — also auch 12:00. Klickt er drauf, wird gebucht.
 
-- Keine Codeänderungen
-- Keine neuen Tabellen, keine Migrations
-- Edge Functions bleiben wie bisher (eigener Befund ist bereits als "by design" mit Rate Limiting akzeptiert)
+## Fix
+
+`supabase/functions/get-availability-range/index.ts` anpassen:
+
+1. Slot-Generierung ändern auf **08:30 bis 17:30 in 60-Minuten-Schritten** (genau wie in `get-available-slots`):
+   ```ts
+   const allSlots = [];
+   for (let h = 8; h <= 17; h++) {
+     allSlots.push(`${String(h).padStart(2,'0')}:30`);
+   }
+   // → 08:30, 09:30, 10:30, …, 17:30
+   ```
+
+2. Slot-Dauer in der Overlap-Prüfung von `{ minutes: 30 }` auf **`{ minutes: 60 }`** ändern.
+
+3. In-Memory-Cache bleibt (60s TTL leert sich von selbst).
+
+Keine weiteren Änderungen — `create-booking` und `get-available-slots` sind bereits korrekt.
+
+## Hinweis zum Alex-Jung-Termin
+
+Der bestehende Eintrag 12:00–13:00 bleibt im Google Kalender stehen. Nach dem Fix blockt er korrekt die Slots **11:30–12:30** und **12:30–13:30** (Overlap-Check greift bereits richtig).
