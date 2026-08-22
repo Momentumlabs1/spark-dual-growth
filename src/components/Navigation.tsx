@@ -70,7 +70,7 @@ const Navigation = () => {
                 variant="default"
                 className="bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 py-2 ml-4"
               >
-                Gespräch anfragen
+                Kostenloser Anamnesebogen
               </Button>
             </div>
           </div>
@@ -114,7 +114,7 @@ const Navigation = () => {
               variant="default"
               className="bg-nf-red hover:bg-nf-red/90 text-nf-white w-full"
             >
-              Gespräch anfragen
+              Kostenloser Anamnesebogen
             </Button>
           </div>
         </div>
