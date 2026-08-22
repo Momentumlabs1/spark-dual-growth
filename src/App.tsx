@@ -8,7 +8,6 @@ import NotFound from "./pages/NotFound";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
-import GesundheitscheckPage from "./pages/GesundheitscheckPage";
 import Bewerbung from "./pages/Bewerbung";
 
 const queryClient = new QueryClient();
@@ -25,8 +24,8 @@ const App = () => (
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<AGB />} />
           <Route path="/bewerbung" element={<Bewerbung />} />
-          <Route path="/gesundheitscheck" element={<GesundheitscheckPage />} />
           {/* Alte Funnel-Routen: laufen jetzt alle in den Typeform */}
+          <Route path="/gesundheitscheck" element={<Navigate to="/bewerbung" replace />} />
           <Route path="/termin-vorbereitung" element={<Navigate to="/bewerbung" replace />} />
           <Route path="/booking" element={<Navigate to="/bewerbung" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -4,7 +4,6 @@ import TeamSection from "@/components/TeamSection";
 import ServicesGrid from "@/components/ServicesGrid";
 import TestimonialSection from "@/components/TestimonialSection";
 import Footer from "@/components/Footer";
-import HealthCalculatorCTA from "@/components/HealthCalculatorSection";
 import ContactForm from "@/components/ContactForm";
 
 const Index = () => {
@@ -18,9 +17,6 @@ const Index = () => {
 
       {/* Services Section */}
       <ServicesGrid />
-
-      {/* Health Calculator CTA */}
-      <HealthCalculatorCTA />
 
       {/* Team Section */}
       <TeamSection />

@@ -55,17 +55,6 @@ const Footer = () => {
                   Team
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => {
-                    const element = document.querySelector('#bmi-rechner');
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="text-nf-white/70 hover:text-nf-red transition-smooth"
-                >
-                  BMI Rechner
-                </button>
-              </li>
             </ul>
           </div>
 

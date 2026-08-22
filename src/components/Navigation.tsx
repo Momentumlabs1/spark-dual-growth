@@ -10,7 +10,6 @@ const Navigation = () => {
 
   const navItems = [
     { label: "Coaching", href: "#coaching" },
-    { label: "Gesundheits-Rechner", href: "/gesundheitscheck", isRoute: true },
     { label: "Team", href: "#team" },
     { label: "Kontakt", href: "#kontakt" },
   ];
@@ -59,7 +58,7 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <button
                   key={item.label}
-                  onClick={() => scrollToSection(item.href, item.isRoute)}
+                  onClick={() => scrollToSection(item.href)}
                   className="text-nf-black hover:text-nf-red px-3 py-2 text-sm font-medium transition-smooth relative group"
                 >
                   {item.label}
@@ -100,7 +99,7 @@ const Navigation = () => {
           {navItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => scrollToSection(item.href, item.isRoute)}
+              onClick={() => scrollToSection(item.href)}
               className="text-nf-black hover:text-nf-red block px-3 py-2 text-base font-medium w-full text-left transition-smooth"
             >
               {item.label}
