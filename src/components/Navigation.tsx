@@ -67,11 +67,11 @@ const Navigation = () => {
                 </button>
               ))}
               <Button
-                onClick={() => navigate('/termin-vorbereitung')}
+                onClick={() => navigate('/bewerbung')}
                 variant="default"
                 className="bg-nf-red hover:bg-nf-red/90 text-nf-white px-6 py-2 ml-4"
               >
-                Kostenloses Gespräch
+                Gespräch anfragen
               </Button>
             </div>
           </div>
@@ -109,13 +109,13 @@ const Navigation = () => {
           <div className="pt-2">
             <Button
               onClick={() => {
-                navigate('/termin-vorbereitung');
+                navigate('/bewerbung');
                 setIsOpen(false);
               }}
               variant="default"
               className="bg-nf-red hover:bg-nf-red/90 text-nf-white w-full"
             >
-              Kostenloses Gespräch
+              Gespräch anfragen
             </Button>
           </div>
         </div>

@@ -902,7 +902,7 @@ const BMICalculatorFunnel = () => {
                     };
                     
                     // Navigate with health data
-                    navigate('/booking', { state: { healthData } });
+                    navigate('/bewerbung');
                   }}
                   className="w-full bg-white text-nf-red hover:bg-gray-100 font-bold py-5 text-base md:text-lg shadow-lg hover:shadow-xl transition-all"
                   size="lg"

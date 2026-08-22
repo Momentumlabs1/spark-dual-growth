@@ -700,19 +700,19 @@ const GesundheitscheckPage = () => {
                         console.log("Übertragene Daten:", healthData);
                         console.log("Struggle:", healthData.struggle);
                         
-                        // Navigate zur Booking-Seite
-                        navigate('/booking', { state: { healthData } });
+                        // Weiter in den Bewerbungs-Typeform
+                        navigate('/bewerbung');
                       }}
                       size="lg"
                       className="w-full md:w-auto bg-white text-nf-red hover:bg-gray-50 font-bold py-6 px-12 text-xl shadow-2xl hover:shadow-3xl transition-all hover:scale-105"
                     >
                       <Calendar className="mr-3 h-6 w-6" />
-                      Jetzt Termin vereinbaren
+                      Kostenloses Gespräch anfragen
                       <ArrowRight className="ml-3 h-6 w-6" />
                     </Button>
 
                     <p className="text-sm text-white/75 italic">
-                      Im Gespräch besprechen wir deine Ergebnisse im Detail und erstellen deinen persönlichen Aktionsplan
+                      Beantworte ein paar kurze Fragen – ich schaue mir deine Situation persönlich an und melde mich bei dir
                     </p>
                   </div>
                 </div>

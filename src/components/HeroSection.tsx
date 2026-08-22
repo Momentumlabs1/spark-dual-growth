@@ -52,14 +52,14 @@ const HeroSection = () => {
             {/* Button Overlay - overlaps bottom of image */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center">
               <motion.button
-                onClick={() => navigate('/termin-vorbereitung')}
+                onClick={() => navigate('/bewerbung')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ backgroundColor: "rgb(220, 38, 38)" }}
                 className="pointer-events-auto w-[92%] sm:w-[86%] md:w-[80%] lg:w-[75%] xl:w-[70%] text-white px-5 py-4 sm:px-7 sm:py-5 md:px-12 md:py-6 lg:px-8 lg:py-3.5 xl:px-10 xl:py-4 text-sm sm:text-base md:text-lg lg:text-sm xl:text-base font-bold rounded-xl shadow-2xl border border-white/10 transition-all duration-200 hover:opacity-90 flex items-center justify-center gap-2 -translate-y-6 sm:-translate-y-7 md:-translate-y-8 lg:-translate-y-5"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-5 lg:h-5 xl:w-5 xl:h-5 flex-shrink-0" />
-                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH</span>
+                <span className="whitespace-nowrap">KOSTENLOSES GESPRÄCH ANFRAGEN</span>
               </motion.button>
             </div>
           </div>

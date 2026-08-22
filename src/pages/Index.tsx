@@ -3,7 +3,6 @@ import HeroSection from "@/components/HeroSection";
 import TeamSection from "@/components/TeamSection";
 import ServicesGrid from "@/components/ServicesGrid";
 import TestimonialSection from "@/components/TestimonialSection";
-import BookingFunnel from "@/components/BookingFunnel";
 import Footer from "@/components/Footer";
 import HealthCalculatorCTA from "@/components/HealthCalculatorSection";
 import ContactForm from "@/components/ContactForm";

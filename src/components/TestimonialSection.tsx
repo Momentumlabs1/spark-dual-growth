@@ -530,13 +530,13 @@ const TestimonialSection = () => {
               Willst du auch so eine Transformation?
             </h3>
             <p className="text-xl md:text-2xl text-red-50 mb-8 max-w-2xl mx-auto">
-              Starte jetzt deine Reise zu deinem Traumkörper – genauso wie unsere 500+ erfolgreichen Kunden!
+              Beantworte ein paar kurze Fragen – wenn wir zusammenpassen, melde ich mich persönlich bei dir.
             </p>
             <button
-              onClick={() => (window.location.href = "/termin-vorbereitung")}
+              onClick={() => (window.location.href = "/bewerbung")}
               className="bg-white text-red-600 px-10 py-4 rounded-full text-lg md:text-xl font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
-              Jetzt starten! 🔥
+              Jetzt bewerben 🔥
             </button>
           </div>
         </motion.div>
