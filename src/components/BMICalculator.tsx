@@ -908,7 +908,7 @@ const BMICalculatorFunnel = () => {
                   size="lg"
                 >
                   <span className="mr-2">🎯</span>
-                  Jetzt kostenloses Gespräch buchen
+                  Jetzt kostenloses Gespräch anfragen
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <p className="text-center text-xs mt-3 opacity-75">
